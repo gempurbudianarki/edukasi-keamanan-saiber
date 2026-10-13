@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { evaluatePassword } from '../../../data/passwordRules';
 import { playSound } from '../../../utils/soundEffects';
+import { FloatingScoreBurst } from '../../layout/FloatingScoreBurst';
 import { PasswordTester } from './components/PasswordTester';
 import { PassphraseGenerator } from './components/PassphraseGenerator';
 import './PasswordVault.css';
@@ -10,6 +11,7 @@ export function PasswordVault({ onBack, onComplete, initialScore = 0 }) {
   const [password, setPassword] = useState('123456');
   const [showPassword, setShowPassword] = useState(false);
   const [score, setScore] = useState(initialScore);
+  const [burstTrigger, setBurstTrigger] = useState(0);
 
   const analysis = evaluatePassword(password);
 
@@ -18,8 +20,9 @@ export function PasswordVault({ onBack, onComplete, initialScore = 0 }) {
     const newAnalysis = evaluatePassword(val);
     if (newAnalysis.score >= 80) {
       if (score < 100) {
-        playSound('success');
+        playSound('complete');
         setScore(100);
+        setBurstTrigger(t => t + 1);
         onComplete(100);
       }
     }
@@ -27,6 +30,8 @@ export function PasswordVault({ onBack, onComplete, initialScore = 0 }) {
 
   return (
     <div className="module-page container">
+      <FloatingScoreBurst text="+100 PTS BRANKAS SANDI BAJA!" trigger={burstTrigger} />
+
       <div className="module-header">
         <button className="module-nav-back" onClick={onBack}>
           <ArrowLeft size={16} /> Kembali ke Misi Hub
