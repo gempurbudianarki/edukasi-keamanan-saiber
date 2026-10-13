@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Volume2, VolumeX, Monitor, RotateCcw, Award, Home } from 'lucide-react';
+import { Shield, Volume2, VolumeX, Monitor, RotateCcw, Home } from 'lucide-react';
 import { toggleAudioMute, getAudioMutedStatus, playSound } from '../../utils/soundEffects';
+import { ResetConfirmModal } from './ResetConfirmModal';
 
 export function Navbar({ 
   progress, 
@@ -11,6 +12,7 @@ export function Navbar({
   currentView
 }) {
   const [muted, setMuted] = useState(false);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
   useEffect(() => {
     setMuted(getAudioMutedStatus());
@@ -101,10 +103,8 @@ export function Navbar({
               id="btn-reset-progress"
               className="btn btn-secondary btn-icon-only"
               onClick={() => {
-                if (window.confirm('Reset semua hasil simulasi dan mulai dari awal?')) {
-                  playSound('click');
-                  onReset();
-                }
+                playSound('click');
+                setIsResetModalOpen(true);
               }}
               title="Reset Semua Latihan"
             >
@@ -113,6 +113,13 @@ export function Navbar({
           </div>
         </div>
       </div>
+
+      {/* In-App Reset Confirmation Modal */}
+      <ResetConfirmModal
+        isOpen={isResetModalOpen}
+        onClose={() => setIsResetModalOpen(false)}
+        onConfirm={onReset}
+      />
     </header>
   );
 }

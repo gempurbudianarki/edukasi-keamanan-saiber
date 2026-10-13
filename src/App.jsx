@@ -105,6 +105,7 @@ export default function App() {
     const fresh = resetStoredProgress();
     setProgress(fresh);
     setCurrentView('welcome');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSaveStudentName = (name) => {
