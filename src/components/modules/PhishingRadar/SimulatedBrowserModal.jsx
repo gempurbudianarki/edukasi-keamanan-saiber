@@ -62,12 +62,8 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
           </div>
 
           <div className="sim-url-pill">
-            {scenario.isPhishing ? (
-              <AlertTriangle size={14} className="url-danger" />
-            ) : (
-              <Lock size={14} className="url-safe" />
-            )}
-            <span className={`url-text ${scenario.isPhishing ? 'url-danger' : 'url-safe'}`}>
+            <Lock size={14} style={{ color: '#94a3b8', flexShrink: 0 }} />
+            <span className="url-text" style={{ color: '#e2e8f0' }}>
               {scenario.displayUrl}
             </span>
           </div>

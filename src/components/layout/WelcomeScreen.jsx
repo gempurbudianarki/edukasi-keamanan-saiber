@@ -88,7 +88,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
             </button>
           </div>
           <p className="name-box-hint">
-            *Nama ini akan otomatis tertera secara resmi pada <strong>Sertifikat Digital Kelulusan</strong> setelah seluruh misi berhasil diselesaikan.
+            *Nama ini akan digunakan untuk mencatat progres latihan dan evaluasi literasi siber kamu.
           </p>
         </div>
 
@@ -154,7 +154,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
           </div>
           <div className="feature-pill">
             <CheckCircle size={15} color="#dc2626" />
-            <span>Sertifikat Digital Resmi PKM UBBG</span>
+            <span>Evaluasi Mandiri Terstandar PKM</span>
           </div>
         </div>
       </div>

@@ -13,10 +13,10 @@ export function ResetConfirmModal({ isOpen, onClose, onConfirm }) {
           maxWidth: '440px',
           width: '90%',
           padding: '28px',
-          background: 'rgba(15, 23, 42, 0.95)',
-          border: '1.5px solid rgba(220, 38, 38, 0.4)',
+          background: '#ffffff',
+          border: '1.5px solid #fee2e2',
           borderRadius: 'var(--radius-lg)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(220, 38, 38, 0.15)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 25px rgba(220, 38, 38, 0.08)',
           textAlign: 'center',
           position: 'relative'
         }}
@@ -42,7 +42,8 @@ export function ResetConfirmModal({ isOpen, onClose, onConfirm }) {
             width: '54px',
             height: '54px',
             borderRadius: '50%',
-            background: 'rgba(220, 38, 38, 0.15)',
+            background: '#fef2f2',
+            border: '1.5px solid #fecaca',
             color: '#dc2626',
             display: 'flex',
             alignItems: 'center',
@@ -53,10 +54,10 @@ export function ResetConfirmModal({ isOpen, onClose, onConfirm }) {
           <AlertTriangle size={28} />
         </div>
 
-        <h3 style={{ fontSize: '1.25rem', marginBottom: '8px', color: '#fff' }}>
+        <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: '#0f172a', fontWeight: 800 }}>
           Reset Seluruh Simulasi?
         </h3>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginBottom: '24px', lineHeight: 1.5 }}>
+        <p style={{ color: '#475569', fontSize: '0.88rem', marginBottom: '24px', lineHeight: 1.5 }}>
           Seluruh skor 4 misi, status penyelesaian, dan data nama siswa akan dihapus dari memori browser dan dikembalikan ke awal.
         </p>
 

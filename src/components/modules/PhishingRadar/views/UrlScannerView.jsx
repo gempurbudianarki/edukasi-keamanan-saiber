@@ -54,7 +54,7 @@ export function UrlScannerView() {
           value={urlInput}
           onChange={(e) => setUrlInput(e.target.value)}
           placeholder="https://contoh-domain-mencurigakan.com/path"
-          style={{ flex: 1, minWidth: '260px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.15)', background: 'rgba(0, 0, 0, 0.4)', color: '#fff', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}
+          style={{ flex: 1, minWidth: '260px', padding: '12px 14px', borderRadius: '8px', border: '1.5px solid #cbd5e1', background: '#ffffff', color: '#0f172a', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}
         />
         <button
           className="btn btn-primary"
@@ -84,13 +84,13 @@ export function UrlScannerView() {
 
       {/* Analysis Result */}
       {analysis && (
-        <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: `1.5px solid ${analysis.riskColor}40`, borderRadius: '12px', padding: '20px' }}>
+        <div style={{ background: '#ffffff', border: `1.5px solid ${analysis.riskColor}60`, borderRadius: '12px', padding: '20px', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
             <div>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 700 }}>
                 Tingkat Risiko Ancaman
               </div>
-              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: analysis.riskColor }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: analysis.riskColor }}>
                 {analysis.riskLevel}
               </div>
             </div>
@@ -105,12 +105,12 @@ export function UrlScannerView() {
             </div>
           </div>
 
-          <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: '12px', borderRadius: '8px', marginBottom: '18px', fontSize: '0.86rem', color: '#cbd5e1' }}>
-            <strong>Rekomendasi Keamanan:</strong> {analysis.recommendation}
+          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '14px', borderRadius: '8px', marginBottom: '18px', fontSize: '0.88rem', color: '#1e293b', lineHeight: 1.5 }}>
+            <strong style={{ color: '#0f172a' }}>Rekomendasi Keamanan:</strong> {analysis.recommendation}
           </div>
 
           {/* Features list */}
-          <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#94a3b8', marginBottom: '8px' }}>
+          <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '10px' }}>
             Parameter Ekstraksi Algoritma:
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
@@ -118,17 +118,17 @@ export function UrlScannerView() {
               <div
                 key={i}
                 style={{
-                  padding: '10px 12px',
-                  borderRadius: '6px',
-                  background: f.danger ? 'rgba(220, 38, 38, 0.1)' : 'rgba(22, 163, 74, 0.08)',
-                  border: `1px solid ${f.danger ? 'rgba(220, 38, 38, 0.25)' : 'rgba(22, 163, 74, 0.25)'}`,
-                  fontSize: '0.78rem'
+                  padding: '12px 14px',
+                  borderRadius: '8px',
+                  background: f.danger ? '#fef2f2' : '#f0fdf4',
+                  border: `1.5px solid ${f.danger ? '#fecaca' : '#bbf7d0'}`,
+                  fontSize: '0.8rem'
                 }}
               >
-                <div style={{ fontWeight: 700, color: f.danger ? '#fca5a5' : '#86efac', marginBottom: '2px' }}>
+                <div style={{ fontWeight: 700, color: f.danger ? '#b91c1c' : '#15803d', marginBottom: '4px' }}>
                   {f.name}
                 </div>
-                <div style={{ color: '#94a3b8', lineHeight: 1.4 }}>{f.desc}</div>
+                <div style={{ color: '#475569', lineHeight: 1.45 }}>{f.desc}</div>
               </div>
             ))}
           </div>

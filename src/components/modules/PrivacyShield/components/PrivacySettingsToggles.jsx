@@ -34,23 +34,24 @@ export function PrivacySettingsToggles({ settings, onToggle }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '14px',
-                borderRadius: '10px',
-                background: isActive ? 'rgba(16, 185, 129, 0.08)' : 'rgba(255, 255, 255, 0.02)',
-                border: `1.5px solid ${isActive ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.08)'}`,
+                padding: '16px',
+                borderRadius: '12px',
+                background: isActive ? '#f0fdf4' : '#f8fafc',
+                border: `1.5px solid ${isActive ? '#86efac' : '#e2e8f0'}`,
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.02)'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ color: isActive ? '#10b981' : '#64748b' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                <div style={{ color: isActive ? '#16a34a' : '#64748b' }}>
                   {renderIcon(def.key)}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '0.9rem', color: isActive ? '#86efac' : '#e2e8f0' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.92rem', color: isActive ? '#15803d' : '#0f172a', marginBottom: '2px' }}>
                     {def.title}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
+                  <div style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.4 }}>
                     {def.desc}
                   </div>
                 </div>
@@ -58,10 +59,10 @@ export function PrivacySettingsToggles({ settings, onToggle }) {
 
               <div
                 style={{
-                  width: '42px',
-                  height: '24px',
-                  borderRadius: '12px',
-                  background: isActive ? '#10b981' : '#334155',
+                  width: '46px',
+                  height: '26px',
+                  borderRadius: '13px',
+                  background: isActive ? '#16a34a' : '#cbd5e1',
                   position: 'relative',
                   flexShrink: 0,
                   transition: 'background 0.2s'
@@ -69,14 +70,15 @@ export function PrivacySettingsToggles({ settings, onToggle }) {
               >
                 <div
                   style={{
-                    width: '18px',
-                    height: '18px',
+                    width: '20px',
+                    height: '20px',
                     borderRadius: '50%',
                     background: '#fff',
                     position: 'absolute',
                     top: '3px',
-                    left: isActive ? '21px' : '3px',
-                    transition: 'left 0.2s'
+                    left: isActive ? '23px' : '3px',
+                    transition: 'left 0.2s',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)'
                   }}
                 />
               </div>

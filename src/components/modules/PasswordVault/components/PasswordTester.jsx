@@ -37,10 +37,10 @@ export function PasswordTester({
             width: '100%',
             padding: '12px 45px 12px 14px',
             borderRadius: '8px',
-            border: `1.5px solid ${analysis.color}`,
-            background: 'rgba(0, 0, 0, 0.4)',
-            color: '#fff',
-            fontSize: '1rem',
+            border: `2px solid ${analysis.color}`,
+            background: '#ffffff',
+            color: '#0f172a',
+            fontSize: '1.05rem',
             fontFamily: 'var(--font-mono)'
           }}
         />
@@ -63,25 +63,25 @@ export function PasswordTester({
       </div>
 
       {/* Cracking time banner */}
-      <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: `1.5px solid ${analysis.color}35`, borderRadius: '10px', padding: '16px', marginBottom: '18px' }}>
+      <div style={{ background: '#f8fafc', border: `1.5px solid ${analysis.color}50`, borderRadius: '12px', padding: '18px', marginBottom: '18px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, marginBottom: '4px' }}>
           <Clock size={15} /> Estimasi Waktu Retas Hacker:
         </div>
         <div style={{ fontSize: '1.6rem', fontWeight: 800, color: analysis.color, fontFamily: 'var(--font-mono)' }}>
           {analysis.crackTime}
         </div>
-        <div style={{ fontSize: '0.82rem', color: '#94a3b8', marginTop: '4px' }}>
-          Kategori: <strong>{analysis.label}</strong> (Skor Entropi: {analysis.score}/100)
+        <div style={{ fontSize: '0.84rem', color: '#475569', marginTop: '4px' }}>
+          Kategori: <strong style={{ color: '#0f172a' }}>{analysis.label}</strong> (Skor Entropi: {analysis.score}/100)
         </div>
       </div>
 
       {/* Checklist criteria */}
-      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#94a3b8', marginBottom: '8px' }}>
+      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '8px' }}>
         Indikator Kriteria Keamanan:
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '8px', marginBottom: '18px' }}>
         {analysis.checks?.map((chk, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: chk.passed ? '#86efac' : '#94a3b8' }}>
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: chk.passed ? '#15803d' : '#64748b', fontWeight: chk.passed ? 600 : 400 }}>
             {chk.passed ? <Check size={14} color="#16a34a" /> : <X size={14} color="#dc2626" />}
             <span>{chk.label}</span>
           </div>

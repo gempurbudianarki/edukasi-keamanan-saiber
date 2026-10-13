@@ -23,15 +23,15 @@ export function PassphraseGenerator({ onApplyPassphrase }) {
   return (
     <div className="glass-panel scenario-card">
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-        <Sparkles size={22} color="var(--accent-cyan)" />
-        <h2 style={{ fontSize: '1.25rem' }}>Generator Passphrase Indonesia</h2>
+        <Sparkles size={22} color="#dc2626" />
+        <h2 style={{ fontSize: '1.25rem', color: '#0f172a' }}>Generator Passphrase Indonesia</h2>
       </div>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', marginBottom: '16px' }}>
         Metode terbaik membuat sandi tangguh namun mudah diingat: gabungan 3-4 kata Indonesia bermakna + angka + simbol:
       </p>
 
-      <div style={{ background: 'rgba(0, 0, 0, 0.4)', border: '1.5px solid rgba(0, 240, 255, 0.3)', borderRadius: '10px', padding: '16px', textAlign: 'center', marginBottom: '16px' }}>
-        <div style={{ fontSize: '1.15rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#00f0ff', wordBreak: 'break-all', marginBottom: '12px' }}>
+      <div style={{ background: '#f8fafc', border: '1.5px solid #cbd5e1', borderRadius: '12px', padding: '18px', textAlign: 'center', marginBottom: '18px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)' }}>
+        <div style={{ fontSize: '1.2rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#dc2626', wordBreak: 'break-all', marginBottom: '14px', letterSpacing: '1px' }}>
           {passphrase}
         </div>
 
@@ -40,7 +40,7 @@ export function PassphraseGenerator({ onApplyPassphrase }) {
             <RefreshCw size={14} /> Acak Ulang
           </button>
           <button className="btn btn-secondary btn-sm" onClick={handleCopy}>
-            {copied ? <Check size={14} color="#10b981" /> : <Copy size={14} />}
+            {copied ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
             <span>{copied ? 'Tersalin!' : 'Salin Sandi'}</span>
           </button>
         </div>

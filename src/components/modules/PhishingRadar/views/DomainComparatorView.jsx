@@ -14,12 +14,23 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
   const current = drills[currentIndex];
   const isLast = currentIndex === drills.length - 1;
 
+  const domainA_name = current.domainA?.name || current.domainA?.url || '';
+  const domainA_isLegit = current.domainA?.isLegit ?? current.domainA?.isReal ?? false;
+  const domainA_analysis = current.domainA?.analysis || (domainA_isLegit ? 'Domain resmi instansi terkait.' : 'Domain penipuan pihak ketiga.');
+
+  const domainB_name = current.domainB?.name || current.domainB?.url || '';
+  const domainB_isLegit = current.domainB?.isLegit ?? current.domainB?.isReal ?? false;
+  const domainB_analysis = current.domainB?.analysis || (domainB_isLegit ? 'Domain resmi instansi terkait.' : 'Domain penipuan pihak ketiga.');
+
+  const correctAnswer = current.correctAnswer || current.correctReal || 'A';
+  const keyPoint = current.keyPoint || current.keyClue || current.takeaway || '';
+
   const handleSelect = (choice) => {
     if (selectedChoice) return;
 
     setSelectedChoice(choice);
     setShowAnalysis(true);
-    const isCorrect = (choice === current.correctAnswer);
+    const isCorrect = (choice === correctAnswer);
 
     if (isCorrect) {
       playSound('success');
@@ -64,25 +75,26 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
             padding: '20px',
             borderRadius: '12px',
             border: selectedChoice === 'A' 
-              ? (current.correctAnswer === 'A' ? '2px solid #16a34a' : '2px solid #dc2626')
-              : '1.5px solid rgba(255, 255, 255, 0.1)',
+              ? (correctAnswer === 'A' ? '2px solid #16a34a' : '2px solid #dc2626')
+              : '1.5px solid #e2e8f0',
             background: selectedChoice === 'A'
-              ? (current.correctAnswer === 'A' ? 'rgba(22, 163, 74, 0.1)' : 'rgba(220, 38, 38, 0.1)')
-              : 'rgba(255, 255, 255, 0.03)',
+              ? (correctAnswer === 'A' ? '#f0fdf4' : '#fef2f2')
+              : '#f8fafc',
             cursor: selectedChoice ? 'default' : 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span className="badge badge-secondary">Opsi A</span>
-            <Globe size={18} color="var(--accent-cyan)" />
+            <Globe size={18} color="#dc2626" />
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600 }}>
-            {current.domainA.name}
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600, color: '#0f172a' }}>
+            {domainA_name}
           </div>
           {showAnalysis && (
-            <div style={{ marginTop: '12px', fontSize: '0.8rem', color: current.domainA.isLegit ? '#16a34a' : '#dc2626', lineHeight: 1.5 }}>
-              {current.domainA.analysis}
+            <div style={{ marginTop: '12px', fontSize: '0.82rem', color: domainA_isLegit ? '#15803d' : '#b91c1c', lineHeight: 1.5 }}>
+              {domainA_analysis}
             </div>
           )}
         </div>
@@ -94,25 +106,26 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
             padding: '20px',
             borderRadius: '12px',
             border: selectedChoice === 'B' 
-              ? (current.correctAnswer === 'B' ? '2px solid #16a34a' : '2px solid #dc2626')
-              : '1.5px solid rgba(255, 255, 255, 0.1)',
+              ? (correctAnswer === 'B' ? '2px solid #16a34a' : '2px solid #dc2626')
+              : '1.5px solid #e2e8f0',
             background: selectedChoice === 'B'
-              ? (current.correctAnswer === 'B' ? 'rgba(22, 163, 74, 0.1)' : 'rgba(220, 38, 38, 0.1)')
-              : 'rgba(255, 255, 255, 0.03)',
+              ? (correctAnswer === 'B' ? '#f0fdf4' : '#fef2f2')
+              : '#f8fafc',
             cursor: selectedChoice ? 'default' : 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <span className="badge badge-secondary">Opsi B</span>
-            <Globe size={18} color="var(--accent-cyan)" />
+            <Globe size={18} color="#dc2626" />
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600 }}>
-            {current.domainB.name}
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600, color: '#0f172a' }}>
+            {domainB_name}
           </div>
           {showAnalysis && (
-            <div style={{ marginTop: '12px', fontSize: '0.8rem', color: current.domainB.isLegit ? '#16a34a' : '#dc2626', lineHeight: 1.5 }}>
-              {current.domainB.analysis}
+            <div style={{ marginTop: '12px', fontSize: '0.82rem', color: domainB_isLegit ? '#15803d' : '#b91c1c', lineHeight: 1.5 }}>
+              {domainB_analysis}
             </div>
           )}
         </div>
@@ -122,7 +135,7 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
       {selectedChoice && (
         <div className="feedback-box">
           <div className="feedback-result">
-            {selectedChoice === current.correctAnswer ? (
+            {selectedChoice === correctAnswer ? (
               <div className="feedback-correct">
                 <ShieldCheck size={20} />
                 <span>BENAR! Kamu jeli membedakan domain resmi.</span>
@@ -135,8 +148,8 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
             )}
           </div>
 
-          <div style={{ background: 'rgba(0, 240, 255, 0.05)', border: '1px solid rgba(0, 240, 255, 0.2)', padding: '12px', borderRadius: '8px', fontSize: '0.84rem', color: '#e2e8f0', marginBottom: '16px' }}>
-            <strong>Kunci Analisis:</strong> {current.keyPoint}
+          <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', padding: '14px', borderRadius: '8px', fontSize: '0.86rem', color: '#1e3a8a', marginBottom: '16px' }}>
+            <strong>Kunci Analisis:</strong> {keyPoint}
           </div>
 
           <button className="btn btn-primary" onClick={handleNext}>

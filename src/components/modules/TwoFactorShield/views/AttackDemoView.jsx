@@ -95,29 +95,37 @@ export function AttackDemoView({ onProceedToPractice }) {
         </div>
 
         {/* Akun korban */}
-        <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '10px', padding: '18px' }}>
+        <div style={{ background: '#ffffff', border: '1.5px solid #fee2e2', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 12px rgba(220, 38, 38, 0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <User size={22} color="#fff" />
             </div>
             <div>
-              <div style={{ fontWeight: 700 }}>@pelajar_kekinian</div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                Status: {attackResult === 'hacked' ? 'DIBOBOL!' : attackResult === 'defended' ? 'TERLINDUNGI' : 'Siaga'}
+              <div style={{ fontWeight: 700, color: '#0f172a' }}>@pelajar_kekinian</div>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                Status Akun: <strong style={{ color: attackResult === 'hacked' ? '#dc2626' : attackResult === 'defended' ? '#16a34a' : '#0f172a' }}>
+                  {attackResult === 'hacked' ? 'DIBOBOL!' : attackResult === 'defended' ? 'TERLINDUNGI' : 'Siaga'}
+                </strong>
               </div>
             </div>
           </div>
 
           {attackResult === 'hacked' && (
-            <div style={{ padding: '12px', background: 'rgba(220, 38, 38, 0.15)', border: '1px solid rgba(220, 38, 38, 0.3)', borderRadius: '8px', color: '#fca5a5', fontSize: '0.84rem' }}>
-              <ShieldAlert size={16} style={{ display: 'inline', marginRight: '6px' }} />
-              Hacker berhasil login! Akses akun, foto, dan DM dicuri karena tidak ada lapis verifikasi kedua.
+            <div style={{ padding: '14px', background: '#fef2f2', border: '1.5px solid #fecaca', borderRadius: '8px', color: '#991b1b', fontSize: '0.86rem', lineHeight: 1.5 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, marginBottom: '4px' }}>
+                <ShieldAlert size={16} color="#dc2626" />
+                <span>AKUN BERHASIL DIRETAK!</span>
+              </div>
+              Hacker berhasil login! Akses akun, foto, dan DM dicuri karena tidak ada lapis verifikasi kedua (2FA).
             </div>
           )}
 
           {attackResult === 'defended' && (
-            <div style={{ padding: '12px', background: 'rgba(22, 163, 74, 0.15)', border: '1px solid rgba(22, 163, 74, 0.3)', borderRadius: '8px', color: '#86efac', fontSize: '0.84rem' }}>
-              <ShieldCheck size={16} style={{ display: 'inline', marginRight: '6px' }} />
+            <div style={{ padding: '14px', background: '#f0fdf4', border: '1.5px solid #bbf7d0', borderRadius: '8px', color: '#166534', fontSize: '0.86rem', lineHeight: 1.5 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, marginBottom: '4px' }}>
+                <ShieldCheck size={16} color="#16a34a" />
+                <span>PERTAHANAN 2FA BERHASIL!</span>
+              </div>
               Hacker terblokir total! Meskipun password bocor, hacker tidak memegang HP fisik korban untuk melihat kode 2FA.
             </div>
           )}

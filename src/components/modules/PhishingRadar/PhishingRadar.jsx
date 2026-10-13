@@ -89,7 +89,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
           <div className="badge badge-red" style={{ marginBottom: 12 }}>
             MISI 01 SELESAI // EVALUASI PHISHING TUNTAS
           </div>
-          <h2 style={{ fontSize: '1.8rem', marginBottom: 10, color: '#fff' }}>
+          <h2 style={{ fontSize: '1.8rem', marginBottom: 10, color: '#0f172a' }}>
             Operasi Pertahanan Phishing Sukses
           </h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: 24, maxWidth: 580, margin: '0 auto 24px' }}>
@@ -138,9 +138,9 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
       </div>
 
       {/* Mode navigation tabs */}
-      <div className="mode-nav-tabs">
+      <div className="tactical-mode-selector">
         <button
-          className={`mode-tab-btn ${activeMode === 'simulation' ? 'active' : ''}`}
+          className={`tactical-tab-btn ${activeMode === 'simulation' ? 'active' : ''}`}
           onClick={() => { playSound('beep'); setActiveMode('simulation'); }}
         >
           <Radio size={16} />
@@ -148,7 +148,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
         </button>
 
         <button
-          className={`mode-tab-btn ${activeMode === 'domain_comparator' ? 'active' : ''}`}
+          className={`tactical-tab-btn ${activeMode === 'domain_comparator' ? 'active' : ''}`}
           onClick={() => { playSound('beep'); setActiveMode('domain_comparator'); }}
         >
           <Globe size={16} />
@@ -156,7 +156,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
         </button>
 
         <button
-          className={`mode-tab-btn ${activeMode === 'email_spoofing' ? 'active' : ''}`}
+          className={`tactical-tab-btn ${activeMode === 'email_spoofing' ? 'active' : ''}`}
           onClick={() => { playSound('beep'); setActiveMode('email_spoofing'); }}
         >
           <Mail size={16} />
@@ -164,7 +164,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
         </button>
 
         <button
-          className={`mode-tab-btn ${activeMode === 'url_scanner' ? 'active' : ''}`}
+          className={`tactical-tab-btn ${activeMode === 'url_scanner' ? 'active' : ''}`}
           onClick={() => { playSound('scan'); setActiveMode('url_scanner'); }}
         >
           <Search size={16} />

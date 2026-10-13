@@ -128,51 +128,53 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
         </div>
 
         {/* Message bubble */}
-        <div className="message-mockup">
-          <div className="msg-header">
-            <div className="msg-avatar-box">{renderIcon(current.iconType)}</div>
+        <div className="chat-mockup">
+          <div className="sender-header">
+            <div className="sender-avatar">{renderIcon(current.iconType)}</div>
             <div>
-              <div className="msg-sender">{current.sender}</div>
-              <div className="msg-subject">{current.subject}</div>
+              <div className="sender-name">{current.sender}</div>
+              <div className="sender-subject">{current.subject}</div>
             </div>
           </div>
 
-          <div className="msg-body">{current.message}</div>
+          <div className="chat-bubble">{current.message}</div>
 
           {current.attachment && (
-            <div className="msg-attachment">
+            <div className="chat-attachment">
               <span className="att-icon">📎</span>
               <span className="att-name">{current.attachment}</span>
               <span className="badge badge-red" style={{ marginLeft: 'auto' }}>Ekstensi Berbahaya</span>
             </div>
           )}
 
-          <div className="msg-link-box">
-            <span className="msg-link-url">{current.displayUrl}</span>
+          <div className="chat-link-box">
+            <span>{current.displayUrl}</span>
           </div>
         </div>
 
-        {/* URL Deep Inspector Box */}
+        {/* URL Deep Inspector Panel */}
         {inspectorOpen && (
-          <div className="inspector-box">
-            <div className="inspector-title">
-              <Search size={16} /> BEDAH FORENSIK STRUKTUR TAUTAN
+          <div className="inspector-panel">
+            <div className="inspector-header">
+              <div className="inspector-title">
+                <Search size={16} /> BEDAH FORENSIK STRUKTUR TAUTAN
+              </div>
             </div>
             <div className="inspector-grid">
-              <div className="ins-item">
-                <span className="ins-lbl">Protokol:</span>
-                <span className="ins-val">{current.urlBreakdown.protocol}</span>
+              <div className="inspector-cell">
+                <div className="inspector-label">Protokol:</div>
+                <div className="inspector-value">{current.urlBreakdown.protocol}</div>
               </div>
-              <div className="ins-item">
-                <span className="ins-lbl">Subdomain:</span>
-                <span className="ins-val">{current.urlBreakdown.subdomain}</span>
+              <div className="inspector-cell">
+                <div className="inspector-label">Subdomain:</div>
+                <div className="inspector-value">{current.urlBreakdown.subdomain}</div>
               </div>
-              <div className="ins-item">
-                <span className="ins-lbl">TLD Domain:</span>
-                <span className="ins-val">{current.urlBreakdown.tld}</span>
+              <div className="inspector-cell">
+                <div className="inspector-label">TLD Domain:</div>
+                <div className="inspector-value">{current.urlBreakdown.tld}</div>
               </div>
             </div>
-            <div className="ins-danger-detail">
+            <div className={current.isPhishing ? 'inspector-danger-box' : 'inspector-safe-box'}>
               <strong>Analisis Forensik:</strong> {current.urlBreakdown.dangerDetail}
             </div>
           </div>
@@ -180,33 +182,33 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
 
         {/* Action Buttons */}
         {!answeredAction ? (
-          <div className="scenario-actions">
+          <div className="scenario-actions" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <button 
               className="btn btn-secondary"
               onClick={() => handleAction('open')}
+              style={{ flex: '1 1 200px' }}
             >
               <ExternalLink size={16} />
               <span>Buka Tautan di Browser Virtual</span>
             </button>
 
-            {current.isPhishing ? (
-              <button 
-                className="btn btn-primary"
-                onClick={() => handleAction('block')}
-              >
-                <ShieldAlert size={16} />
-                <span>Tandai Phishing & Laporkan</span>
-              </button>
-            ) : (
-              <button 
-                className="btn btn-primary"
-                style={{ background: '#16a34a', borderColor: '#15803d' }}
-                onClick={() => handleAction('safe')}
-              >
-                <ShieldCheck size={16} />
-                <span>Tautan Aman & Resmi</span>
-              </button>
-            )}
+            <button 
+              className="btn btn-primary"
+              style={{ background: '#dc2626', borderColor: '#b91c1c', flex: '1 1 180px' }}
+              onClick={() => handleAction('block')}
+            >
+              <ShieldAlert size={16} />
+              <span>Tandai Phishing & Blokir</span>
+            </button>
+
+            <button 
+              className="btn btn-primary"
+              style={{ background: '#16a34a', borderColor: '#15803d', flex: '1 1 180px' }}
+              onClick={() => handleAction('safe')}
+            >
+              <ShieldCheck size={16} />
+              <span>Tautan Aman & Sah</span>
+            </button>
           </div>
         ) : (
           <div className="feedback-box">

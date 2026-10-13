@@ -53,10 +53,10 @@ export function ActivationPracticeView({ onCompletePractice }) {
 
       {practiceStep === 1 && (
         <div style={{ maxWidth: '480px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ padding: '20px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', marginBottom: '20px' }}>
-            <Smartphone size={36} color="var(--accent-cyan)" style={{ margin: '0 auto 12px' }} />
-            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Pilih Metode Keamanan 2FA</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.84rem', lineHeight: 1.5 }}>
+          <div style={{ padding: '24px', background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '14px', marginBottom: '20px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.03)' }}>
+            <Smartphone size={36} color="#dc2626" style={{ margin: '0 auto 12px' }} />
+            <h3 style={{ fontSize: '1.15rem', color: '#0f172a', marginBottom: '8px' }}>Pilih Metode Keamanan 2FA</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', lineHeight: 1.5 }}>
               Direkomendasikan menggunakan aplikasi Authenticator (Google Authenticator / Microsoft) atau SMS OTP ke nomor pribadi.
             </p>
           </div>
@@ -76,23 +76,23 @@ export function ActivationPracticeView({ onCompletePractice }) {
       {practiceStep === 2 && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', alignItems: 'center' }}>
           {/* Mockup HP virtual */}
-          <div style={{ background: '#020617', border: '2px solid #334155', borderRadius: '24px', padding: '24px', maxWidth: '300px', margin: '0 auto', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+          <div style={{ background: '#020617', border: '3px solid #334155', borderRadius: '24px', padding: '24px', maxWidth: '300px', margin: '0 auto', textAlign: 'center', boxShadow: '0 12px 30px rgba(0,0,0,0.2)' }}>
             <div style={{ width: '40px', height: '4px', background: '#334155', borderRadius: '4px', margin: '0 auto 16px' }}></div>
-            <div style={{ fontSize: '0.74rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px' }}>
-              Authenticator Token
+            <div style={{ fontSize: '0.74rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
+              Aplikasi Authenticator
             </div>
-            <div style={{ fontSize: '2.4rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#00f0ff', letterSpacing: '4px', marginBottom: '8px' }}>
+            <div style={{ fontSize: '2.4rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#38bdf8', letterSpacing: '4px', marginBottom: '8px' }}>
               {currentOtp}
             </div>
-            <div style={{ fontSize: '0.76rem', color: otpTimer <= 5 ? '#f43f5e' : '#10b981' }}>
+            <div style={{ fontSize: '0.76rem', fontWeight: 600, color: otpTimer <= 5 ? '#f43f5e' : '#34d399' }}>
               Berganti dalam {otpTimer} detik
             </div>
           </div>
 
           {/* Form input */}
-          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', padding: '20px' }}>
-            <h3 style={{ fontSize: '1rem', marginBottom: '10px' }}>Masukkan 6-Digit Kode Konfirmasi</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', marginBottom: '16px' }}>
+          <div style={{ background: '#ffffff', border: '1.5px solid #fee2e2', borderRadius: '14px', padding: '24px', boxShadow: '0 4px 14px rgba(220, 38, 38, 0.05)' }}>
+            <h3 style={{ fontSize: '1.05rem', color: '#0f172a', marginBottom: '10px' }}>Masukkan 6-Digit Kode Konfirmasi</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.84rem', marginBottom: '16px' }}>
               Ketik kode OTP yang sedang aktif di layar HP virtual di samping:
             </p>
 
@@ -103,12 +103,12 @@ export function ActivationPracticeView({ onCompletePractice }) {
                 value={inputOtp}
                 onChange={(e) => setInputOtp(e.target.value.replace(/\D/g, ''))}
                 placeholder="Contoh: 482910"
-                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.2)', background: 'rgba(0, 0, 0, 0.4)', color: '#fff', fontSize: '1.2rem', fontFamily: 'var(--font-mono)', textAlign: 'center', letterSpacing: '4px', marginBottom: '12px' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '2px solid #cbd5e1', background: '#ffffff', color: '#0f172a', fontSize: '1.3rem', fontFamily: 'var(--font-mono)', textAlign: 'center', letterSpacing: '4px', marginBottom: '14px' }}
                 required
               />
 
               {errorMsg && (
-                <div style={{ color: '#f87171', fontSize: '0.8rem', marginBottom: '12px' }}>
+                <div style={{ color: '#dc2626', fontSize: '0.82rem', fontWeight: 600, marginBottom: '14px', background: '#fef2f2', padding: '8px 12px', borderRadius: '6px' }}>
                   {errorMsg}
                 </div>
               )}

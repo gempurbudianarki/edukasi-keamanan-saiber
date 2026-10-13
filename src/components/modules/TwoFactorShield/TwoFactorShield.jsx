@@ -23,8 +23,8 @@ export function TwoFactorShield({ onBack, onComplete, initialScore = 0 }) {
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span className="badge badge-purple">Misi 02: Benteng 2FA</span>
-          <span className="badge badge-cyan">Skor: {score}/100</span>
+          <span className="badge badge-red">Misi 02: Benteng 2FA</span>
+          <span className="badge badge-green">Skor: {score}/100</span>
         </div>
       </div>
 

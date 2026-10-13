@@ -22,18 +22,18 @@ export function SocialProfilePreview({ settings }) {
         </div>
       </div>
 
-      <div style={{ fontSize: '0.84rem', color: '#cbd5e1', lineHeight: 1.5, marginBottom: '18px' }}>
+      <div style={{ fontSize: '0.88rem', color: '#475569', lineHeight: 1.5, marginBottom: '18px' }}>
         Siswa SMA • Hobi Fotografi & Game • Banda Aceh 📍
       </div>
 
-      <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '14px', fontSize: '0.8rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: settings.hidePreciseLocation ? '#86efac' : '#fca5a5' }}>
-          <MapPin size={15} />
+      <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '14px', fontSize: '0.82rem', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: settings.hidePreciseLocation ? '#15803d' : '#b91c1c', fontWeight: 600 }}>
+          <MapPin size={16} />
           <span>Lokasi Presisi: {settings.hidePreciseLocation ? 'Disembunyikan (Aman dari Stalker)' : 'Terbuka Terlacak (Banda Aceh)'}</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: settings.hideContactInfo ? '#86efac' : '#fca5a5' }}>
-          <PhoneCall size={15} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: settings.hideContactInfo ? '#15803d' : '#b91c1c', fontWeight: 600 }}>
+          <PhoneCall size={16} />
           <span>Nomor WhatsApp: {settings.hideContactInfo ? 'Disembunyikan dari Publik' : '+62 812-3456-7890 (Tampak Bebas)'}</span>
         </div>
       </div>
