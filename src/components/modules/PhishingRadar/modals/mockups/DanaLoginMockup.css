@@ -1,0 +1,345 @@
+/* ================================================================
+   DANA INDONESIA 1:1 AUTHENTIC MOCKUP STYLING (PHISHING SIMULATION)
+   ================================================================ */
+
+.dana-mockup-container {
+  max-width: 440px;
+  margin: 0 auto;
+  color: #1e293b;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  animation: danaFadeIn 0.3s ease-out both;
+}
+
+@keyframes danaFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Top Educational Safety Banner ────────────────────────────── */
+.dana-safety-banner {
+  background: #fffbeb;
+  border: 1.5px solid #fde68a;
+  color: #92400e;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Simulated SMS Incoming Push Notification (Toast) ────────── */
+.dana-sms-toast {
+  background: #0f172a;
+  border: 1.5px solid #38bdf8;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.25);
+  animation: toastSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes toastSlideDown {
+  from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dana-sms-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.dana-sms-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dana-sms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.dana-sms-sender {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+.dana-sms-time {
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.dana-sms-text {
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  line-height: 1.35;
+}
+
+.dana-sms-otp-code {
+  display: inline-block;
+  background: #e11d48;
+  color: #fff;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+}
+
+/* ── DANA Brand Header ────────────────────────────────────────── */
+.dana-header-card {
+  background: linear-gradient(135deg, #118eea, #0b69b7);
+  border-radius: 14px;
+  padding: 18px 20px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 20px rgba(17, 142, 234, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.dana-logo-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.dana-kaget-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.dana-kaget-nominal {
+  font-size: 1.65rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.dana-kaget-sub {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 2px;
+}
+
+/* ── Step Progress Indicator ─────────────────────────────────── */
+.dana-step-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.dana-step-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.dana-step-item.active {
+  color: #118eea;
+}
+
+.dana-step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.dana-step-item.active .dana-step-num {
+  background: #118eea;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(17, 142, 234, 0.4);
+}
+
+.dana-step-divider {
+  width: 24px;
+  height: 2px;
+  background: #e2e8f0;
+}
+
+/* ── Main Form Body ───────────────────────────────────────────── */
+.dana-form-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.dana-field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.dana-input-text {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  color: #0f172a;
+  background: #f8fafc;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.dana-input-text:focus {
+  outline: none;
+  border-color: #118eea;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(17, 142, 234, 0.15);
+}
+
+/* ── 6-Digit PIN Circles Display ─────────────────────────────── */
+.dana-pin-display-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0 20px;
+}
+
+.dana-pin-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  background: #f1f5f9;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dana-pin-circle.filled {
+  background: #118eea;
+  border-color: #118eea;
+  transform: scale(1.15);
+  box-shadow: 0 0 10px rgba(17, 142, 234, 0.5);
+}
+
+/* ── 4-Box OTP Display ───────────────────────────────────────── */
+.dana-otp-boxes-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.dana-otp-single-box {
+  width: 52px;
+  height: 56px;
+  border-radius: 10px;
+  border: 2px solid #cbd5e1;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #118eea;
+  transition: all 0.2s;
+}
+
+.dana-otp-single-box.active {
+  border-color: #118eea;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(17, 142, 234, 0.2);
+}
+
+/* ── DANA Buttons ────────────────────────────────────────────── */
+.dana-btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: #118eea;
+  border: 1.5px solid #0c70b8;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.92rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(17, 142, 234, 0.35);
+}
+
+.dana-btn-submit:hover:not(:disabled) {
+  background: #0c70b8;
+  transform: translateY(-1px);
+}
+
+.dana-btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ── Error Banner ────────────────────────────────────────────── */
+.dana-error-alert {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dana-footer-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: #dc2626;
+  margin-top: 12px;
+  font-weight: 600;
+}
