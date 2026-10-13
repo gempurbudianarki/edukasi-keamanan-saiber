@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, KeyRound, Smartphone, Terminal } from 'lucide-react';
 import { playSound } from '../../../utils/soundEffects';
+import { syncRouteToUrl, getRouteParams } from '../../../utils/navigation';
 import { AttackDemoView } from './views/AttackDemoView';
 import { ActivationPracticeView } from './views/ActivationPracticeView';
 import './TwoFactorShield.css';
 
 export function TwoFactorShield({ onBack, onComplete, initialScore = 0 }) {
-  const [activeTab, setActiveTab] = useState('demo'); // 'demo' | 'practice'
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = getRouteParams();
+    return params.tab === 'practice' ? 'practice' : 'demo';
+  });
   const [score, setScore] = useState(initialScore);
+
+  const handleTabChange = (tab) => {
+    playSound('beep');
+    setActiveTab(tab);
+    syncRouteToUrl('twoFactor', tab);
+  };
 
   const handleComplete = () => {
     setScore(100);
@@ -32,7 +42,7 @@ export function TwoFactorShield({ onBack, onComplete, initialScore = 0 }) {
       <div className="mode-nav-tabs" style={{ marginBottom: '20px' }}>
         <button
           className={`mode-tab-btn ${activeTab === 'demo' ? 'active' : ''}`}
-          onClick={() => { playSound('beep'); setActiveTab('demo'); }}
+          onClick={() => handleTabChange('demo')}
         >
           <Terminal size={16} />
           <span>Demo Serangan Hacker</span>
@@ -40,7 +50,7 @@ export function TwoFactorShield({ onBack, onComplete, initialScore = 0 }) {
 
         <button
           className={`mode-tab-btn ${activeTab === 'practice' ? 'active' : ''}`}
-          onClick={() => { playSound('beep'); setActiveTab('practice'); }}
+          onClick={() => handleTabChange('practice')}
         >
           <Smartphone size={16} />
           <span>Praktik Aktivasi 2FA</span>
@@ -49,7 +59,7 @@ export function TwoFactorShield({ onBack, onComplete, initialScore = 0 }) {
 
       {/* Tab views */}
       {activeTab === 'demo' && (
-        <AttackDemoView onProceedToPractice={() => setActiveTab('practice')} />
+        <AttackDemoView onProceedToPractice={() => handleTabChange('practice')} />
       )}
 
       {activeTab === 'practice' && (

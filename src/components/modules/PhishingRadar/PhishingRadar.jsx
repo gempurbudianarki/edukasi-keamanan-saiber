@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, RotateCcw, ShieldCheck, Sparkles, Globe, Mail, Radio, Search } from 'lucide-react';
 import { apiClient } from '../../../api/apiClient';
 import { playSound } from '../../../utils/soundEffects';
+import { syncRouteToUrl, getRouteParams } from '../../../utils/navigation';
 import { WebSimulationView } from './views/WebSimulationView';
 import { DomainComparatorView } from './views/DomainComparatorView';
 import { EmailSpoofingView } from './views/EmailSpoofingView';
@@ -9,7 +10,15 @@ import { UrlScannerView } from './views/UrlScannerView';
 import './PhishingRadar.css';
 
 export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
-  const [activeMode, setActiveMode] = useState('simulation');
+  // Sync tab with URL parameter (tab=simulation | domain_comparator | email_spoofing | url_scanner)
+  const [activeMode, setActiveMode] = useState(() => {
+    const params = getRouteParams();
+    if (params.tab && ['simulation', 'domain_comparator', 'email_spoofing', 'url_scanner'].includes(params.tab)) {
+      return params.tab;
+    }
+    return 'simulation';
+  });
+
   const [scenarios, setScenarios] = useState([]);
   const [domainDrills, setDomainDrills] = useState([]);
   const [emailDrills, setEmailDrills] = useState([]);
@@ -20,6 +29,11 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
   const [domainHistory, setDomainHistory] = useState([]);
   const [emailHistory, setEmailHistory] = useState([]);
   const [finished, setFinished] = useState(false);
+
+  const handleTabChange = (mode) => {
+    setActiveMode(mode);
+    syncRouteToUrl('phishing', mode, false);
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -63,7 +77,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
     setDomainHistory([]);
     setEmailHistory([]);
     setFinished(false);
-    setActiveMode('simulation');
+    handleTabChange('simulation');
   };
 
   // Completion screen
@@ -141,7 +155,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
       <div className="tactical-mode-selector">
         <button
           className={`tactical-tab-btn ${activeMode === 'simulation' ? 'active' : ''}`}
-          onClick={() => { playSound('beep'); setActiveMode('simulation'); }}
+          onClick={() => { playSound('beep'); handleTabChange('simulation'); }}
         >
           <Radio size={16} />
           <span>Simulasi Web ({scenarios.length})</span>
@@ -149,7 +163,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
 
         <button
           className={`tactical-tab-btn ${activeMode === 'domain_comparator' ? 'active' : ''}`}
-          onClick={() => { playSound('beep'); setActiveMode('domain_comparator'); }}
+          onClick={() => { playSound('beep'); handleTabChange('domain_comparator'); }}
         >
           <Globe size={16} />
           <span>Komparasi Domain ({domainDrills.length})</span>
@@ -157,7 +171,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
 
         <button
           className={`tactical-tab-btn ${activeMode === 'email_spoofing' ? 'active' : ''}`}
-          onClick={() => { playSound('beep'); setActiveMode('email_spoofing'); }}
+          onClick={() => { playSound('beep'); handleTabChange('email_spoofing'); }}
         >
           <Mail size={16} />
           <span>Forensik Email ({emailDrills.length})</span>
@@ -165,7 +179,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
 
         <button
           className={`tactical-tab-btn ${activeMode === 'url_scanner' ? 'active' : ''}`}
-          onClick={() => { playSound('scan'); setActiveMode('url_scanner'); }}
+          onClick={() => { playSound('scan'); handleTabChange('url_scanner'); }}
         >
           <Search size={16} />
           <span>Scanner URL AI</span>
@@ -183,7 +197,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
             <WebSimulationView
               scenarios={scenarios}
               onRecordResult={(r) => setSimHistory(prev => [...prev, r])}
-              onCompleteMode={() => setActiveMode('domain_comparator')}
+              onCompleteMode={() => handleTabChange('domain_comparator')}
             />
           )}
 
@@ -191,7 +205,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
             <DomainComparatorView
               drills={domainDrills}
               onRecordResult={(r) => setDomainHistory(prev => [...prev, r])}
-              onCompleteMode={() => setActiveMode('email_spoofing')}
+              onCompleteMode={() => handleTabChange('email_spoofing')}
             />
           )}
 

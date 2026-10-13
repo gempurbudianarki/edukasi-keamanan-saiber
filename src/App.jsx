@@ -9,12 +9,39 @@ import { PasswordVault } from './components/modules/PasswordVault/PasswordVault'
 import { PrivacyShield } from './components/modules/PrivacyShield/PrivacyShield';
 import { getStoredProgress, saveStoredProgress, resetStoredProgress } from './utils/storage';
 import { playSound } from './utils/soundEffects';
+import { resolveCurrentRoute, syncRouteToUrl } from './utils/navigation';
 
 export default function App() {
-  // Start on the Welcome screen so user is not directly thrown into everything
-  const [currentView, setCurrentView] = useState('welcome');
+  // Initialize view from URL route (supports F5 refresh, bookmarks, and direct URLs)
+  const [currentView, setCurrentView] = useState(() => resolveCurrentRoute());
   const [progress, setProgress] = useState(getStoredProgress());
   const [isPresenterMode, setIsPresenterMode] = useState(false);
+
+  // Sync with browser URL changes (Back / Forward buttons & direct link edits)
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const activeRoute = resolveCurrentRoute();
+      setCurrentView(activeRoute);
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('hashchange', handleUrlChange);
+
+    // Initial sync so the browser URL always reflects the loaded view
+    syncRouteToUrl(currentView, null, true);
+
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
+  }, []);
+
+  // Centralized route navigator
+  const navigateTo = (view, replace = false) => {
+    setCurrentView(view);
+    syncRouteToUrl(view, null, replace);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Presenter Mode handler
   const handleTogglePresenter = () => {
@@ -33,20 +60,17 @@ export default function App() {
   };
 
   const handleSelectMission = (missionId) => {
-    setCurrentView(missionId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo(missionId);
   };
 
   const handleBackToHub = () => {
     playSound('click');
-    setCurrentView('hub');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo('hub');
   };
 
   const handleNavigateHome = () => {
     playSound('click');
-    setCurrentView('welcome');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo('welcome');
   };
 
   const handleCompleteMission = (missionId, score) => {
@@ -104,8 +128,7 @@ export default function App() {
   const handleReset = () => {
     const fresh = resetStoredProgress();
     setProgress(fresh);
-    setCurrentView('welcome');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo('welcome', true);
   };
 
   const handleSaveStudentName = (name) => {
@@ -136,8 +159,7 @@ export default function App() {
             studentName={progress.studentName}
             onSaveName={handleSaveStudentName}
             onStartSimulation={() => {
-              setCurrentView('hub');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              navigateTo('hub');
             }}
           />
         )}

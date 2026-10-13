@@ -104,11 +104,11 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
                   </div>
                 )}
 
-                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 24 }}>
-                  <button className="btn btn-secondary" onClick={onClose}>
+                <div className="breach-actions">
+                  <button className="btn btn-secondary" onClick={onClose} style={{ background: '#ffffff', color: '#0f172a', fontWeight: 600, padding: '10px 22px' }}>
                     Tutup Simulator
                   </button>
-                  <button className="btn btn-primary" onClick={onReportPhishing}>
+                  <button className="btn btn-primary" onClick={onReportPhishing} style={{ background: '#dc2626', borderColor: '#b91c1c', fontWeight: 700, padding: '10px 22px' }}>
                     <ShieldAlert size={16} /> Laporkan & Blokir Tautan
                   </button>
                 </div>
@@ -116,7 +116,7 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
             </div>
           ) : (
             /* MOCKUP VIEWS */
-            <div style={{ background: '#fff', minHeight: '380px', padding: '20px' }}>
+            <div style={{ background: '#fff', minHeight: '380px', padding: '24px 20px', flex: 1, overflowY: 'auto' }}>
               {scenario.simType === 'dana_login' && (
                 <DanaLoginMockup scenario={scenario} onBreach={handleBreach} />
               )}
