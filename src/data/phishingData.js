@@ -533,5 +533,38 @@ export const emailSpoofingDrills = [
     correctAction: 'real',
     redFlags: [],
     explanation: 'EMAIL RESMI INSTITUSI PENDIDIKAN! Domain berakhiran .ac.id (Academy Indonesia) yang telah diautentikasi oleh Pengelola Nama Domain Internet Indonesia (PANDI). SPF dan DKIM lolos verifikasi.'
+  },
+  {
+    id: 'email-lookalike-allpass',
+    title: 'Peringatan Darurat Pembatasan Akun Microsoft 365',
+    category: 'Serangan Lookalike Canggih (All-PASS)',
+    iconType: 'alert',
+    clientView: {
+      senderDisplay: 'Microsoft Account Security',
+      fromEmail: 'security@rnicrosoft-security.com',
+      toEmail: 'siswa.pkm@sekolah.sch.id',
+      date: '13 Oktober 2026, 16:45 WIB',
+      subject: 'Tindakan Mendesak: Akun Anda Akan Dibekukan Dalam 24 Jam',
+      bodyText: 'Yth. Pengguna Microsoft,\n\nKami mendeteksi aktivitas login yang mencurigakan pada akun Anda dari lokasi tidak dikenal. Demi melindungi data Anda, kami mewajibkan verifikasi kredensial segera.\n\nJika Anda tidak melakukan verifikasi ulang melalui tautan di bawah dalam waktu 24 jam, akun Anda akan dibekukan secara permanen.',
+      ctaText: 'Verifikasi & Amankan Akun Sekarang',
+      ctaUrl: 'https://rnicrosoft-security.com/verify-login'
+    },
+    rawHeaders: {
+      from: 'Microsoft Account Security <security@rnicrosoft-security.com>',
+      replyTo: 'security@rnicrosoft-security.com',
+      returnPath: 'bounce@rnicrosoft-security.com',
+      senderIp: '198.51.100.22 (Server Milik Penyerang)',
+      spfRecord: 'PASS (Domain rnicrosoft-security.com mengesahkan IP pengirim)',
+      dkimRecord: 'PASS (Signature "rnicrosoft-security.com" terverifikasi sah)',
+      dmarcRecord: 'PASS (p=reject sp=reject)'
+    },
+    isPhishing: true,
+    correctAction: 'fake',
+    redFlags: [
+      'Domain pengirim menggunakan "rnicrosoft-security.com" (huruf "r" dan "n" digabung mengecoh mata seolah-olah "m"), BUKAN "microsoft.com".',
+      'Seluruh protokol keamanan (SPF, DKIM, DMARC) bertatus PASS karena peretas memiliki domain tiruan tersebut secara legal!',
+      'Menyematkan ancaman pembekuan akun 24 jam untuk memaksa korban login di web tiruan.'
+    ],
+    explanation: 'SERANGAN HOMOGLYPH LOOKALIKE BERBAHAYA! Perhatikan nama domain: "rnicrosoft-security.com" (r+n terlihat mirip m di layar). Karena peretas menguasai domain tiruan ini, mereka membuat SPF, DKIM, dan DMARC lolos (PASS) 100%! Siswa cerdas tidak boleh hanya melihat centang hijau teknis, melainkan wajib memeriksa keaslian ejaan nama domain induknya!'
   }
 ];
