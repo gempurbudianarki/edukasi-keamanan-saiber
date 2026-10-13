@@ -1,0 +1,897 @@
+/* ================================================================
+   SIMULATED BROWSER — PIXEL-PERFECT FAKE WEBSITES
+   Tampilan harus 1:1 mirip dunia nyata sehingga siswa tertipu 
+   sebelum mendapat pelajaran berharga.
+   ================================================================ */
+
+/* ── Browser Chrome Shell ─────────────────────────────────────── */
+.sim-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.sim-chrome {
+  width: 100%;
+  max-width: 780px;
+  background: #1a1a2e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  max-height: 94vh;
+}
+
+/* Tab bar — looks like real Chrome dark mode */
+.sim-tabbar {
+  background: #16161e;
+  padding: 8px 12px 0 12px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.sim-tab {
+  background: #1a1a2e;
+  border-radius: 8px 8px 0 0;
+  padding: 7px 14px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sim-tab .tab-favicon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.sim-tab .tab-close {
+  margin-left: auto;
+  opacity: 0.4;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 0.68rem;
+}
+
+/* Address bar */
+.sim-addressbar {
+  background: #1a1a2e;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sim-nav-btns {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.sim-nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.sim-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sim-url-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0f0f1a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  color: #94a3b8;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sim-url-pill .lock-icon {
+  flex-shrink: 0;
+}
+
+.sim-url-pill .url-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.url-danger { color: #f87171; }
+.url-safe { color: #6ee7b7; }
+
+.sim-close-x {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sim-close-x:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* Page content area */
+.sim-page {
+  flex: 1;
+  overflow-y: auto;
+  background: #fff;
+}
+
+/* ================================================================
+   1. KEMENDIKBUD KUOTA 100 GB — Government Fake Portal
+   Tampilan harus meyakinkan layaknya portal pemerintah asli
+   ================================================================ */
+
+.gov-page {
+  min-height: 480px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #1e293b;
+}
+
+/* Top bar merah-putih */
+.gov-topstrip {
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 5px 24px;
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 0.02em;
+}
+
+/* Header band */
+.gov-header {
+  background: #fff;
+  border-bottom: 3px solid #1e40af;
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.gov-garuda {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+
+.gov-header-text h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin-bottom: 1px;
+}
+
+.gov-header-text p {
+  font-size: 0.76rem;
+  color: #64748b;
+}
+
+/* Success banner */
+.gov-banner {
+  background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+  border-left: 4px solid #2563eb;
+  margin: 20px 28px 0;
+  padding: 14px 18px;
+  border-radius: 0 6px 6px 0;
+}
+
+.gov-banner h3 {
+  font-size: 0.95rem;
+  color: #1e40af;
+  margin-bottom: 4px;
+}
+
+.gov-banner p {
+  font-size: 0.82rem;
+  color: #475569;
+}
+
+/* Form section */
+.gov-form-section {
+  padding: 24px 28px 32px;
+}
+
+.gov-field {
+  margin-bottom: 18px;
+}
+
+.gov-field label {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.gov-field label .required {
+  color: #dc2626;
+}
+
+.gov-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  color: #0f172a;
+  background: #fff;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.gov-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.gov-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  color: #0f172a;
+  background: #fff;
+  outline: none;
+  font-family: inherit;
+  appearance: auto;
+}
+
+.gov-submit-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  font-family: inherit;
+  transition: filter 0.15s;
+}
+
+.gov-submit-btn:hover {
+  filter: brightness(1.08);
+}
+
+.gov-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.gov-footer-notice {
+  padding: 12px 28px;
+  background: #f1f5f9;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ================================================================
+   2. INSTAGRAM LOGIN 1:1 CLONE — Black theme exact replica
+   ================================================================ */
+
+.ig-page {
+  background: #000;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px;
+}
+
+.ig-card {
+  width: 350px;
+  max-width: 100%;
+  background: #000;
+  border: 1px solid #363636;
+  padding: 42px 40px 24px;
+  text-align: center;
+}
+
+/* The Instagram wordmark */
+.ig-wordmark {
+  font-family: 'Brush Script MT', 'Billabong', 'Segoe Script', cursive;
+  font-size: 2.8rem;
+  color: #fff;
+  margin-bottom: 24px;
+  user-select: none;
+  letter-spacing: 1px;
+}
+
+.ig-subtitle {
+  color: #a8a8a8;
+  font-size: 0.82rem;
+  margin-bottom: 18px;
+  line-height: 1.45;
+}
+
+.ig-field {
+  margin-bottom: 6px;
+}
+
+.ig-input {
+  width: 100%;
+  background: #121212;
+  border: 1px solid #363636;
+  border-radius: 3px;
+  padding: 9px 8px;
+  color: #fafafa;
+  font-size: 0.82rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.ig-input::placeholder {
+  color: #737373;
+}
+
+.ig-input:focus {
+  border-color: #555;
+}
+
+.ig-btn-login {
+  width: 100%;
+  background: #0095f6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+.ig-btn-login:hover {
+  background: #1877f2;
+}
+
+.ig-btn-login:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.ig-or-row {
+  display: flex;
+  align-items: center;
+  margin: 18px 0;
+  gap: 16px;
+}
+
+.ig-or-line {
+  flex: 1;
+  height: 1px;
+  background: #363636;
+}
+
+.ig-or-text {
+  color: #a8a8a8;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.ig-fb-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #e0f1ff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.ig-fb-row:hover {
+  text-decoration: underline;
+}
+
+.ig-forgot {
+  margin-top: 16px;
+  color: #00376b;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.ig-signup-box {
+  width: 350px;
+  max-width: 100%;
+  border: 1px solid #363636;
+  padding: 22px 40px;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.86rem;
+  color: #fafafa;
+}
+
+.ig-signup-link {
+  color: #0095f6;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================================================================
+   3. CAPCUT MOD APK INSTALLER — Play Store / APK Dark UI
+   ================================================================ */
+
+.apk-page {
+  background: #0f0f17;
+  min-height: 480px;
+  padding: 24px;
+  color: #e2e8f0;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.apk-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.apk-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #000, #1a1a2e);
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.apk-meta h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.apk-meta .developer {
+  font-size: 0.82rem;
+  color: #10b981;
+  cursor: pointer;
+}
+
+.apk-meta .stats {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.apk-features-strip {
+  display: flex;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 18px;
+  overflow-x: auto;
+}
+
+.apk-feat-chip {
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #6ee7b7;
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+/* Permission danger box */
+.apk-perm-section {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.apk-perm-title {
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: #fca5a5;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.apk-perm-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 0.84rem;
+  color: #fca5a5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.apk-perm-row:last-child {
+  border-bottom: none;
+}
+
+.apk-perm-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+}
+
+.apk-install-btn {
+  width: 100%;
+  padding: 14px;
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.apk-install-btn:hover {
+  background: #059669;
+}
+
+.apk-install-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* ================================================================
+   4. GAME DIAMOND MLBB — Flashy promo page
+   ================================================================ */
+
+.game-page {
+  background: radial-gradient(ellipse at 50% 30%, #1a0a3e 0%, #0a0514 100%);
+  min-height: 500px;
+  padding: 28px 24px;
+  text-align: center;
+  color: #fff;
+}
+
+.game-diamonds {
+  font-size: 3.5rem;
+  margin-bottom: 6px;
+  text-shadow: 0 0 30px rgba(0, 200, 255, 0.4);
+}
+
+.game-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00f0ff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.game-sub {
+  font-size: 0.84rem;
+  color: #a78bfa;
+  margin-bottom: 24px;
+}
+
+.game-form-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: left;
+}
+
+.game-field {
+  margin-bottom: 14px;
+}
+
+.game-field label {
+  display: block;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.game-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.game-input:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+}
+
+.game-claim-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 4px;
+}
+
+.game-claim-btn:hover {
+  filter: brightness(1.1);
+}
+
+.game-claim-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* ================================================================
+   5. LEGIT GOOGLE CLASSROOM — Clean white Google UI
+   ================================================================ */
+
+.gc-page {
+  background: #fff;
+  min-height: 420px;
+  padding: 40px 32px;
+  text-align: center;
+  color: #202124;
+  font-family: 'Google Sans', 'Roboto', 'Inter', sans-serif;
+}
+
+.gc-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+}
+
+.gc-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 6px;
+}
+
+.gc-desc {
+  font-size: 0.9rem;
+  color: #5f6368;
+  max-width: 460px;
+  margin: 0 auto 22px;
+  line-height: 1.55;
+}
+
+.gc-verified-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  color: #2e7d32;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+/* ================================================================
+   BREACH CONSEQUENCE SCREEN — Full red alert with stolen data
+   ================================================================ */
+
+.breach-wrap {
+  padding: 0;
+}
+
+.breach-topbar {
+  background: #300;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: #f87171;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ef4444;
+}
+
+.breach-body {
+  background: #1a0507;
+  padding: 28px 24px 32px;
+}
+
+.breach-big-title {
+  color: #ef4444;
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.3;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.breach-subtitle {
+  text-align: center;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  margin-bottom: 22px;
+}
+
+/* Stolen data terminal */
+.breach-terminal {
+  background: #050505;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  margin-bottom: 22px;
+  line-height: 1.55;
+}
+
+.breach-terminal .line-label {
+  color: #ef4444;
+}
+
+.breach-terminal .line-val {
+  color: #00f0ff;
+}
+
+/* Crime cards */
+.breach-crimes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.crime-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #ef4444;
+  padding: 12px 14px;
+  border-radius: 4px;
+}
+
+.crime-card-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.crime-card h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.crime-card p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+
+.breach-cta {
+  text-align: center;
+}
+
+.breach-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.breach-cta-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sim-chrome {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .ig-card, .ig-signup-box {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .gov-header {
+    padding: 12px 16px;
+  }
+  .gov-form-section {
+    padding: 18px 16px 24px;
+  }
+  .gov-banner {
+    margin: 16px 16px 0;
+  }
+}
