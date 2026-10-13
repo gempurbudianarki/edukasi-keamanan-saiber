@@ -10,19 +10,39 @@ import {
   User, 
   CheckCircle,
   Award,
-  BookOpen
+  BookOpen,
+  Shield,
+  Edit3,
+  AlertCircle
 } from 'lucide-react';
 import { playSound } from '../../utils/soundEffects';
 import './WelcomeScreen.css';
 
 export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
   const [nameInput, setNameInput] = useState(studentName || '');
+  const [isEditing, setIsEditing] = useState(!studentName);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleStart = () => {
-    playSound('success');
-    if (nameInput.trim()) {
-      onSaveName(nameInput.trim());
+  const handleValidateAndSave = () => {
+    const trimmed = nameInput.trim();
+    if (!trimmed || trimmed.length < 2) {
+      playSound('beep');
+      setErrorMessage('⚠️ Nama wajib diisi (minimal 2 huruf)! Jangan biarkan kosong.');
+      return false;
     }
+    setErrorMessage('');
+    onSaveName(trimmed);
+    playSound('success');
+    setIsEditing(false);
+    return true;
+  };
+
+  const handleStartDirectly = () => {
+    if (isEditing) {
+      const isValid = handleValidateAndSave();
+      if (!isValid) return;
+    }
+    playSound('success');
     onStartSimulation();
   };
 
@@ -60,37 +80,95 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
           </div>
         </div>
 
-        {/* Name Registration Box */}
-        <div className="welcome-name-box">
-          <label htmlFor="student-name-input" className="name-box-label">
-            <User size={16} className="text-red" />
-            Masukkan Nama Lengkap Kamu untuk Memulai:
-          </label>
-          <div className="name-input-row">
-            <input
-              id="student-name-input"
-              type="text"
-              className="name-input-field"
-              placeholder="Contoh: Muhammad Rizky / Siti Sarah"
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleStart();
-              }}
-            />
-            <button
-              id="btn-start-simulation-welcome"
-              className="btn btn-red-glow"
-              onClick={handleStart}
-            >
-              <span>Mulai Simulasi</span>
-              <ArrowRight size={18} />
-            </button>
+        {/* Personalized Agent Greeting or Name Registration */}
+        {!isEditing && (studentName || nameInput.trim()) ? (
+          <div className="agent-greeting-card">
+            <div className="agent-card-left">
+              <div className="agent-avatar-circle">
+                <Shield size={32} />
+              </div>
+              <div className="agent-greeting-info">
+                <div className="agent-greeting-tag">
+                  <span className="welcome-dot-red" />
+                  IDENTITAS AGEN TERVERIFIKASI
+                </div>
+                <h2 className="agent-greeting-title">
+                  Selamat Datang, <span className="agent-highlight-name">Agen {studentName || nameInput.trim()}</span>! 🛡️
+                </h2>
+                <p className="agent-greeting-desc">
+                  Data analisismu telah tersimpan di sistem PKM UBBG 2026. Siap menguji ketangkasanmu membongkar serangan siber?
+                </p>
+              </div>
+            </div>
+
+            <div className="agent-greeting-actions">
+              <button
+                id="btn-start-simulation-welcome"
+                className="btn btn-red-glow"
+                onClick={handleStartDirectly}
+              >
+                <span>Masuk ke Hub 4 Misi</span>
+                <ArrowRight size={18} />
+              </button>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  playSound('click');
+                  setIsEditing(true);
+                }}
+                title="Ganti Nama Siswa"
+              >
+                <Edit3 size={15} />
+                <span>Ubah Nama</span>
+              </button>
+            </div>
           </div>
-          <p className="name-box-hint">
-            *Nama ini akan digunakan untuk mencatat progres latihan dan evaluasi literasi siber kamu.
-          </p>
-        </div>
+        ) : (
+          <div className="welcome-name-box">
+            <label htmlFor="student-name-input" className="name-box-label">
+              <User size={16} className="text-red" />
+              Masukkan Nama Lengkap Kamu untuk Memulai:
+            </label>
+            <div className="name-input-row">
+              <input
+                id="student-name-input"
+                type="text"
+                className={`name-input-field ${errorMessage ? 'input-error' : ''}`}
+                placeholder="Contoh: Muhammad Rizky / Siti Sarah"
+                value={nameInput}
+                onChange={(e) => {
+                  setNameInput(e.target.value);
+                  if (errorMessage) setErrorMessage('');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleValidateAndSave();
+                  }
+                }}
+                autoFocus
+              />
+              <button
+                id="btn-save-name-welcome"
+                className="btn btn-red-glow"
+                onClick={handleStartDirectly}
+              >
+                <span>Mulai Simulasi</span>
+                <ArrowRight size={18} />
+              </button>
+            </div>
+
+            {errorMessage ? (
+              <div className="name-error-message">
+                <AlertCircle size={16} />
+                <span>{errorMessage}</span>
+              </div>
+            ) : (
+              <p className="name-box-hint">
+                *Tekan <strong>Enter</strong> atau klik <strong>Mulai Simulasi</strong>. Nama tidak boleh kosong agar evaluasi literasimu tercatat.
+              </p>
+            )}
+          </div>
+        )}
 
         {/* 4 Mission Highlights Grid */}
         <div className="welcome-preview-section">

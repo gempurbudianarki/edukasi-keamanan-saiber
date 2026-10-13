@@ -90,6 +90,21 @@ export function Navbar({
               {muted ? <VolumeX size={17} color="#dc2626" /> : <Volume2 size={17} color="#dc2626" />}
             </button>
 
+            {/* Student Name Pill */}
+            {progress.studentName && (
+              <div 
+                className="student-name-pill hide-mobile" 
+                title={`Identitas Siswa: ${progress.studentName} (Klik untuk ke Halaman Sambutan)`}
+                onClick={() => {
+                  playSound('click');
+                  onNavigateHome();
+                }}
+              >
+                <span className="student-dot-pulse" />
+                <span>Agen {progress.studentName}</span>
+              </div>
+            )}
+
             {/* Score Pill */}
             <div className="score-pill" title={`Total Kemajuan: ${completedCount}/4 Misi Selesai`}>
               <div className="score-bar-fill" style={{ width: `${(completedCount / 4) * 100}%` }}></div>

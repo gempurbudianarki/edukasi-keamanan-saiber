@@ -6,9 +6,26 @@ export function DanaLoginMockup({ scenario, onBreach }) {
   const [phone, setPhone] = useState('0812-9876-5432');
   const [pin, setPin] = useState('123456');
   const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const cleanPhone = phone.trim();
+    const cleanPin = pin.trim();
+
+    if (!cleanPhone || cleanPhone.length < 8) {
+      playSound('beep');
+      setErrorMessage('Nomor ponsel akun DANA wajib diisi dengan benar (minimal 8 angka)!');
+      return;
+    }
+
+    if (!cleanPin || cleanPin.length !== 6) {
+      playSound('beep');
+      setErrorMessage('6 Digit PIN akun DANA wajib diisi lengkap untuk otentikasi!');
+      return;
+    }
+
+    setErrorMessage('');
     setSubmitting(true);
     playSound('click');
     setTimeout(() => {
@@ -29,6 +46,13 @@ export function DanaLoginMockup({ scenario, onBreach }) {
       </div>
 
       <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '20px' }}>
+        {errorMessage && (
+          <div style={{ background: '#fee2e2', border: '1px solid #fca5a5', color: '#991b1b', padding: '10px 12px', borderRadius: '8px', fontSize: '0.82rem', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <AlertTriangle size={16} />
+            <span>{errorMessage}</span>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '14px' }}>
             <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px' }}>
@@ -37,9 +61,12 @@ export function DanaLoginMockup({ scenario, onBreach }) {
             <input
               type="text"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }}
-              required
+              onChange={(e) => {
+                setPhone(e.target.value);
+                if (errorMessage) setErrorMessage('');
+              }}
+              placeholder="08xxxxxxxxxx"
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: `1.5px solid ${errorMessage && (!phone.trim() || phone.trim().length < 8) ? '#ef4444' : '#cbd5e1'}`, fontSize: '0.9rem' }}
             />
           </div>
 
@@ -51,9 +78,12 @@ export function DanaLoginMockup({ scenario, onBreach }) {
               type="password"
               maxLength={6}
               value={pin}
-              onChange={(e) => setPin(e.target.value)}
-              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem', letterSpacing: '4px' }}
-              required
+              onChange={(e) => {
+                setPin(e.target.value);
+                if (errorMessage) setErrorMessage('');
+              }}
+              placeholder="••••••"
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: `1.5px solid ${errorMessage && (!pin.trim() || pin.trim().length !== 6) ? '#ef4444' : '#cbd5e1'}`, fontSize: '0.9rem', letterSpacing: '4px' }}
             />
           </div>
 

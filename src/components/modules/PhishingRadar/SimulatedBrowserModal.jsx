@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Lock, AlertTriangle, ShieldAlert, CreditCard, Camera, Smartphone, MessageSquare, Gamepad2, User } from 'lucide-react';
 import { playSound } from '../../../utils/soundEffects';
 import { DanaLoginMockup } from './modals/mockups/DanaLoginMockup';
@@ -39,7 +40,7 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
     ? 'Google Classroom'
     : 'Kemendikbud – Kuota Belajar';
 
-  return (
+  return createPortal(
     <div className="sim-overlay">
       <div className={`sim-chrome ${breached ? 'breach-active' : ''}`}>
         {/* Tab bar */}
@@ -136,6 +137,7 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

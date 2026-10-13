@@ -7,6 +7,7 @@ export function UrlScannerView() {
   const [urlInput, setUrlInput] = useState('https://dana-kaget-klaim2026.xyz/dompet-digital/auth');
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const PRESET_SAMPLES = [
     { name: 'Klaim DANA Palsu (.xyz)', url: 'https://dana-kaget-klaim2026.xyz/dompet-digital/auth' },
@@ -18,8 +19,13 @@ export function UrlScannerView() {
 
   const handleScan = async (targetUrl) => {
     const scanUrl = targetUrl || urlInput;
-    if (!scanUrl.trim()) return;
+    if (!scanUrl.trim()) {
+      playSound('beep');
+      setErrorMessage('Harap ketik atau pilih tautan URL yang ingin dipindai terlebih dahulu!');
+      return;
+    }
 
+    setErrorMessage('');
     setLoading(true);
     playSound('scan');
     try {
@@ -48,13 +54,16 @@ export function UrlScannerView() {
       </p>
 
       {/* Input bar */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '10px', marginBottom: errorMessage ? '8px' : '14px', flexWrap: 'wrap' }}>
         <input
           type="text"
           value={urlInput}
-          onChange={(e) => setUrlInput(e.target.value)}
+          onChange={(e) => {
+            setUrlInput(e.target.value);
+            if (errorMessage) setErrorMessage('');
+          }}
           placeholder="https://contoh-domain-mencurigakan.com/path"
-          style={{ flex: 1, minWidth: '260px', padding: '12px 14px', borderRadius: '8px', border: '1.5px solid #cbd5e1', background: '#ffffff', color: '#0f172a', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}
+          style={{ flex: 1, minWidth: '260px', padding: '12px 14px', borderRadius: '8px', border: `1.5px solid ${errorMessage ? '#ef4444' : '#cbd5e1'}`, background: '#ffffff', color: '#0f172a', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}
         />
         <button
           className="btn btn-primary"
@@ -65,6 +74,13 @@ export function UrlScannerView() {
           <span>{loading ? 'Memindai...' : 'Pindai Tautan'}</span>
         </button>
       </div>
+
+      {errorMessage && (
+        <div style={{ background: '#fee2e2', border: '1px solid #fca5a5', color: '#991b1b', padding: '8px 12px', borderRadius: '6px', fontSize: '0.82rem', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <AlertTriangle size={15} />
+          <span>{errorMessage}</span>
+        </div>
+      )}
 
       {/* Preset pills */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>

@@ -156,6 +156,114 @@
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
 }
 
+.name-input-field.input-error {
+  border-color: #ef4444 !important;
+  background-color: #fffaf0;
+  animation: shakeInput 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.name-error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #dc2626;
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-top: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 8px 14px;
+  border-radius: 6px;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+/* Agent Greeting Card when Name is Confirmed */
+.agent-greeting-card {
+  background: linear-gradient(135deg, #ffffff, #fef2f2);
+  border: 2px solid #fca5a5;
+  border-radius: 16px;
+  padding: 28px 30px;
+  margin-bottom: 38px;
+  box-shadow: 0 10px 30px rgba(220, 38, 38, 0.1), 0 0 0 1px rgba(220, 38, 38, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.agent-card-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.agent-avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+  flex-shrink: 0;
+}
+
+.agent-greeting-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  margin-bottom: 6px;
+}
+
+.agent-greeting-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.agent-highlight-name {
+  color: #dc2626;
+  text-decoration: underline;
+  text-decoration-color: #fca5a5;
+  text-underline-offset: 4px;
+}
+
+.agent-greeting-desc {
+  color: #475569;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.agent-greeting-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@keyframes shakeInput {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
 .btn-red-glow {
   background: linear-gradient(135deg, #dc2626, #b91c1c);
   color: #ffffff;

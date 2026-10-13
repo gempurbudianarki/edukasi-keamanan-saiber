@@ -95,7 +95,7 @@ export function MissionHub({ progress, onSelectMission }) {
         </h1>
 
         <p className="hero-description">
-          Selamat datang di ruang simulasi praktik Pengabdian Kepada Masyarakat (PKM) <strong>Universitas Bina Bangsa Getsempena (UBBG)</strong>. 
+          Selamat datang kembali, <strong>{progress.studentName ? `Agen ${progress.studentName}` : 'Siswa Siber'}</strong> di markas simulasi praktik Pengabdian Kepada Masyarakat (PKM) <strong>Universitas Bina Bangsa Getsempena (UBBG)</strong>. 
           Pilih dan selesaikan 4 misi di bawah ini untuk menguji ketangkasanmu menghadapi ancaman nyata di dunia digital!
         </p>
 
