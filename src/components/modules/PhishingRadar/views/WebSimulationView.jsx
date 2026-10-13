@@ -11,7 +11,8 @@ import {
   MessageSquare,
   Camera,
   CreditCard,
-  GraduationCap
+  GraduationCap,
+  Gamepad2
 } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 import { SimulatedBrowserModal } from '../SimulatedBrowserModal';
@@ -53,6 +54,7 @@ export function WebSimulationView({
       case 'camera': return <Camera size={20} color="#dc2626" />;
       case 'whatsapp': return <Smartphone size={20} color="#16a34a" />;
       case 'graduation': return <GraduationCap size={20} color="#16a34a" />;
+      case 'gamepad': return <Gamepad2 size={20} color="#7c3aed" />;
       default: return <MessageSquare size={20} color="#dc2626" />;
     }
   };
@@ -201,19 +203,19 @@ export function WebSimulationView({
             <div className="inspector-grid">
               <div className="inspector-cell">
                 <div className="inspector-label">Protokol:</div>
-                <div className="inspector-value">{current.urlBreakdown.protocol}</div>
+                <div className="inspector-value">{current.urlBreakdown?.protocol || '-'}</div>
               </div>
               <div className="inspector-cell">
                 <div className="inspector-label">Subdomain:</div>
-                <div className="inspector-value">{current.urlBreakdown.subdomain}</div>
+                <div className="inspector-value">{current.urlBreakdown?.subdomain || '-'}</div>
               </div>
               <div className="inspector-cell">
                 <div className="inspector-label">TLD Domain:</div>
-                <div className="inspector-value">{current.urlBreakdown.tld}</div>
+                <div className="inspector-value">{current.urlBreakdown?.tld || '-'}</div>
               </div>
             </div>
             <div className={current.isPhishing ? 'inspector-danger-box' : 'inspector-safe-box'}>
-              <strong>Analisis Forensik:</strong> {current.urlBreakdown.dangerDetail}
+              <strong>Analisis Forensik:</strong> {current.urlBreakdown?.dangerDetail || 'Tidak ada catatan.'}
             </div>
           </div>
         )}
