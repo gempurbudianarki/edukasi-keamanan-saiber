@@ -1,6 +1,26 @@
-const STORAGE_KEY = 'cybergenz_pkm_progress_v1';
+export const STORAGE_KEY = 'cybergenz_pkm_progress_v1';
+export const LEGACY_STORAGE_KEY = 'cybergenz_progress_2026';
+
+/**
+ * Migrasi data sesi progres lama secara otomatis (one-time migration)
+ * agar siswa yang sudah memulai tidak kehilangan progress.
+ */
+export function migrateLegacyProgress() {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    const legacyData = localStorage.getItem(LEGACY_STORAGE_KEY);
+    const currentData = localStorage.getItem(STORAGE_KEY);
+    if (legacyData && !currentData) {
+      localStorage.setItem(STORAGE_KEY, legacyData);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+    }
+  } catch (e) {
+    console.warn('[storage] Gagal migrasi data legacy:', e);
+  }
+}
 
 export function getStoredProgress() {
+  migrateLegacyProgress();
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data) {
@@ -37,6 +57,7 @@ export function saveStoredProgress(progress) {
 export function resetStoredProgress() {
   try {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
   } catch (e) {
     console.error('Failed to reset progress', e);
   }

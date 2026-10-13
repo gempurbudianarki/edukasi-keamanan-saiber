@@ -3,6 +3,8 @@
 // PKM UBBG 2026 — CyberGenZ Simulator
 // ================================================================
 
+import { getStoredProgress } from './storage';
+
 export const ROUTE_MAP = {
   welcome: '#/welcome',
   hub: '#/hub',
@@ -60,14 +62,11 @@ export function resolveCurrentRoute() {
     return HASH_TO_VIEW[cleanKey];
   }
 
-  // 3. If on root and user has already started before, go to hub; otherwise welcome
+  // 3. If on root and user has already registered name, go to hub; otherwise welcome
   try {
-    const rawProgress = localStorage.getItem('cybergenz_progress_2026');
-    if (rawProgress) {
-      const parsed = JSON.parse(rawProgress);
-      if (parsed.studentName) {
-        return 'hub';
-      }
+    const progress = getStoredProgress();
+    if (progress && progress.studentName) {
+      return 'hub';
     }
   } catch {
     // Ignore storage parse error
