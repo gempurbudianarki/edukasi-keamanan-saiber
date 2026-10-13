@@ -34,13 +34,23 @@
   width: 44px;
   height: 44px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
-  border: 1px solid #dc2626;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.brand-icon:hover {
+  transform: scale(1.06);
+}
+
+.brand-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(37, 99, 235, 0.25));
 }
 
 .brand-title {

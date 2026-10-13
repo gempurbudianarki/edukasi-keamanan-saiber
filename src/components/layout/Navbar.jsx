@@ -41,7 +41,7 @@ export function Navbar({
             title="Klik untuk kembali ke Halaman Selamat Datang"
           >
             <div className="brand-icon">
-              <Shield className="icon-shield" size={24} />
+              <img src="/logo.png" alt="CyberGenZ Logo" className="brand-logo-img" />
             </div>
             <div>
               <div className="brand-title">CyberGenZ <span className="brand-tag">Simulator</span></div>

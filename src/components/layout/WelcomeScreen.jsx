@@ -59,6 +59,10 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
       {/* Main Welcome Card */}
       <div className="welcome-card">
         <div className="welcome-header">
+          <div className="welcome-logo-hero-wrap">
+            <img src="/logo.png" alt="Logo CyberGenZ UBBG" className="welcome-hero-logo" />
+          </div>
+
           <div className="welcome-badge">
             <span className="welcome-dot-red" />
             LITERASI KEAMANAN SIBER GENERASI Z
@@ -84,8 +88,8 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
         {!isEditing && (studentName || nameInput.trim()) ? (
           <div className="agent-greeting-card">
             <div className="agent-card-left">
-              <div className="agent-avatar-circle">
-                <Shield size={32} />
+              <div className="agent-avatar-circle" style={{ background: '#ffffff', border: '2px solid #fee2e2' }}>
+                <img src="/logo.png" alt="CyberGenZ Emblem" className="agent-avatar-logo" />
               </div>
               <div className="agent-greeting-info">
                 <div className="agent-greeting-tag">
