@@ -140,6 +140,10 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div className="radar-status-indicator" title="Sistem Radar Siber Aktif">
+            <span className="radar-ping-dot" />
+            <span className="radar-sweep-scanner" />
+          </div>
           <span className="badge badge-red">Misi 01: Phishing Radar</span>
           <span className="badge badge-cyan">
             Progress: {simHistory.length + domainHistory.length + emailHistory.length} Kasus Selesai

@@ -1,29 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Smartphone, CheckCircle2, ShieldCheck, RotateCcw, Sparkles } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
+import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
 export function ActivationPracticeView({ onCompletePractice }) {
   const [practiceStep, setPracticeStep] = useState(1); // 1: pilih metode, 2: input otp, 3: selesai
   const [currentOtp, setCurrentOtp] = useState('482910');
-  const [otpTimer, setOtpTimer] = useState(30);
+  const [remainingSeconds, setRemainingSeconds] = useState(30);
   const [inputOtp, setInputOtp] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [burstTrigger, setBurstTrigger] = useState(0);
 
-  // Countdown timer for 30s OTP
+  const cycleStartRef = useRef(Date.now());
+  const lastCycleRef = useRef(0);
+
+  // Anti-drift timestamp-based countdown
   useEffect(() => {
-    let interval = null;
-    if (practiceStep === 2) {
-      interval = setInterval(() => {
-        setOtpTimer(prev => {
-          if (prev <= 1) {
-            const nextCode = Math.floor(100000 + Math.random() * 900000).toString();
-            setCurrentOtp(nextCode);
-            return 30;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
+    if (practiceStep !== 2) return;
+    cycleStartRef.current = Date.now();
+
+    const interval = setInterval(() => {
+      const elapsed = (Date.now() - cycleStartRef.current) / 1000;
+      const currentCycle = Math.floor(elapsed / 30);
+
+      if (currentCycle !== lastCycleRef.current) {
+        lastCycleRef.current = currentCycle;
+        const nextCode = Math.floor(100000 + Math.random() * 900000).toString();
+        setCurrentOtp(nextCode);
+      }
+
+      const cycleRemaining = Math.max(1, Math.ceil(30 - (elapsed % 30)));
+      setRemainingSeconds(cycleRemaining);
+    }, 200);
+
     return () => clearInterval(interval);
   }, [practiceStep]);
 
@@ -32,6 +41,7 @@ export function ActivationPracticeView({ onCompletePractice }) {
     if (inputOtp.trim() === currentOtp) {
       playSound('complete');
       setErrorMsg('');
+      setBurstTrigger(t => t + 1);
       setPracticeStep(3);
       onCompletePractice();
     } else {
@@ -40,8 +50,16 @@ export function ActivationPracticeView({ onCompletePractice }) {
     }
   };
 
+  // Circular gauge calculations
+  const radius = 54;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (remainingSeconds / 30) * circumference;
+  const gaugeColor = remainingSeconds <= 5 ? '#f43f5e' : remainingSeconds <= 12 ? '#f59e0b' : '#38bdf8';
+
   return (
     <div className="glass-panel scenario-card">
+      <FloatingScoreBurst text="+50 PTS!" trigger={burstTrigger} />
+
       <div style={{ marginBottom: '20px' }}>
         <h2 style={{ fontSize: '1.25rem', marginBottom: '4px' }}>
           Praktik Interaktif: Aktivasi Verifikasi Dua Langkah (2FA)
@@ -75,17 +93,52 @@ export function ActivationPracticeView({ onCompletePractice }) {
 
       {practiceStep === 2 && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', alignItems: 'center' }}>
-          {/* Mockup HP virtual */}
-          <div style={{ background: '#020617', border: '3px solid #334155', borderRadius: '24px', padding: '24px', maxWidth: '300px', margin: '0 auto', textAlign: 'center', boxShadow: '0 12px 30px rgba(0,0,0,0.2)' }}>
-            <div style={{ width: '40px', height: '4px', background: '#334155', borderRadius: '4px', margin: '0 auto 16px' }}></div>
-            <div style={{ fontSize: '0.74rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
+          {/* Mockup HP virtual dengan Circular Timer Gauge */}
+          <div style={{ background: '#020617', border: '3px solid #334155', borderRadius: '24px', padding: '24px 20px', maxWidth: '300px', margin: '0 auto', textAlign: 'center', boxShadow: '0 12px 30px rgba(0,0,0,0.2)' }}>
+            <div style={{ width: '40px', height: '4px', background: '#334155', borderRadius: '4px', margin: '0 auto 16px' }} />
+            <div style={{ fontSize: '0.74rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '14px', letterSpacing: '1px' }}>
               Aplikasi Authenticator
             </div>
-            <div style={{ fontSize: '2.4rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#38bdf8', letterSpacing: '4px', marginBottom: '8px' }}>
-              {currentOtp}
+
+            {/* Circular Gauge SVG */}
+            <div style={{ position: 'relative', width: '130px', height: '130px', margin: '0 auto 14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="130" height="130" style={{ transform: 'rotate(-90deg)', position: 'absolute', top: 0, left: 0 }}>
+                {/* Background Track */}
+                <circle
+                  cx="65"
+                  cy="65"
+                  r={radius}
+                  stroke="#1e293b"
+                  strokeWidth="6"
+                  fill="transparent"
+                />
+                {/* Dynamic Countdown Circle */}
+                <circle
+                  cx="65"
+                  cy="65"
+                  r={radius}
+                  stroke={gaugeColor}
+                  strokeWidth="6"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  fill="transparent"
+                  style={{ transition: 'stroke-dashoffset 0.25s linear, stroke 0.3s ease' }}
+                />
+              </svg>
+
+              <div style={{ zIndex: 2, textAlign: 'center' }}>
+                <div style={{ fontSize: '1.65rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#ffffff', letterSpacing: '2px' }}>
+                  {currentOtp}
+                </div>
+                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: gaugeColor }}>
+                  {remainingSeconds}s
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: '0.76rem', fontWeight: 600, color: otpTimer <= 5 ? '#f43f5e' : '#34d399' }}>
-              Berganti dalam {otpTimer} detik
+
+            <div style={{ fontSize: '0.74rem', color: '#64748b' }}>
+              Kode OTP berubah otomatis demi keamanan
             </div>
           </div>
 
@@ -108,13 +161,13 @@ export function ActivationPracticeView({ onCompletePractice }) {
               />
 
               {errorMsg && (
-                <div style={{ color: '#dc2626', fontSize: '0.82rem', fontWeight: 600, marginBottom: '14px', background: '#fef2f2', padding: '8px 12px', borderRadius: '6px' }}>
+                <div style={{ color: '#dc2626', fontSize: '0.82rem', marginBottom: '12px' }}>
                   {errorMsg}
                 </div>
               )}
 
               <button type="submit" className="btn btn-primary btn-full">
-                Verifikasi & Kunci Akun
+                Verifikasi & Kunci Akun dengan 2FA
               </button>
             </form>
           </div>
@@ -122,19 +175,27 @@ export function ActivationPracticeView({ onCompletePractice }) {
       )}
 
       {practiceStep === 3 && (
-        <div style={{ textAlign: 'center', padding: '30px 20px', maxWidth: '480px', margin: '0 auto' }}>
-          <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-            <CheckCircle2 size={36} />
+        <div style={{ maxWidth: '480px', margin: '0 auto', textAlign: 'center', padding: '24px' }}>
+          <div style={{ color: '#16a34a', marginBottom: '16px' }}>
+            <ShieldCheck size={56} style={{ margin: '0 auto' }} />
           </div>
-          <h3 style={{ fontSize: '1.3rem', color: '#10b981', marginBottom: '8px' }}>
-            2FA Berhasil Diaktifkan!
+          <h3 style={{ fontSize: '1.3rem', color: '#0f172a', marginBottom: '8px' }}>
+            Aktivasi 2FA Berhasil Sempurna!
           </h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', lineHeight: 1.5, marginBottom: '20px' }}>
-            Akunmu kini terlindungi dengan lapis pertahanan ganda. Siapa pun yang mencoba masuk tanpa izin fisik terhadap HP-mu akan otomatis terblokir!
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: 1.5, marginBottom: '24px' }}>
+            Akun Anda kini terlindungi oleh verifikasi dua langkah. Bahkan jika password Anda bocor, penyerang tidak akan bisa masuk tanpa memegang fisik smartphone Anda!
           </p>
-          <div className="badge badge-green" style={{ padding: '8px 18px', fontSize: '0.86rem' }}>
-            Nilai Penuh 100/100 Tercapai
-          </div>
+
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              playSound('click');
+              setPracticeStep(1);
+              setInputOtp('');
+            }}
+          >
+            <RotateCcw size={16} /> Ulangi Praktik
+          </button>
         </div>
       )}
     </div>
