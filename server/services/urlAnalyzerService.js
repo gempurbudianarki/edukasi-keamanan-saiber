@@ -48,6 +48,17 @@ export function analyzeUrlHeuristics(rawUrl) {
   const features = [];
   let riskScore = 0;
 
+  // 0. Protocol Security Check
+  if (parsed.protocol === 'http:') {
+    riskScore += 20;
+    features.push({
+      id: 'protocol_insecure',
+      name: 'Protokol HTTP Tidak Terenkripsi',
+      danger: true,
+      desc: 'Tautan menggunakan HTTP polos tanpa sertifikat keamanan SSL/TLS. Seluruh data input rentan disadap.'
+    });
+  }
+
   // 1. IP Address Hostname
   const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
   if (ipPattern.test(hostname)) {
