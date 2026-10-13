@@ -17,13 +17,28 @@ import { playSound } from '../../../../utils/soundEffects';
 import { SimulatedBrowserModal } from '../SimulatedBrowserModal';
 import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
-export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export function WebSimulationView({ 
+  scenarios, 
+  initialIndex = 0, 
+  onIndexChange, 
+  onRecordResult, 
+  onCompleteMode 
+}) {
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    return Math.max(0, initialIndex || 0);
+  });
   const [browserOpen, setBrowserOpen] = useState(false);
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const [answeredAction, setAnsweredAction] = useState(null); // 'open' | 'block' | 'safe'
   const [sinkholeAlert, setSinkholeAlert] = useState(null);
   const [burstTrigger, setBurstTrigger] = useState(0);
+
+  // Sync if initialIndex changes externally
+  React.useEffect(() => {
+    if (initialIndex !== undefined && scenarios?.length) {
+      setCurrentIndex(Math.min(initialIndex, scenarios.length - 1));
+    }
+  }, [initialIndex, scenarios?.length]);
 
   if (!scenarios || scenarios.length === 0) {
     return <div style={{ padding: '24px', textAlign: 'center' }}>Memuat skenario...</div>;
@@ -86,8 +101,13 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
     setSinkholeAlert(null);
 
     if (!isLast) {
-      setCurrentIndex(i => i + 1);
+      setCurrentIndex(i => {
+        const next = i + 1;
+        onIndexChange?.(next);
+        return next;
+      });
     } else {
+      onIndexChange?.(0);
       onCompleteMode();
     }
   };

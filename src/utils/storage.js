@@ -54,10 +54,58 @@ export function saveStoredProgress(progress) {
   }
 }
 
+export const RADAR_SESSION_KEY = 'cybergenz_radar_session_v1';
+
+export function getRadarSession() {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return {
+      simHistory: [],
+      domainHistory: [],
+      emailHistory: [],
+      simIndex: 0,
+      domainIndex: 0,
+      emailIndex: 0
+    };
+  }
+  try {
+    const raw = localStorage.getItem(RADAR_SESSION_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.error('Failed to load radar session from localStorage', e);
+  }
+  return {
+    simHistory: [],
+    domainHistory: [],
+    emailHistory: [],
+    simIndex: 0,
+    domainIndex: 0,
+    emailIndex: 0
+  };
+}
+
+export function saveRadarSession(session) {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    localStorage.setItem(RADAR_SESSION_KEY, JSON.stringify(session));
+  } catch (e) {
+    console.error('Failed to save radar session to localStorage', e);
+  }
+}
+
+export function resetRadarSession() {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    localStorage.removeItem(RADAR_SESSION_KEY);
+  } catch (e) {
+    console.error('Failed to reset radar session', e);
+  }
+}
+
 export function resetStoredProgress() {
   try {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(LEGACY_STORAGE_KEY);
+    resetRadarSession();
   } catch (e) {
     console.error('Failed to reset progress', e);
   }
@@ -77,3 +125,4 @@ export function resetStoredProgress() {
     }
   };
 }
+

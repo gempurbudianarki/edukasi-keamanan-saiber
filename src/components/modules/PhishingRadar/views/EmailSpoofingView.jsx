@@ -3,11 +3,25 @@ import { Mail, ShieldCheck, ShieldAlert, ChevronRight, Code, AlertTriangle, Chec
 import { playSound } from '../../../../utils/soundEffects';
 import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
-export function EmailSpoofingView({ drills, onRecordResult, onCompleteMode }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export function EmailSpoofingView({ 
+  drills, 
+  initialIndex = 0, 
+  onIndexChange, 
+  onRecordResult, 
+  onCompleteMode 
+}) {
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    return Math.max(0, initialIndex || 0);
+  });
   const [showHeaders, setShowHeaders] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null); // 'fake' | 'real'
   const [burstTrigger, setBurstTrigger] = useState(0);
+
+  React.useEffect(() => {
+    if (initialIndex !== undefined && drills?.length) {
+      setCurrentIndex(Math.min(initialIndex, drills.length - 1));
+    }
+  }, [initialIndex, drills?.length]);
 
   if (!drills || drills.length === 0) {
     return <div style={{ padding: '24px', textAlign: 'center' }}>Memuat latihan email...</div>;
@@ -60,8 +74,13 @@ export function EmailSpoofingView({ drills, onRecordResult, onCompleteMode }) {
     setShowHeaders(false);
 
     if (!isLast) {
-      setCurrentIndex(i => i + 1);
+      setCurrentIndex(i => {
+        const next = i + 1;
+        onIndexChange?.(next);
+        return next;
+      });
     } else {
+      onIndexChange?.(0);
       onCompleteMode();
     }
   };

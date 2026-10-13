@@ -8,6 +8,7 @@ import { DomainComparatorView } from './views/DomainComparatorView';
 import { EmailSpoofingView } from './views/EmailSpoofingView';
 import { UrlScannerView } from './views/UrlScannerView';
 import { calculateMissionAccuracy } from '../../../utils/scoring';
+import { getRadarSession, saveRadarSession, resetRadarSession } from '../../../utils/storage';
 import './PhishingRadar.css';
 
 export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
@@ -25,11 +26,29 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
   const [emailDrills, setEmailDrills] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Result histories
-  const [simHistory, setSimHistory] = useState([]);
-  const [domainHistory, setDomainHistory] = useState([]);
-  const [emailHistory, setEmailHistory] = useState([]);
+  // Result histories & question indices initialized from persistent radar session
+  const [radarSession] = useState(() => getRadarSession());
+  const [simHistory, setSimHistory] = useState(() => radarSession?.simHistory || []);
+  const [domainHistory, setDomainHistory] = useState(() => radarSession?.domainHistory || []);
+  const [emailHistory, setEmailHistory] = useState(() => radarSession?.emailHistory || []);
+
+  const [simIndex, setSimIndex] = useState(() => radarSession?.simIndex || 0);
+  const [domainIndex, setDomainIndex] = useState(() => radarSession?.domainIndex || 0);
+  const [emailIndex, setEmailIndex] = useState(() => radarSession?.emailIndex || 0);
+
   const [finished, setFinished] = useState(false);
+
+  // Persist progress so F5 / page reload preserves active question and answers
+  useEffect(() => {
+    saveRadarSession({
+      simHistory,
+      domainHistory,
+      emailHistory,
+      simIndex,
+      domainIndex,
+      emailIndex
+    });
+  }, [simHistory, domainHistory, emailHistory, simIndex, domainIndex, emailIndex]);
 
   const handleTabChange = (mode) => {
     setActiveMode(mode);
@@ -65,6 +84,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
     const combinedHistory = [...simHistory, ...domainHistory, ...emailHistory];
     const totalQuestions = (scenarios.length || 6) + (domainDrills.length || 3) + (emailDrills.length || 5);
     const finalPct = calculateMissionAccuracy(combinedHistory, totalQuestions);
+    resetRadarSession();
     onComplete(finalPct);
   };
 
@@ -73,7 +93,11 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
     setSimHistory([]);
     setDomainHistory([]);
     setEmailHistory([]);
+    setSimIndex(0);
+    setDomainIndex(0);
+    setEmailIndex(0);
     setFinished(false);
+    resetRadarSession();
     handleTabChange('simulation');
   };
 
@@ -122,7 +146,7 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
             <button className="btn btn-secondary" onClick={handleRestart}>
               <RotateCcw size={16} /> Ulangi Latihan
             </button>
-            <button className="btn btn-primary" onClick={() => { onComplete(finalPct); onBack(); }}>
+            <button className="btn btn-primary" onClick={() => { resetRadarSession(); onComplete(finalPct); onBack(); }}>
               <Sparkles size={16} /> Simpan Hasil & Lanjut
             </button>
           </div>
@@ -196,6 +220,8 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
           {activeMode === 'simulation' && (
             <WebSimulationView
               scenarios={scenarios}
+              initialIndex={simIndex}
+              onIndexChange={setSimIndex}
               onRecordResult={(r) => setSimHistory(prev => [...prev, r])}
               onCompleteMode={() => handleTabChange('domain_comparator')}
             />
@@ -204,6 +230,8 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
           {activeMode === 'domain_comparator' && (
             <DomainComparatorView
               drills={domainDrills}
+              initialIndex={domainIndex}
+              onIndexChange={setDomainIndex}
               onRecordResult={(r) => setDomainHistory(prev => [...prev, r])}
               onCompleteMode={() => handleTabChange('email_spoofing')}
             />
@@ -212,6 +240,8 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
           {activeMode === 'email_spoofing' && (
             <EmailSpoofingView
               drills={emailDrills}
+              initialIndex={emailIndex}
+              onIndexChange={setEmailIndex}
               onRecordResult={(r) => setEmailHistory(prev => [...prev, r])}
               onCompleteMode={handleFinishAll}
             />
