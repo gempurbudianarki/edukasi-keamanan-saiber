@@ -1,0 +1,213 @@
+.twofa-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+
+.twofa-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.twofa-tab-btn.active {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+/* Hacker Terminal Simulation */
+.attack-arena {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.terminal-box {
+  background: #06090e;
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-topbar {
+  background: #0d131f;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.terminal-title {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
+.terminal-body {
+  padding: 18px;
+  font-size: 0.85rem;
+  min-height: 220px;
+  line-height: 1.6;
+}
+
+.log-line {
+  margin-bottom: 6px;
+}
+
+.log-cyan { color: #00f0ff; }
+.log-green { color: #10b981; }
+.log-red { color: #ef4444; }
+.log-amber { color: #f59e0b; }
+.log-muted { color: #64748b; }
+
+/* Victim Account Status Box */
+.victim-box {
+  background: rgba(18, 22, 38, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.victim-status-hacked {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(40, 10, 15, 0.6);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.2);
+}
+
+.victim-status-shielded {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(10, 35, 25, 0.6);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+}
+
+/* Smartphone Virtual OTP Simulator */
+.phone-simulator-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.phone-device {
+  background: #090c13;
+  border: 3px solid #1e293b;
+  border-radius: 36px;
+  padding: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.phone-notch {
+  width: 90px;
+  height: 16px;
+  background: #1e293b;
+  border-radius: 0 0 12px 12px;
+  margin: 0 auto 16px auto;
+}
+
+.phone-screen {
+  background: #111827;
+  border-radius: 24px;
+  padding: 20px 16px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.authenticator-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.otp-code-display {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  text-align: center;
+  margin: 12px 0;
+}
+
+.otp-timer-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.otp-timer-progress {
+  height: 100%;
+  background: var(--accent-cyan);
+  transition: width 1s linear;
+}
+
+.otp-input-field {
+  width: 100%;
+  max-width: 280px;
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  letter-spacing: 0.25em;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--border-neon);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: #fff;
+  outline: none;
+  margin: 16px 0;
+}
+
+.otp-input-field:focus {
+  border-color: #00f0ff;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .attack-arena {
+    grid-template-columns: 1fr;
+  }
+  .phone-simulator-grid {
+    grid-template-columns: 1fr;
+  }
+}
