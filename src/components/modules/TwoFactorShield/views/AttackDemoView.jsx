@@ -1,180 +1,195 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Play, ShieldAlert, ShieldCheck, User, Smartphone, AlertTriangle, Lock, Unlock, Radio, BellRing, CheckCircle2, XCircle } from 'lucide-react';
+import { Terminal, Play, ShieldAlert, ShieldCheck, User, Smartphone, AlertTriangle, Lock, Unlock, Radio, BellRing, CheckCircle2, XCircle, Wifi, Battery, ShieldX, KeyRound, ArrowRight } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 
 export function AttackDemoView({ onProceedToPractice }) {
   const [has2FAEnabled, setHas2FAEnabled] = useState(false);
   const [isAttacking, setIsAttacking] = useState(false);
-  const [attackStep, setAttackStep] = useState('idle'); // 'idle' | 'scanning' | 'testing' | 'matched' | 'challenge' | 'done'
+  const [attackProgress, setAttackProgress] = useState(0);
   const [attackLogs, setAttackLogs] = useState([
-    '[*] HydraBot v5.4.1 initialized. Ready for credential stuffing attack.',
-    '[*] Target: @pelajar_kekinian (Email: akun_siswa@sekolah.sch.id)',
-    '[*] Database kebocoran data: 14.341.564 akun terkompromi.',
-    '[*] Pilih status 2FA di atas lalu klik "Luncurkan Simulasi Serangan Hacker"!'
+    '[*] HydraBot v5.4.1 [Kali-Linux 6.8.0-kali3-amd64] initialized.',
+    '[*] Target: @pelajar_kekinian (ID: 1049281)',
+    '[*] Wordlist: /usr/share/wordlists/rockyou.txt (14.341.564 passwords)',
+    '[*] Status Mode: Klik "Luncurkan Simulasi Serangan Hacker" di bawah.'
   ]);
   const [attackResult, setAttackResult] = useState(null); // 'hacked' | 'defended'
-  const [showPushPrompt, setShowPushPrompt] = useState(false);
-  const [pushStatus, setPushStatus] = useState('waiting'); // 'waiting' | 'rejected' | 'allowed'
+  const [showPushNotification, setShowPushNotification] = useState(false);
+  const [isPhoneVibrating, setIsPhoneVibrating] = useState(false);
+  const [rejectedPush, setRejectedPush] = useState(false);
   const terminalBottomRef = useRef(null);
 
-  // Auto-scroll terminal logs to bottom
+  // Auto-scroll terminal
   useEffect(() => {
     if (terminalBottomRef.current) {
       terminalBottomRef.current.scrollTop = terminalBottomRef.current.scrollHeight;
     }
   }, [attackLogs]);
 
-  const addLog = (msg) => {
-    setAttackLogs(prev => [...prev, msg]);
+  const addLog = (text, type = 'muted') => {
+    setAttackLogs(prev => [...prev, { text, type }]);
   };
 
   const runAttack = (with2FA) => {
     if (isAttacking) return;
     setIsAttacking(true);
     setAttackResult(null);
-    setShowPushPrompt(false);
-    setPushStatus('waiting');
-    playSound('beep');
+    setShowPushNotification(false);
+    setIsPhoneVibrating(false);
+    setRejectedPush(false);
+    setAttackProgress(0);
 
+    playSound('click');
     setAttackLogs([
-      `[>] Memulai automated brute-force ke endpoint: POST /api/v2/auth/login`,
-      `[>] Menggunakan dictionary attack (RockYou wordlist)...`
+      { text: `[+] Memulai automated credential stuffing ke https://api.instagram.com/v1/auth`, type: 'cyan' },
+      { text: `[*] Threads: 16 | Rate: 120 req/sec | Proxy: Tor Network`, type: 'muted' }
     ]);
+
+    // Fast progress ticker with keyboard audio
+    let p = 0;
+    const progressTimer = setInterval(() => {
+      p += 15;
+      if (p <= 80) {
+        setAttackProgress(p);
+        playSound('keyboard');
+      } else {
+        clearInterval(progressTimer);
+      }
+    }, 200);
 
     // Step 1: Testing passwords
     setTimeout(() => {
-      playSound('beep');
-      addLog(`[..] Menguji kredensial #1: "admin123" ... [401 Unauthorized]`);
+      playSound('keyboard');
+      addLog(`[>>] Testing pass #1: "123456" .......... [401 UNAUTHORIZED]`, 'red');
     }, 400);
 
     setTimeout(() => {
-      playSound('beep');
-      addLog(`[..] Menguji kredensial #2: "rahasia2024" ... [401 Unauthorized]`);
+      playSound('keyboard');
+      addLog(`[>>] Testing pass #2: "rahasia2024" .... [401 UNAUTHORIZED]`, 'red');
     }, 800);
 
     setTimeout(() => {
-      playSound('click');
-      addLog(`[..] Menguji kredensial #3: "sayang123" ... [200 OK] PASSWORD COCOK!`);
-    }, 1200);
+      playSound('beep');
+      addLog(`[>>] Testing pass #3: "sayang123" ...... [200 OK] PASSWORD COCOK!`, 'green');
+      setAttackProgress(90);
+    }, 1300);
 
     // Step 2: Evaluation based on 2FA
     setTimeout(() => {
+      setAttackProgress(100);
       if (!with2FA) {
-        // NO 2FA -> BREACH!
-        playSound('glitch');
-        addLog(`[!] MEMERIKSA PERISAI 2FA: KOSONG / NONAKTIF!`);
-        addLog(`[+] BYPASS SUKSES! Hak akses akun didapatkan tanpa hambatan.`);
-        addLog(`[+] Mengambil Sesi JWT Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`);
-        addLog(`[!] FORCE LOGOUT PERANGKAT KORBAN SELESAI. AKUN RESMI DIBOBOL!`);
+        // WITHOUT 2FA: BREACH!
+        setIsPhoneVibrating(true);
+        addLog(`[!] STATUS 2FA AKUN: KOSONG / NONAKTIF!`, 'red');
+        addLog(`[+] BYPASS SUKSES! Mengambil Sesi JWT: eyJhbGciOiJIUzI1NiIsIn...`, 'cyan');
+        addLog(`[!] FORCE LOGOUT PERANGKAT ASLI: SUKSES`, 'red');
+        addLog(`[+] AKUN 100% DIKUASAI PERETAS! DATA PRIBADI DILUCUTI!`, 'red');
 
         setTimeout(() => {
+          playSound('siren', true);
           setAttackResult('hacked');
           setIsAttacking(false);
-          playSound('siren', true);
         }, 500);
-      } else {
-        // WITH 2FA -> CHALLENGE TRIGGERED!
-        playSound('beep');
-        addLog(`[!] SISTEM KEAMANAN SERVER: PASSWORD BENAR, NAMUN PERANGKAT TIDAK DIKENAL!`);
-        addLog(`[!] VERIFIKASI DUA LANGKAH (2FA) AKTIF! Server menerbitkan tantangan OTP 6-Digit...`);
-        addLog(`[~] Menunggu konfirmasi OTP atau Mobile Push Challenge dari HP korban...`);
-        setShowPushPrompt(true);
 
-        // Simulate mobile challenge
+      } else {
+        // WITH 2FA: CHALLENGE!
+        addLog(`[!] SERVER: Password cocok, TETAPI IP Rusia tidak dikenali!`, 'amber');
+        addLog(`[!] PERISAI 2FA AKTIF: Mengirim Push Challenge ke HP Korban...`, 'cyan');
+        setShowPushNotification(true);
+        playSound('phone_ring');
+
+        // Automatic block simulation
         setTimeout(() => {
-          playSound('scan');
-          addLog(`[-] Hacker tidak memegang HP fisik korban untuk melihat kode 6-digit!`);
-          addLog(`[-] Hacker mencoba brute-force OTP: "000000", "123456", "999999" ...`);
-          addLog(`[-] RATE-LIMIT TRIGGERED: 3x gagal input OTP. IP Hacker diblokir permanen (403 Forbidden)!`);
-          addLog(`[+] KONEKSI DITOLAK TOTAL! PERISAI 2FA BERHASIL MELINDUNGI AKUN!`);
+          playSound('shield');
+          setRejectedPush(true);
+          addLog(`[-] PERINGATAN HP: Korban menekan "TOLAK & BLOKIR AKSES"!`, 'amber');
+          addLog(`[-] Hacker mencoba brute-force OTP 6-Digit: 123456, 000000 ...`, 'muted');
+          addLog(`[-] RATE-LIMIT EXCEEDED: IP 185.220.101.5 di-blacklist permanen!`, 'red');
+          addLog(`[+] PERISAI 2FA SUKSES MENANGKAL PERETAS! AKUN TETAP AMAN!`, 'green');
           setAttackResult('defended');
-          setPushStatus('rejected');
           setIsAttacking(false);
           playSound('success');
         }, 2200);
       }
-    }, 1600);
+    }, 1700);
   };
 
-  const handleManualRejectPush = () => {
-    playSound('click');
-    setPushStatus('rejected');
-    addLog(`[!] Korban menekan "TOLAK & BLOKIR" pada notifikasi HP! Akses hacker dibatalkan seketika.`);
+  const handleManualReject = () => {
+    playSound('shield');
+    setRejectedPush(true);
+    addLog(`[!] Tombol "TOLAK & BLOKIR" ditekan langsung oleh Anda! Sesi peretas diputus!`, 'green');
   };
 
   return (
     <div className="glass-panel scenario-card">
-      {/* Top Header & 2FA State Switch */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '14px', borderBottom: '1px solid #fee2e2', paddingBottom: '16px' }}>
+      {/* Top Banner & 2FA State Switch */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '14px', borderBottom: '1.5px solid #fee2e2', paddingBottom: '16px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Radio size={18} color="#dc2626" className="pulse-slow" />
+            <Radio size={20} color="#dc2626" className="pulse-slow" />
             <h2 style={{ fontSize: '1.25rem', color: '#0f172a', margin: 0 }}>
               Simulasi Serangan Hacker: Mengapa Kata Sandi Saja Tidak Cukup?
             </h2>
           </div>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', margin: 0 }}>
-            Saksikan bagaimana bot hacker langsung menembus akun jika hanya mengandalkan kata sandi, dan bagaimana perisai 2FA menggagalkan serangan 100%!
+            Uji apa yang terjadi ketika kata sandi korban bocor di internet pada akun <strong>Tanpa 2FA</strong> vs <strong>Dengan 2FA</strong>.
           </p>
         </div>
 
-        {/* Toggle 2FA switch */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '8px 16px', borderRadius: '12px', border: '1.5px solid #e2e8f0' }}>
-          <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#334155' }}>Mode Pertahanan:</span>
+        {/* 2FA Toggle Switch Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '8px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0' }}>
+          <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#334155' }}>Status Benteng Akun:</span>
           <button
-            className={`btn btn-sm ${has2FAEnabled ? 'btn-primary' : 'btn-secondary'}`}
+            className="btn btn-sm"
             style={{
-              padding: '6px 14px',
-              fontSize: '0.82rem',
-              background: has2FAEnabled ? '#16a34a' : '#ef4444',
+              padding: '8px 16px',
+              fontSize: '0.84rem',
+              fontWeight: 800,
+              background: has2FAEnabled ? '#16a34a' : '#dc2626',
               color: '#ffffff',
               border: 'none',
-              boxShadow: has2FAEnabled ? '0 0 12px rgba(22, 163, 74, 0.4)' : '0 0 12px rgba(239, 68, 68, 0.4)'
+              boxShadow: has2FAEnabled ? '0 0 16px rgba(22, 163, 74, 0.45)' : '0 0 16px rgba(220, 38, 38, 0.45)',
+              transition: 'all 0.25s'
             }}
             onClick={() => {
               if (isAttacking) return;
               playSound('click');
               setHas2FAEnabled(prev => !prev);
               setAttackResult(null);
-              setShowPushPrompt(false);
+              setShowPushNotification(false);
+              setIsPhoneVibrating(false);
             }}
           >
             {has2FAEnabled ? (
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Lock size={14} /> 2FA AKTIF (TERPERISAI)
+                <Lock size={15} /> 2FA: AKTIF (TERPERISAI)
               </span>
             ) : (
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Unlock size={14} /> 2FA MATI (RENTAN BOBOL)
+                <Unlock size={15} /> 2FA: MATI (RENTAN BOBOL)
               </span>
             )}
           </button>
         </div>
       </div>
 
-      {/* Main Arena: Terminal vs Victim Account */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'start' }}>
+      {/* Cyber Combat Arena: Hacker Terminal (Left) vs Real Smartphone (Right) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(330px, 1fr))', gap: '24px', alignItems: 'center' }}>
         
-        {/* Terminal Kali Linux / Hydra Brute-Force Bot */}
-        <div style={{ background: '#020617', border: '2px solid #1e293b', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 12px 30px rgba(0, 0, 0, 0.35)' }}>
-          {/* Terminal Window Header */}
-          <div style={{ background: '#0f172a', padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1e293b' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b', display: 'inline-block' }} />
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
-              </div>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: '#38bdf8', fontWeight: 600, marginLeft: '6px' }}>
-                hydrabot@kali-linux: ~# attack_engine --target akun_siswa
-              </span>
+        {/* Sisi Kiri: Terminal Kali Linux Brute-Force Bot */}
+        <div className="terminal-box">
+          {/* Top Bar Window */}
+          <div className="terminal-topbar">
+            <div className="terminal-dots">
+              <span className="terminal-dot dot-red" />
+              <span className="terminal-dot dot-yellow" />
+              <span className="terminal-dot dot-green" />
             </div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: isAttacking ? '#22c55e' : '#64748b' }}>
-              {isAttacking ? '● EXECUTING...' : '○ IDLE'}
+            <span className="terminal-title">
+              root@kali-attacker: ~/tools/hydrabot
             </span>
           </div>
 
-          {/* Terminal Logs View */}
+          {/* Terminal Screen Body */}
           <div
             ref={terminalBottomRef}
             style={{
@@ -182,7 +197,7 @@ export function AttackDemoView({ onProceedToPractice }) {
               fontFamily: 'var(--font-mono)',
               fontSize: '0.78rem',
               lineHeight: 1.6,
-              height: '240px',
+              height: '260px',
               overflowY: 'auto',
               background: 'radial-gradient(ellipse at top, #091324 0%, #020617 100%)',
               color: '#cbd5e1'
@@ -190,169 +205,182 @@ export function AttackDemoView({ onProceedToPractice }) {
           >
             {attackLogs.map((log, index) => {
               let color = '#94a3b8';
-              if (log.startsWith('[+]')) color = '#4ade80'; // Success green
-              else if (log.startsWith('[!]')) color = '#f87171'; // Warning red
-              else if (log.startsWith('[-]')) color = '#fbbf24'; // Notice amber
-              else if (log.startsWith('[>]')) color = '#38bdf8'; // Process cyan
+              if (typeof log === 'string') {
+                if (log.startsWith('[+]')) color = '#34d399';
+                else if (log.startsWith('[!]')) color = '#f87171';
+                else if (log.startsWith('[-]')) color = '#fbbf24';
+                else if (log.startsWith('[*]')) color = '#38bdf8';
+                return <div key={index} style={{ color, marginBottom: '4px' }}>{log}</div>;
+              }
+
+              if (log.type === 'green') color = '#34d399';
+              else if (log.type === 'red') color = '#f87171';
+              else if (log.type === 'cyan') color = '#38bdf8';
+              else if (log.type === 'amber') color = '#fbbf24';
+
               return (
-                <div key={index} style={{ color, marginBottom: '4px', wordBreak: 'break-all' }}>
-                  {log}
+                <div key={index} style={{ color, marginBottom: '4px' }}>
+                  {log.text}
                 </div>
               );
             })}
+            <span className="terminal-cursor" style={{ color: '#00f0ff', fontWeight: 800 }}>█</span>
           </div>
 
-          {/* Terminal Footer action */}
-          <div style={{ padding: '12px 16px', background: '#0b1329', borderTop: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
-              Attack Speed: {isAttacking ? '15,400 wps' : '0 wps'} | Wordlist: RockYou.txt
-            </span>
-            <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-              Port: 443 (HTTPS)
-            </span>
+          {/* Terminal Status Footer */}
+          <div style={{ padding: '10px 16px', background: '#0b1329', borderTop: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Progres Serangan:</span>
+              <div style={{ width: '120px', height: '6px', background: '#1e293b', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${attackProgress}%`, background: attackResult === 'hacked' ? '#ef4444' : '#00f0ff', transition: 'width 0.2s' }} />
+              </div>
+              <span style={{ fontSize: '0.72rem', color: '#cbd5e1', fontFamily: 'var(--font-mono)' }}>{attackProgress}%</span>
+            </div>
+
+            <button
+              className="btn btn-primary btn-sm"
+              disabled={isAttacking}
+              onClick={() => runAttack(has2FAEnabled)}
+              style={{ padding: '6px 14px', fontSize: '0.78rem' }}
+            >
+              <Play size={14} />
+              <span>{isAttacking ? 'Menyerang...' : 'Luncurkan Serangan'}</span>
+            </button>
           </div>
         </div>
 
-        {/* Akun Siswa Korban & Telemetri Real-time */}
-        <div style={{ background: '#ffffff', border: `2px solid ${attackResult === 'hacked' ? '#ef4444' : attackResult === 'defended' ? '#16a34a' : '#fee2e2'}`, borderRadius: '14px', padding: '20px', boxShadow: '0 6px 18px rgba(0, 0, 0, 0.04)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            {/* Header Profil Akun */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', borderBottom: '1px solid #f1f5f9', paddingBottom: '14px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: attackResult === 'hacked' ? '#ef4444' : '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 2px 8px rgba(220, 38, 38, 0.2)' }}>
-                  <User size={24} />
-                </div>
-                <div>
-                  <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a' }}>@pelajar_kekinian</div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Budi Pratama • Siswa SMA</div>
+        {/* Sisi Kanan: 1:1 Realistic Physical Smartphone Frame (Victim's Phone) */}
+        <div className="phone-device-wrap">
+          <div className={`phone-device-card ${isPhoneVibrating ? 'phone-shake-active' : ''} ${attackResult === 'defended' ? 'shield-active-glow' : ''}`}>
+            
+            {/* Dynamic Island Notch */}
+            <div className="dynamic-island">
+              <span className="notch-camera" />
+              <span className="notch-sensor" />
+            </div>
+
+            {/* Screen Inner */}
+            <div className="phone-screen-container" style={{
+              background: attackResult === 'hacked'
+                ? 'radial-gradient(circle at center, #7f1d1d 0%, #450a0a 100%)'
+                : attackResult === 'defended'
+                ? 'radial-gradient(circle at center, #064e3b 0%, #022c22 100%)'
+                : 'radial-gradient(circle at center, #0f172a 0%, #020617 100%)',
+              transition: 'background 0.5s ease',
+              padding: '16px'
+            }}>
+              
+              {/* Phone Status Bar */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.7rem', color: '#cbd5e1', marginBottom: '14px' }}>
+                <span style={{ fontWeight: 700 }}>09:41</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Wifi size={12} />
+                  <span>5G</span>
+                  <Battery size={14} />
                 </div>
               </div>
 
-              <div>
-                <span className={`badge ${has2FAEnabled ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.78rem' }}>
-                  {has2FAEnabled ? 'Perisai 2FA Aktif' : '2FA Nonaktif'}
+              {/* Dynamic Notification Dropdown (Ketika 2FA Aktif) */}
+              {showPushNotification && (
+                <div className="banner-drop-in" style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  padding: '12px 14px',
+                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.4)',
+                  marginBottom: '12px',
+                  border: '1.5px solid #38bdf8'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', fontWeight: 800, color: '#0f172a' }}>
+                      <BellRing size={14} color="#dc2626" />
+                      <span>Apple ID Security</span>
+                    </div>
+                    <span style={{ fontSize: '0.68rem', color: '#64748b' }}>Baru Saja</span>
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: '#334155', lineHeight: 1.35, marginBottom: '8px' }}>
+                    ⚠️ Upaya masuk terdeteksi dari <strong>St. Petersburg, Rusia</strong> (IP: 185.220.101.5). Apakah ini Anda?
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      className="btn btn-sm"
+                      style={{ flex: 1, background: '#dc2626', color: '#ffffff', border: 'none', padding: '6px 8px', fontSize: '0.72rem', fontWeight: 700 }}
+                      onClick={handleManualReject}
+                    >
+                      <XCircle size={12} /> TOLAK & BLOKIR
+                    </button>
+                    <button
+                      className="btn btn-sm"
+                      style={{ background: '#f1f5f9', color: '#64748b', border: 'none', padding: '6px 8px', fontSize: '0.72rem' }}
+                      disabled
+                    >
+                      Izinkan
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Center Lockscreen Graphic */}
+              <div style={{ textAlign: 'center', margin: 'auto 0' }}>
+                {attackResult === 'hacked' ? (
+                  <div style={{ animation: 'phone-shake 0.3s' }}>
+                    <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', boxShadow: '0 0 20px #ef4444' }}>
+                      <ShieldX size={32} color="#ffffff" />
+                    </div>
+                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fecaca', marginBottom: '4px' }}>
+                      PERANGKAT DI-LOGOUT PAKSA!
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: '#fca5a5', lineHeight: 1.4, padding: '0 8px' }}>
+                      Hacker berhasil membajak token login akun <strong>@pelajar_kekinian</strong> via password yang bocor!
+                    </div>
+                  </div>
+                ) : attackResult === 'defended' ? (
+                  <div>
+                    <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', boxShadow: '0 0 24px #22c55e' }}>
+                      <ShieldCheck size={34} color="#ffffff" />
+                    </div>
+                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#bbf7d0', marginBottom: '4px' }}>
+                      PERISAI 2FA BERHASIL!
+                    </div>
+                    <div style={{ fontSize: '0.74rem', color: '#86efac', lineHeight: 1.4, padding: '0 8px' }}>
+                      Serangan ditangkal total! Peretas tidak memiliki akses fisik ke ponsel Anda untuk melihat kode OTP.
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: '#1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                      <Smartphone size={28} color="#94a3b8" />
+                    </div>
+                    <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#f8fafc', marginBottom: '2px' }}>
+                      Smartphone Siswa (Aman)
+                    </div>
+                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                      Menunggu telemetri autentikasi...
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Bottom Phone Footer */}
+              <div style={{ textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px' }}>
+                <span className={`badge ${has2FAEnabled ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.7rem' }}>
+                  {has2FAEnabled ? '🛡️ Terlindungi Lapis 2FA' : '⚠️ Hanya Kata Sandi'}
                 </span>
               </div>
             </div>
-
-            {/* Info Kredensial Bocor */}
-            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px', fontSize: '0.82rem', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ color: '#64748b' }}>Email Akun:</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#0f172a' }}>akun_siswa@sekolah.sch.id</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ color: '#64748b' }}>Kata Sandi Bocor:</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#dc2626' }}>sayang123 (Terkompromi)</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#64748b' }}>Status Proteksi Sesi:</span>
-                <span style={{ fontWeight: 700, color: has2FAEnabled ? '#16a34a' : '#ef4444' }}>
-                  {has2FAEnabled ? 'Wajib OTP 6-Digit' : 'Hanya Password (Mudah Bobol)'}
-                </span>
-              </div>
-            </div>
-
-            {/* Mobile Push Challenge Simulation (Ketika 2FA Aktif) */}
-            {showPushPrompt && (
-              <div style={{
-                background: '#0f172a',
-                color: '#ffffff',
-                borderRadius: '12px',
-                padding: '14px',
-                marginBottom: '16px',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
-                border: '1.5px solid #38bdf8',
-                animation: 'pulse 2s infinite'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#38bdf8', fontWeight: 700, fontSize: '0.84rem', marginBottom: '6px' }}>
-                  <BellRing size={16} />
-                  <span>NOTIFIKASI TANTANGAN KEAMANAN HP KORBAN</span>
-                </div>
-                <div style={{ fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.4, marginBottom: '10px' }}>
-                  ⚠️ Ada upaya login baru terdeteksi dari <strong>St. Petersburg, Rusia (IP: 185.220.101.5)</strong> via Linux/HydraBot. Apakah ini Anda?
-                </div>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <button
-                    className="btn btn-sm"
-                    style={{ flex: 1, background: '#ef4444', color: '#fff', border: 'none', padding: '6px 10px', fontSize: '0.78rem' }}
-                    onClick={handleManualRejectPush}
-                  >
-                    <XCircle size={14} /> TOLAK & BLOKIR AKSES
-                  </button>
-                  <button
-                    className="btn btn-sm"
-                    style={{ background: '#334155', color: '#94a3b8', border: 'none', padding: '6px 10px', fontSize: '0.78rem' }}
-                    disabled
-                  >
-                    Izinkan (Palsu)
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Outcome Result: Hacked Alert */}
-            {attackResult === 'hacked' && (
-              <div style={{ padding: '16px', background: '#fef2f2', border: '2px solid #ef4444', borderRadius: '10px', color: '#991b1b', fontSize: '0.86rem', lineHeight: 1.5, marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: '0.98rem', marginBottom: '6px', color: '#dc2626' }}>
-                  <ShieldAlert size={20} />
-                  <span>AKUN DIBOBOL HACKER! SESI LOGIN TELAH DICURI!</span>
-                </div>
-                <p style={{ margin: '0 0 8px 0' }}>
-                  Karena <strong>2FA TIDAK AKTIF</strong>, hacker langsung mendapatkan akses penuh ke akun Anda hanya bermodalkan password yang bocor!
-                </p>
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                  <span className="badge badge-red" style={{ fontSize: '0.72rem' }}>⚠️ Foto Pribadi Diunduh</span>
-                  <span className="badge badge-red" style={{ fontSize: '0.72rem' }}>⚠️ DM & Kontak Diintip</span>
-                  <span className="badge badge-red" style={{ fontSize: '0.72rem' }}>⚠️ Nomor Korban Force Logout</span>
-                </div>
-              </div>
-            )}
-
-            {/* Outcome Result: Defended Alert */}
-            {attackResult === 'defended' && (
-              <div style={{ padding: '16px', background: '#f0fdf4', border: '2px solid #16a34a', borderRadius: '10px', color: '#166534', fontSize: '0.86rem', lineHeight: 1.5, marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: '0.98rem', marginBottom: '6px', color: '#15803d' }}>
-                  <ShieldCheck size={20} />
-                  <span>PERISAI 2FA BERHASIL MENGGAGALKAN PENCURIAN AKUN!</span>
-                </div>
-                <p style={{ margin: '0 0 8px 0' }}>
-                  Meskipun password Anda bocor di internet, hacker <strong>TETAP TIDAK BISA LOGIN</strong> karena tidak memegang HP fisik Anda untuk melihat kode 6-digit OTP!
-                </p>
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                  <span className="badge badge-green" style={{ fontSize: '0.72rem' }}>🛡️ IP Hacker Diblokir Otomatis</span>
-                  <span className="badge badge-green" style={{ fontSize: '0.72rem' }}>🛡️ Sesi Asli Aman</span>
-                  <span className="badge badge-cyan" style={{ fontSize: '0.72rem' }}>✨ +50 Skor Literasi</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Action Trigger Button */}
-          <div style={{ marginTop: '14px' }}>
-            <button
-              className="btn btn-primary btn-full"
-              style={{ padding: '12px', fontSize: '0.92rem', fontWeight: 700 }}
-              disabled={isAttacking}
-              onClick={() => runAttack(has2FAEnabled)}
-            >
-              <Play size={16} />
-              <span>{isAttacking ? 'Bot Hacker Sedang Menyerang...' : 'Luncurkan Simulasi Serangan Hacker'}</span>
-            </button>
           </div>
         </div>
 
       </div>
 
-      {/* Bottom Nav to Practice */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '22px', borderTop: '1px solid #fee2e2', paddingTop: '16px', flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ fontSize: '0.84rem', color: '#64748b' }}>
-          💡 <em>Fakta Siber: Mengaktifkan 2FA memblokir hingga 99.9% serangan pengambilalihan akun otomatis (Microsoft Digital Defense Report).</em>
+      {/* Educational Footer Banner */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '22px', borderTop: '1.5px solid #fee2e2', paddingTop: '16px', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.4 }}>
+          💡 <strong>Pelajaran Penting:</strong> Kata sandi Anda bisa saja bocor dari database luar. Namun dengan <strong>2FA Aktif</strong>, akun Anda tetap 100% kebal karena peretas tidak memegang ponsel Anda!
         </div>
 
         <button className="btn btn-secondary" onClick={onProceedToPractice} style={{ padding: '8px 18px' }}>
           <span>Lanjut ke Praktikkan Aktivasi 2FA</span>
-          <Smartphone size={16} />
+          <ArrowRight size={16} />
         </button>
       </div>
     </div>

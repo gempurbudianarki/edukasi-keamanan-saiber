@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Eye, EyeOff, Check, X, ShieldCheck, Clock, Key, Cpu, Zap, Activity, Info, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Eye, EyeOff, Check, X, ShieldCheck, Clock, Key, Cpu, Zap, Activity, Info, Sparkles, Terminal, Flame } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 
 export function PasswordTester({ 
@@ -30,6 +30,17 @@ export function PasswordTester({
     return '#00f0ff'; // Neon Cyan / Strongest
   };
 
+  // Pseudo hash calculator for visual feedback
+  const getPseudoHash = (str) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    const hex = Math.abs(hash).toString(16).padStart(8, '0');
+    return `SHA256:${hex.repeat(4).slice(0, 32)}`;
+  };
+
   return (
     <div className="glass-panel scenario-card">
       {/* Title */}
@@ -43,12 +54,12 @@ export function PasswordTester({
               Uji Ketahanan Sandi & Telemetri Bobol
             </h2>
             <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-              Analisis matematis Shannon Entropy & simulasi brute-force GPU cluster
+              Analisis Shannon Entropy & simulasi 8x RTX 4090 GPU Cluster
             </div>
           </div>
         </div>
 
-        <span className="badge" style={{ background: analysis.color, color: '#ffffff', fontWeight: 700, fontSize: '0.78rem' }}>
+        <span className="badge" style={{ background: analysis.color, color: '#ffffff', fontWeight: 800, fontSize: '0.8rem', boxShadow: `0 0 12px ${analysis.color}60` }}>
           {analysis.label}
         </span>
       </div>
@@ -63,7 +74,7 @@ export function PasswordTester({
           type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => {
-            playSound('click');
+            playSound('keyboard');
             onPasswordChange(e.target.value);
           }}
           placeholder="Ketik kata sandi Anda di sini..."
@@ -77,13 +88,16 @@ export function PasswordTester({
             fontSize: '1.15rem',
             fontFamily: 'var(--font-mono)',
             outline: 'none',
-            boxShadow: `0 0 14px ${analysis.color}25`,
+            boxShadow: `0 0 16px ${analysis.color}35`,
             transition: 'all 0.25s'
           }}
         />
         <button
           type="button"
-          onClick={onToggleShow}
+          onClick={() => {
+            playSound('click');
+            onToggleShow();
+          }}
           style={{
             position: 'absolute',
             right: '14px',
@@ -105,8 +119,8 @@ export function PasswordTester({
       {/* 5-Segment Strength Bar */}
       <div style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '6px' }}>
-          <span>Indikator Kekuatan Sandi</span>
-          <span style={{ color: analysis.color }}>Skor Entropi: {analysis.score}/100</span>
+          <span>Indikator Kekuatan Sandi:</span>
+          <span style={{ color: analysis.color, fontWeight: 800 }}>Skor Entropi: {analysis.score}/100</span>
         </div>
         <div style={{ display: 'flex', gap: '6px', height: '10px' }}>
           {[0, 1, 2, 3, 4].map((idx) => (
@@ -117,7 +131,7 @@ export function PasswordTester({
                 borderRadius: '5px',
                 background: getSegmentColor(idx),
                 transition: 'background-color 0.3s ease, transform 0.2s',
-                boxShadow: idx < activeSegments && activeSegments === 5 ? '0 0 8px rgba(0, 240, 255, 0.6)' : 'none'
+                boxShadow: idx < activeSegments && activeSegments === 5 ? '0 0 8px rgba(0, 240, 255, 0.8)' : 'none'
               }}
             />
           ))}
@@ -131,22 +145,24 @@ export function PasswordTester({
         borderRadius: '14px',
         padding: '18px',
         marginBottom: '18px',
-        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.25)',
-        color: '#f8fafc'
+        boxShadow: '0 12px 30px rgba(0, 0, 0, 0.35)',
+        color: '#f8fafc',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        {/* HUD Header */}
+        {/* HUD Top Bar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#38bdf8', fontSize: '0.8rem', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
             <Cpu size={16} />
-            <span>TELEMETRI CRACKING SUPERKOMPUTER</span>
+            <span>GPU CLUSTER TELEMETRY (8x NVIDIA RTX 4090)</span>
           </div>
           <span style={{ fontSize: '0.72rem', color: '#22c55e', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Activity size={12} /> HASHCAT ONLINE
+            <Activity size={12} /> 100 GH/s ACTIVE
           </span>
         </div>
 
         {/* Live Crack Time Highlight */}
-        <div style={{ textAlign: 'center', padding: '10px 0' }}>
+        <div style={{ textAlign: 'center', padding: '8px 0' }}>
           <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '1px', marginBottom: '4px' }}>
             Estimasi Waktu Tembus Komputer Peretas:
           </div>
@@ -155,21 +171,27 @@ export function PasswordTester({
             fontFamily: 'var(--font-mono)',
             fontWeight: 800,
             color: analysis.color,
-            textShadow: `0 0 16px ${analysis.color}60`,
+            textShadow: `0 0 20px ${analysis.color}70`,
             lineHeight: 1.2
           }}>
             {analysis.crackTime}
           </div>
         </div>
 
+        {/* Live Hash Stream */}
+        <div style={{ background: '#091122', padding: '6px 10px', borderRadius: '6px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#64748b', display: 'flex', justifyContent: 'space-between', margin: '10px 0', overflow: 'hidden' }}>
+          <span>HASH TARGET:</span>
+          <span style={{ color: '#38bdf8' }}>{getPseudoHash(password)}</span>
+        </div>
+
         {/* Telemetry Metrics Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '10px', marginTop: '12px', borderTop: '1px solid #1e293b', paddingTop: '12px', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '10px', borderTop: '1px solid #1e293b', paddingTop: '12px', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
           <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '8px' }}>
             <div style={{ color: '#64748b' }}>Kecepatan Uji:</div>
             <div style={{ color: '#cbd5e1', fontWeight: 700 }}>100 Miliar / dtk</div>
           </div>
           <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '8px' }}>
-            <div style={{ color: '#64748b' }}>Karakter:</div>
+            <div style={{ color: '#64748b' }}>Panjang Karakter:</div>
             <div style={{ color: '#cbd5e1', fontWeight: 700 }}>{password.length} Karakter</div>
           </div>
           <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '8px' }}>
