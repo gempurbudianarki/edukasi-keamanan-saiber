@@ -7,6 +7,7 @@ import { ApkDownloadMockup } from './modals/mockups/ApkDownloadMockup';
 import { SmsFormMockup } from './modals/mockups/SmsFormMockup';
 import { InstagramMockup } from './modals/mockups/InstagramMockup';
 import { LegitClassroomMockup } from './modals/mockups/LegitClassroomMockup';
+import { SCENARIO_TYPES } from '../../../data/scenarioTypes';
 import './SimulatedBrowser.css';
 
 export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
@@ -116,22 +117,39 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
               </div>
             </div>
           ) : (
-            /* MOCKUP VIEWS */
+            /* MOCKUP VIEWS WITH SAFE FALLBACK */
             <div style={{ background: '#fff', minHeight: '380px', padding: '24px 20px', flex: 1, overflowY: 'auto' }}>
-              {scenario.simType === 'dana_login' && (
+              {scenario.simType === SCENARIO_TYPES.DANA_LOGIN && (
                 <DanaLoginMockup scenario={scenario} onBreach={handleBreach} />
               )}
-              {scenario.simType === 'apk_installer' && (
+              {scenario.simType === SCENARIO_TYPES.APK_INSTALLER && (
                 <ApkDownloadMockup scenario={scenario} onBreach={handleBreach} />
               )}
-              {scenario.simType === 'form_kuota' && (
+              {scenario.simType === SCENARIO_TYPES.FORM_KUOTA && (
                 <SmsFormMockup scenario={scenario} onBreach={handleBreach} />
               )}
-              {scenario.simType === 'ig_login' && (
+              {scenario.simType === SCENARIO_TYPES.IG_LOGIN && (
                 <InstagramMockup scenario={scenario} onBreach={handleBreach} />
               )}
-              {scenario.simType === 'legit_classroom' && (
+              {scenario.simType === SCENARIO_TYPES.LEGIT_CLASSROOM && (
                 <LegitClassroomMockup onClose={onClose} />
+              )}
+              {/* Safe Fallback: Mencegah layar putih kosong jika tipe mockup belum terdaftar */}
+              {![
+                SCENARIO_TYPES.DANA_LOGIN,
+                SCENARIO_TYPES.APK_INSTALLER,
+                SCENARIO_TYPES.FORM_KUOTA,
+                SCENARIO_TYPES.IG_LOGIN,
+                SCENARIO_TYPES.LEGIT_CLASSROOM,
+                SCENARIO_TYPES.GAME_DIAMOND
+              ].includes(scenario.simType) && (
+                <div style={{ padding: '40px 20px', textAlign: 'center', color: '#64748b' }}>
+                  <AlertTriangle size={44} color="#f59e0b" style={{ margin: '0 auto 12px' }} />
+                  <h3 style={{ color: '#0f172a', marginBottom: '8px' }}>Simulasi Konten Sedang Dimuat</h3>
+                  <p style={{ fontSize: '0.9rem', maxWidth: '420px', margin: '0 auto', lineHeight: 1.5 }}>
+                    Modul simulasi untuk tipe <strong>{scenario.simType || 'Tidak Dikenal'}</strong> sedang disiapkan. Silakan gunakan tombol Laporkan & Blokir di atas.
+                  </p>
+                </div>
               )}
             </div>
           )}

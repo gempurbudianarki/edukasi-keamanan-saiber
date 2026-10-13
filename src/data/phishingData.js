@@ -3,11 +3,13 @@
 // Clean professional dataset with ZERO raw emojis (Vector-driven)
 // ================================================================
 
+import { SCENARIO_TYPES } from './scenarioTypes.js';
+
 // ── 1. REALISTIC ATTACK SCENARIOS (WITH 1:1 WEBSITES) ───────────
 export const phishingScenarios = [
   {
     id: 'dana-kaget-phishing',
-    simType: 'dana_login',
+    simType: SCENARIO_TYPES.DANA_LOGIN,
     platform: 'WhatsApp Broadcast',
     platformType: 'whatsapp',
     sender: '+62 858-1122-3344 (Grup Mabar MLBB)',
@@ -48,7 +50,7 @@ export const phishingScenarios = [
   },
   {
     id: 'kuota-kemdikbud',
-    simType: 'form_kuota',
+    simType: SCENARIO_TYPES.FORM_KUOTA,
     platform: 'SMS Broadcast Provider',
     platformType: 'sms',
     sender: 'BANTUAN-PEMERINTAH',
@@ -92,7 +94,7 @@ export const phishingScenarios = [
   },
   {
     id: 'ig-copyright',
-    simType: 'ig_login',
+    simType: SCENARIO_TYPES.IG_LOGIN,
     platform: 'Instagram Direct Message',
     platformType: 'instagram',
     sender: 'Instagram Official Support (@help_meta_security_id)',
@@ -133,7 +135,7 @@ export const phishingScenarios = [
   },
   {
     id: 'capcut-apk',
-    simType: 'apk_installer',
+    simType: SCENARIO_TYPES.APK_INSTALLER,
     platform: 'WhatsApp Chat',
     platformType: 'whatsapp',
     sender: '+62 821-4455-8899 (Teman Mabar)',
@@ -181,7 +183,7 @@ export const phishingScenarios = [
   },
   {
     id: 'game-diamond',
-    simType: 'game_diamond',
+    simType: SCENARIO_TYPES.GAME_DIAMOND,
     platform: 'Media Sosial Promo',
     platformType: 'game',
     sender: 'Moonton_Event_ID',
@@ -224,7 +226,7 @@ export const phishingScenarios = [
   },
   {
     id: 'google-classroom',
-    simType: 'legit_classroom',
+    simType: SCENARIO_TYPES.LEGIT_CLASSROOM,
     platform: 'Email Siswa Resmi',
     platformType: 'email',
     sender: 'Google Classroom (no-reply@classroom.google.com)',
