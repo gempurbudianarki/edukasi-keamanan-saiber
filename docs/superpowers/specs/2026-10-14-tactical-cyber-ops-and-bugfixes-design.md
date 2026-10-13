@@ -1,105 +1,142 @@
-# Spesifikasi Desain: Tactical Cyber-Ops Overhaul, Gamifikasi Meriah & Perbaikan Sistem Menyeluruh
+# Spesifikasi Desain: Tactical Cyber-Ops Overhaul, Gamifikasi Meriah & Perbaikan Arsitektur Sistem Menyeluruh
 
 **Tanggal:** 14 Oktober 2026  
 **Status:** Disetujui  
 **Penanggung Jawab:** Gempur Budi Anarki  
 **Institusi:** Universitas Bina Bangsa Getsempena (UBBG)  
-**Lingkup:** Perbaikan Forensik Email Spoofing, Penambahan Mockup Diamond Game, Perbaikan Router & Scoring State, Animasi Radar Sweep, Floating XP (+25 PTS), Gauge Lingkaran OTP 2FA, dan Efek Perisai Privasi Meriah.
+**Lingkup:** Single Data Source, Enum Skenario & Safe Modal Fallback, Pure Function Scoring Idempoten & Vitest, Migrasi Storage Terpusat, Rombak Forensik Email (Termasuk Kasus Semua-PASS Lookalike), Mockup Game Diamond Aman, Timer OTP Berbasis Timestamp, dan Sistem Animasi Aksesibel Ringan.
 
 ---
 
-## 1. Latar Belakang & Identifikasi Masalah
+## 1. Latar Belakang & Evaluasi Masalah
 
-Berdasarkan evaluasi pengujian pengguna secara langsung:
-1. **Forensik Email Phishing Bermasalah & Spoiler Awal:**
-   * Di `EmailSpoofingView.jsx`, status autentikasi SPF/DKIM/DMARC langsung terbuka di awal dengan badge hijau/merah, sehingga membocorkan jawaban sebelum siswa menganalisis.
-   * Teks surat yang ditampilkan hanya berupa kalimat ringkasan pengembang (*developer notes*), bukan format pesan email nyata yang meyakinkan.
-   * Tidak ada ulasan komparasi visual yang jelas setelah siswa menjawab.
-2. **Mockup Game Diamond Blank Putih:**
-   * Skenario 5 (`game-diamond`) di `phishingData.js` tidak memiliki komponen mockup di `SimulatedBrowserModal.jsx`, sehingga saat siswa mengklik "Buka Tautan di Browser Virtual", layar hanya tampil putih kosong.
-3. **Bug Sinkronisasi Skor Akhir (Stale Closure):**
-   * Di `PhishingRadar.jsx`, fungsi `handleFinishAll()` membaca state `emailHistory` yang belum diperbarui oleh siklus render React saat soal email terakhir dijawab, menyebabkan skor persentase akurasi siswa menjadi berkurang tidak adil.
-4. **Desinkronisasi Router & Storage:**
-   * `navigation.js` masih memeriksa key lama `cybergenz_progress_2026`, sedangkan `storage.js` menggunakan `cybergenz_pkm_progress_v1`. Refresh browser di halaman awal dapat mengakibatkan hilangnya sesi siswa.
-5. **Animasi Datar & Kurang Semarak (*Underwhelming Visuals*):**
-   * Tidak ada feedback animasi angka melayang (*floating score burst*) saat jawaban benar.
-   * Phishing Radar tidak memiliki animasi garis putar radar (*tactical sweep*).
-   * Misi 2FA tidak memiliki timer visual melingkar (*circular progress countdown*).
-   * Privacy Shield tidak memiliki letupan visual saat mencapai 100%.
+Berdasarkan tinjauan kritis mendalam terhadap sistem simulasi:
+1. **Risiko Mismatch Penamaan Skenario & Layar Putih (Blank):**
+   * Penamaan skenario tidak terstandarisasi (`game-diamond` vs `game-diamond-scam` vs `game_diamond`).
+   * Tidak ada blok `default:` pada `SimulatedBrowserModal.jsx`, sehingga tipe skenario yang belum terdaftar langsung memunculkan layar putih kosong tanpa pesan kesalahan.
+2. **Duplikasi Dataset Antara Client & Server:**
+   * `src/data/phishingData.js` dan route Express di `server/routes/` mendefinisikan dataset secara terpisah yang rentan mengalami perbedaan konten (*data drift*).
+3. **Kelemahan Perhitungan Skor & Stale Closure:**
+   * Di `PhishingRadar.jsx`, fungsi penutupan membaca state `emailHistory` yang belum ter-update akibat siklus asinkron React.
+   * Skor rentan dimanipulasi dengan klik berulang (*point farming*) dan pembagi skor tidak boleh bergantung pada jumlah soal yang sempat dijawab siswa.
+4. **Desinkronisasi Storage & Race Condition Router:**
+   * `navigation.js` menggunakan key usang `cybergenz_progress_2026` sedangkan `storage.js` memakai `cybergenz_pkm_progress_v1`. Tidak ada migrasi data progres lama dan hidrasi routing belum terpusat.
+5. **Celah Konseptual Edukasi Email Spoofing (SPF/DKIM):**
+   * Menampilkan status SPF/DKIM di awal membocorkan jawaban ke siswa.
+   * Mengajarkan rumus sederhana "SPF PASS = Asli, SPF FAIL = Palsu" berbahaya dalam literasi siber nyata, karena penyerang yang mendaftarkan domain tipuan sendiri (contoh: `rnicrosoft.com` atau `bca-id.com`) dapat memiliki SPF, DKIM, dan DMARC yang semuanya **PASS**.
+6. **Isu Keamanan & Form Input Simulasi:**
+   * Mockup form yang meminta password akun atau PIN dompet digital harus memiliki banner penegasan bahwa data tidak dikirim ke internet, tidak disimpan, dan dilarang menggunakan kata sandi asli.
+7. **Animasi Datar, Risiko Drift Timer, dan Aksesibilitas:**
+   * Timer 30 detik OTP menggunakan `setInterval` decremental yang mengalami drift jika tab browser diminimize/di-background.
+   * Efek animasi belum mempertimbangkan performa perangkat HP kelas bawah dan belum memiliki dukungan `prefers-reduced-motion`. Audio synthesizer harus memiliki status default yang tidak mengganggu di ruang kelas.
 
 ---
 
-## 2. Arsitektur Solusi & Komponen
+## 2. Arsitektur & Perbaikan Inti (Fase 1)
 
-### 2.1 Perbaikan Inti Sinkronisasi Data & Router
-* **Penyelarasan Key Storage:** Mengubah `navigation.js` untuk membaca key tunggal `cybergenz_pkm_progress_v1`.
-* **Sinkronisasi Dataset Skenario Phishing:** Menyelaraskan seluruh ID dan properti skenario antara `server/routes/scenarios.routes.js`, `server/routes/drills.routes.js`, dan `src/data/phishingData.js`:
-  * `dana-kaget-phishing` (DANA fintech)
-  * `capcut-apk-mod` (Android malware SMS dropper)
-  * `kuota-kemdikbud-fake` (Data harvesting kuota)
-  * `ig-copyright-phishing` (Instagram credential clone)
-  * `game-diamond-scam` (Event klaim 10.000 diamond gratis)
-  * `google-classroom-legit` (Tautan resmi kelas daring)
+### 2.1 Single Source of Truth Dataset & Enum Skenario
+* **Berkas Enum:** `src/data/scenarioTypes.js`
+  ```javascript
+  export const SCENARIO_TYPES = {
+    DANA_LOGIN: 'dana_login',
+    APK_INSTALLER: 'apk_installer',
+    FORM_KUOTA: 'form_kuota',
+    IG_LOGIN: 'ig_login',
+    GAME_DIAMOND: 'game_diamond',
+    LEGIT_CLASSROOM: 'legit_classroom'
+  };
+  ```
+* **Dataset Tunggal:** Seluruh dataset skenario dan drill berada di `src/data/phishingData.js`. Route Express di `server/routes/` langsung mengimpor dataset ini menggunakan Node.js ES Modules standar tanpa menduplikasi data.
+* **Safe Fallback Modal:** Di `SimulatedBrowserModal.jsx`, blok switch memiliki `default:` fallback yang merender kartu peringatan grafis jika ada tipe skenario tidak dikenal.
 
-### 2.2 Komponen Mockup Baru: `GameDiamondMockup.jsx`
+### 2.2 Pure Function Scoring Idempoten (`src/utils/scoring.js`)
+* Logika perhitungan skor diekstrak keluar dari komponen React menjadi *pure function*:
+  ```javascript
+  export function calculateMissionAccuracy(historyArray, totalQuestions) {
+    if (!Array.isArray(historyArray) || totalQuestions <= 0) return 0;
+    // Map untuk memastikan setiap ID soal hanya dihitung 1 kali (anti-point farming)
+    const uniqueAnswers = new Map();
+    for (const item of historyArray) {
+      if (item && item.id) uniqueAnswers.set(item.id, Boolean(item.correct));
+    }
+    let correctCount = 0;
+    for (const isCorrect of uniqueAnswers.values()) {
+      if (isCorrect) correctCount++;
+    }
+    return Math.min(100, Math.round((correctCount / totalQuestions) * 100));
+  }
+  ```
+* Didukung unit test otomatis (`src/utils/scoring.test.js`) menggunakan Vitest untuk menguji berbagai edge case: riwayat kosong, jawaban duplikat, dan batas 0–100%.
+
+### 2.3 Storage Key Terpusat & Migrasi 1-Arah
+* `STORAGE_KEY = 'cybergenz_pkm_progress_v1'` diekspor dari `src/utils/storage.js`.
+* Fungsi `migrateLegacyProgress()` memeriksa keberadaan key lama `cybergenz_progress_2026`. Jika ada, data disalin ke key baru dan key lama dihapus.
+* `navigation.js` mengimpor `STORAGE_KEY` langsung dari `storage.js` sehingga eliminasi bug mismatch 100%.
+
+---
+
+## 3. Komponen Skenario & Rombak Forensik Email (Fase 2)
+
+### 3.1 Mockup Baru: `GameDiamondMockup.jsx`
 * Berkas: `src/components/modules/PhishingRadar/modals/mockups/GameDiamondMockup.jsx`
 * Menampilkan:
-  * Banner mencolok event "GIVEAWAY 10.000 DIAMOND MLBB & FREE FIRE 2026".
-  * Roda keberuntungan berputar (*Spinning Lucky Wheel*) interaktif.
-  * Formulir penipuan yang meminta ID Akun Game, Server ID, dan Kata Sandi Akun Moonton / Facebook.
-  * Tombol aksi "Klaim Diamond ke Kotak Surat Game" yang memicu simulasi peretasan akun (*Breach Overlay*).
-* Integrasi di `SimulatedBrowserModal.jsx` untuk tipe skenario `game_diamond`.
+  * Banner peringatan tegas di bagian atas form: *"⚠️ SIMULASI EDUKASI: Data tidak disimpan & tidak dikirim ke internet. JANGAN masukkan kata sandi asli Anda!"*
+  * Desain interaktif event game MLBB / Free Fire 2026.
+  * Roda putar hadiah (*Spin Wheel*) dan form klaim ID game.
+  * Form submit memicu simulasi peretasan (*breach overlay*) tanpa melakukan request network apa pun.
 
-### 2.3 Rombak Total Forensik Email Spoofing (`EmailSpoofingView.jsx`)
-* **Tampilan Email Klien Nyata:**
-  * Header email lengkap: Pengirim terlihat (*Friendly Name*), Alamat email asli (*From Address*), Kepada, Tanggal kirim, dan Subjek berurgensi tinggi.
-  * Isi badan email berformat kartu resmi (dilengkapi peringatan manipulasi rasa panik / diskon palsu).
-* **Mode Deteksi Adil (Tanpa Bocoran Awal):**
-  * Status badge SPF/DKIM/DMARC disembunyikan dalam tombol interaktif **"Inspeksi Header MIME Teknis (SPF / DKIM)"**.
-  * Siswa dilatih membaca parameter teknis: apakah SPF bertuliskan `FAIL`, `PASS`, atau IP server pengirim adalah IP publik asing.
-* **Ulasan Komparasi Hasil:**
-  * Begitu siswa memilih "Email Asli & Terverifikasi" atau "Email Palsu (Spoofed)", sistem membuka ulasan forensik komparatif: menyoroti kenapa email tersebut palsu/asli dan apa saja ciri-ciri (*red flags*) yang menjadi jebakan.
-
-### 2.4 Perbaikan State & Akumulasi Skor (`PhishingRadar.jsx`)
-* Fungsi pencatatan hasil dimodifikasi untuk menerima parameter riwayat terbaru secara langsung tanpa menunggu update asynchronous state React.
-* Menghitung skor total akurasi dari jumlah kasus yang benar dibagi total kasus yang diselesaikan (skala 0 - 100%).
+### 3.2 Rombak Forensik Email & Kasus SPF "Semua PASS Tapi Domain Tipuan"
+* Berkas: `src/components/modules/PhishingRadar/views/EmailSpoofingView.jsx`
+* **Penyajian Pesan:**
+  * Surat dirender sebagai komponen React aman tanpa `dangerouslySetInnerHTML`.
+  * Menampilkan informasi kartu email realistis: Friendly Name, Alamat Email pengirim, Subjek, Tanggal, dan Badan Surat.
+* **Mode Deteksi Tanpa Bocoran:**
+  * Tombol interaktif *"Inspeksi Header Keamanan (SPF / DKIM / DMARC)"*.
+  * Status badge teknis tersembunyi hingga siswa menekan tombol inspeksi atau memberikan tebakan.
+* **Studi Kasus Pedagogis Baru (Semua PASS):**
+  * Skenario email penipuan dengan domain tiruan yang dikontrol attacker (misal: `@rnicrosoft-security.com` atau `@bca-layanan.id`).
+  * Header teknis: SPF = PASS, DKIM = PASS, DMARC = PASS!
+  * Penjelasan edukatif: Mengajarkan siswa bahwa SPF/DKIM hanya membuktikan email benar-benar dikirim dari server pemilik domain tersebut, **bukan** berarti pemilik domain itu adalah Microsoft atau Bank BCA resmi!
 
 ---
 
-## 3. Sistem Animasi & Gamifikasi Meriah (Cyber-Ops Engine)
+## 4. Animasi Gamifikasi Meriah, Ringan & Aksesibel (Fase 3)
 
-### 3.1 Komponen Floating Score (`FloatingScoreBurst.jsx`)
-* Efek angka hijau neon melayang naik secara mulus: `+25 PTS! / TEPAT!` dengan glow bayangan hijau dan suara synth nada keberhasilan.
-* Dipicu di:
-  * Phishing Radar (saat menandai phishing/aman dengan benar)
-  * Domain Comparator (saat memilih domain asli yang benar)
-  * Email Spoofing (saat membedakan email spoofed vs legit)
-  * 2FA Shield (saat sukses mengonfirmasi kode OTP)
-  * Password Vault (saat mencapai status kuat >= 80%)
-  * Privacy Shield (saat skor privasi mencapai 100%)
+### 4.1 Floating XP / Point Burst (`+25 PTS!`)
+* Setiap jawaban benar memicu pop-up angka melayang `+25 PTS!` berwarna hijau neon menyala dengan micro-sound sintetis.
+* Menggunakan CSS hardware-accelerated (`transform: translateY()` dan `opacity`).
 
-### 3.2 Efek Radar Scanning Sweep (`PhishingRadar.css`)
-* Menambahkan animasi lingkaran radar militer dengan garis pemindai hijau/merah berputar 360 derajat di latar belakang kartu skenario Phishing Radar.
-* Memberikan sensasi operasi pertahanan siber aktif (*live tactical radar*).
+### 4.2 Timer OTP Berbasis Timestamp (Anti-Drift)
+* Di `ActivationPracticeView.jsx`, hitungan mundur 30 detik dihitung menggunakan selisih timestamp nyata (`Date.now() - startTime`), memastikan tidak ada percepatan/perlambatan timer jika tab browser berpindah background.
+* Gauge lingkaran interaktif SVG berputar dinamis mengikuti sisa detik.
 
-### 3.3 Visual 2FA: Terminal Matrix & Circular Gauge OTP (`TwoFactorShield`)
-* **Terminal Hacker:** Efek ketikan baris teks berkedip layaknya terminal Linux hacker sungguhan saat serangan bot brute-force diluncurkan.
-* **Circular Gauge OTP:** Lingkaran SVG berputar yang mengecil warnanya dari hijau ke merah saat hitungan mundur 30 detik pada HP virtual.
+### 4.3 Radar Sweep & Border Neon Glow
+* Garis putar radar 360 derajat di latar belakang kartu skenario Phishing Radar.
+* Kartu misi memiliki animasi *subtle pulse glow* saat aktif.
 
-### 3.4 Visual Password Vault: Odometer Counter (`PasswordVault`)
-* Teks estimasi waktu retas hacker beranimasi menghitung dari hitungan milidetik secara dramatis menuju estimasi waktu sesungguhnya.
-* Bar kekuatan sandi bertransisi warna dinamis (Merah -> Kuning -> Hijau Neon).
-
-### 3.5 Visual Privacy Shield: Shield Burst Confetti (`PrivacyShield`)
-* Ketika ke-5 toggle dinyalakan dan skor privasi mencapai 100%, lencana perisai memancarkan animasi *shield pulse* dan menembakkan partikel micro-confetti.
+### 4.4 Aksesibilitas & Kontrol Audio Ruang Kelas
+* Seluruh animasi dinonaktifkan secara otomatis jika sistem operasi siswa mengaktifkan `@media (prefers-reduced-motion: reduce)`.
+* Audio sintetis memiliki status default mute di ruang kelas dan tombol toggle yang mudah diakses di navbar.
 
 ---
 
-## 4. Rencana Pengujian & Validasi
+## 5. Rencana Tahapan Eksekusi
 
-1. **Uji Mockup Game Diamond:** Buka skenario diamond game di browser virtual, pastikan antarmuka render sempurna dan form pemicu breach bekerja tanpa eror.
-2. **Uji Forensik Email:** Verifikasi bahwa badge SPF/DKIM tidak bocor sebelum dibuka, surat tampil realistis, dan jawaban benar/salah terdeteksi presisi.
-3. **Uji Perhitungan Skor Phishing Radar:** Selesaikan ketiga tahap (Web, Domain, Email) dan pastikan skor akhir di layar kelulusan sesuai dengan jumlah jawaban benar tanpa bug closure.
-4. **Uji Refresh & Navigasi:** Refresh browser saat berada di dalam modul dan pastikan identitas siswa serta posisi route tidak ter-reset.
-5. **Uji Efek Animasi & Audio:** Pastikan animasi floating point `+25 PTS!`, radar sweep, circular OTP, dan confetti berjalan mulus 60 FPS pada mobile maupun desktop proyektor.
-6. **Verifikasi Build:** Jalankan `npm run build` dan pastikan proses build bersih 0 error.
+1. **Fase 1: Inti Sistem & Tes Logika**
+   - Implementasi `scenarioTypes.js`
+   - Implementasi `scoring.js` & tes Vitest `scoring.test.js`
+   - Sinkronisasi `storage.js` (migrasi legacy key) dan `navigation.js`
+   - Penyatuan single dataset di `src/data/phishingData.js` dan koneksi ke `server/routes/`
+2. **Fase 2: Mockup Game Diamond & Rombak Email Spoofing**
+   - Pembuatan `GameDiamondMockup.jsx` lengkap dengan disclaimer keamanan
+   - Penambahan skenario SPF/DKIM All-PASS lookalike domain
+   - Rombak antarmuka `EmailSpoofingView.jsx` (inspeksi header, tampilan surat nyata, ulasan komparasi)
+   - Penambahan fallback `default:` di `SimulatedBrowserModal.jsx`
+3. **Fase 3: Animasi Gamifikasi & Performa**
+   - Komponen `FloatingScoreBurst.jsx`
+   - Animasi radar sweep dan pulsing cyber card
+   - Gauge melingkar OTP berbasis timestamp di 2FA
+   - Dukungan `prefers-reduced-motion` dan audit performa 60 FPS
+4. **Fase 4: Verifikasi & Build Bersih**
+   - Menjalankan unit test (`npm test` / vitest)
+   - Menjalankan `npm run build` dan pengujian langsung browser
