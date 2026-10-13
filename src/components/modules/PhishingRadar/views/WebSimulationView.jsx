@@ -147,8 +147,21 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
           {current.attachment && (
             <div className="chat-attachment">
               <span className="att-icon">📎</span>
-              <span className="att-name">{current.attachment}</span>
-              <span className="badge badge-red" style={{ marginLeft: 'auto' }}>Ekstensi Berbahaya</span>
+              <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+                <span className="att-name" style={{ fontWeight: 700, color: '#dc2626', wordBreak: 'break-all' }}>
+                  {typeof current.attachment === 'object' && current.attachment !== null
+                    ? current.attachment.name
+                    : String(current.attachment)}
+                </span>
+                {typeof current.attachment === 'object' && current.attachment?.size && (
+                  <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                    Ukuran: {current.attachment.size} • Format Berbahaya
+                  </span>
+                )}
+              </div>
+              <span className="badge badge-red" style={{ marginLeft: 'auto', flexShrink: 0 }}>
+                Ekstensi Berbahaya
+              </span>
             </div>
           )}
 
