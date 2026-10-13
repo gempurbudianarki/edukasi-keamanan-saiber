@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Mail, ShieldCheck, ShieldAlert, ChevronRight, Code, AlertTriangle, CheckCircle2, User, ExternalLink } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
+import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
 export function EmailSpoofingView({ drills, onRecordResult, onCompleteMode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showHeaders, setShowHeaders] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null); // 'fake' | 'real'
+  const [burstTrigger, setBurstTrigger] = useState(0);
 
   if (!drills || drills.length === 0) {
     return <div style={{ padding: '24px', textAlign: 'center' }}>Memuat latihan email...</div>;
@@ -44,6 +46,7 @@ export function EmailSpoofingView({ drills, onRecordResult, onCompleteMode }) {
 
     if (isCorrect) {
       playSound('success');
+      setBurstTrigger(t => t + 1);
     } else {
       playSound('error');
     }
@@ -65,6 +68,8 @@ export function EmailSpoofingView({ drills, onRecordResult, onCompleteMode }) {
 
   return (
     <div className="glass-panel scenario-card">
+      <FloatingScoreBurst text="+25 PTS!" trigger={burstTrigger} />
+
       <div className="scenario-topbar">
         <span className="badge badge-purple">
           Forensik Email Spoofing #{currentIndex + 1} dari {drills.length}

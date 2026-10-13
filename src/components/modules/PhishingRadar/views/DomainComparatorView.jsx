@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Globe, ShieldCheck, ShieldAlert, ChevronRight, Info } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
+import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
 export function DomainComparatorView({ drills, onRecordResult, onCompleteMode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState(null); // 'A' | 'B'
   const [showAnalysis, setShowAnalysis] = useState(false);
+  const [burstTrigger, setBurstTrigger] = useState(0);
 
   if (!drills || drills.length === 0) {
     return <div style={{ padding: '24px', textAlign: 'center' }}>Memuat latihan domain...</div>;
@@ -34,6 +36,7 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
 
     if (isCorrect) {
       playSound('success');
+      setBurstTrigger(t => t + 1);
     } else {
       playSound('error');
     }
@@ -55,6 +58,8 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
 
   return (
     <div className="glass-panel scenario-card">
+      <FloatingScoreBurst text="+25 PTS!" trigger={burstTrigger} />
+
       <div className="scenario-topbar">
         <span className="badge badge-purple">
           Lab Komparasi Domain #{currentIndex + 1} dari {drills.length}
@@ -74,11 +79,11 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
           style={{
             padding: '20px',
             borderRadius: '12px',
-            border: selectedChoice === 'A' 
-              ? (correctAnswer === 'A' ? '2px solid #16a34a' : '2px solid #dc2626')
+            border: selectedChoice
+              ? (correctAnswer === 'A' ? '2px solid #16a34a' : selectedChoice === 'A' ? '2px solid #dc2626' : '1.5px solid #e2e8f0')
               : '1.5px solid #e2e8f0',
-            background: selectedChoice === 'A'
-              ? (correctAnswer === 'A' ? '#f0fdf4' : '#fef2f2')
+            background: selectedChoice
+              ? (correctAnswer === 'A' ? '#f0fdf4' : selectedChoice === 'A' ? '#fef2f2' : '#f8fafc')
               : '#f8fafc',
             cursor: selectedChoice ? 'default' : 'pointer',
             transition: 'all 0.2s',
@@ -86,7 +91,9 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span className="badge badge-secondary">Opsi A</span>
+            <span className={`badge ${selectedChoice && correctAnswer === 'A' ? 'badge-green' : 'badge-secondary'}`}>
+              Opsi A {selectedChoice && (correctAnswer === 'A' ? '✓ (Resmi)' : selectedChoice === 'A' ? '✗ (Palsu)' : '')}
+            </span>
             <Globe size={18} color="#dc2626" />
           </div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600, color: '#0f172a' }}>
@@ -105,11 +112,11 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
           style={{
             padding: '20px',
             borderRadius: '12px',
-            border: selectedChoice === 'B' 
-              ? (correctAnswer === 'B' ? '2px solid #16a34a' : '2px solid #dc2626')
+            border: selectedChoice
+              ? (correctAnswer === 'B' ? '2px solid #16a34a' : selectedChoice === 'B' ? '2px solid #dc2626' : '1.5px solid #e2e8f0')
               : '1.5px solid #e2e8f0',
-            background: selectedChoice === 'B'
-              ? (correctAnswer === 'B' ? '#f0fdf4' : '#fef2f2')
+            background: selectedChoice
+              ? (correctAnswer === 'B' ? '#f0fdf4' : selectedChoice === 'B' ? '#fef2f2' : '#f8fafc')
               : '#f8fafc',
             cursor: selectedChoice ? 'default' : 'pointer',
             transition: 'all 0.2s',
@@ -117,7 +124,9 @@ export function DomainComparatorView({ drills, onRecordResult, onCompleteMode })
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span className="badge badge-secondary">Opsi B</span>
+            <span className={`badge ${selectedChoice && correctAnswer === 'B' ? 'badge-green' : 'badge-secondary'}`}>
+              Opsi B {selectedChoice && (correctAnswer === 'B' ? '✓ (Resmi)' : selectedChoice === 'B' ? '✗ (Palsu)' : '')}
+            </span>
             <Globe size={18} color="#dc2626" />
           </div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600, color: '#0f172a' }}>

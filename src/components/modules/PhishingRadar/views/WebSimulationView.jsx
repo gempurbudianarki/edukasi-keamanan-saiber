@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 import { SimulatedBrowserModal } from '../SimulatedBrowserModal';
+import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
 export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,6 +23,7 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const [answeredAction, setAnsweredAction] = useState(null); // 'open' | 'block' | 'safe'
   const [sinkholeAlert, setSinkholeAlert] = useState(null);
+  const [burstTrigger, setBurstTrigger] = useState(0);
 
   if (!scenarios || scenarios.length === 0) {
     return <div style={{ padding: '24px', textAlign: 'center' }}>Memuat skenario...</div>;
@@ -53,6 +55,7 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
     const isCorrect = (action === current.correctAction);
     if (isCorrect) {
       playSound('success');
+      setBurstTrigger(t => t + 1);
       if (action === 'block') {
         setSinkholeAlert({ domain: current.displayUrl, ip: '0.0.0.0' });
       }
@@ -69,6 +72,7 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
     const isCorrect = ('block' === current.correctAction);
     if (isCorrect) {
       playSound('success');
+      setBurstTrigger(t => t + 1);
       setSinkholeAlert({ domain: current.displayUrl, ip: '0.0.0.0' });
     }
     onRecordResult({ id: current.id, action: 'block', correct: isCorrect });
@@ -90,6 +94,7 @@ export function WebSimulationView({ scenarios, onRecordResult, onCompleteMode })
 
   return (
     <div>
+      <FloatingScoreBurst text="+25 PTS!" trigger={burstTrigger} />
       {/* SINKHOLE NOTIFICATION */}
       {sinkholeAlert && (
         <div className="sinkhole-banner">

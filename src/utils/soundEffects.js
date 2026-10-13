@@ -1,6 +1,15 @@
 // Web Audio API Synth Sound Effects (Zero external audio files needed)
 let audioCtx = null;
-let isAudioMuted = false;
+
+// Audio default OFF (muted) agar tidak mengagetkan di kelas / proyektor
+let isAudioMuted = true;
+
+if (typeof window !== 'undefined') {
+  const saved = localStorage.getItem('cybergenz_audio_muted');
+  if (saved !== null) {
+    isAudioMuted = saved === 'true';
+  }
+}
 
 function getAudioContext() {
   if (!audioCtx && typeof window !== 'undefined') {
@@ -17,6 +26,9 @@ function getAudioContext() {
 
 export function toggleAudioMute() {
   isAudioMuted = !isAudioMuted;
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('cybergenz_audio_muted', String(isAudioMuted));
+  }
   return isAudioMuted;
 }
 
