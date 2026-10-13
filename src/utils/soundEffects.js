@@ -36,8 +36,8 @@ export function getAudioMutedStatus() {
   return isAudioMuted;
 }
 
-export function playSound(type = 'click') {
-  if (isAudioMuted) return;
+export function playSound(type = 'click', force = false) {
+  if (isAudioMuted && !force) return;
   try {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -75,20 +75,59 @@ export function playSound(type = 'click') {
       osc.start(now);
       osc.stop(now + 0.25);
     } else if (type === 'siren') {
-      // Emergency warning siren
+      // Tactical Nuclear Air-Raid Klaxon Siren
+      const duration = 2.4;
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      const oscSub = ctx.createOscillator();
+      const gainSub = ctx.createGain();
+
       osc.type = 'sawtooth';
-      const duration = 1.2;
-      // Oscillate frequency up and down like an emergency siren
-      for (let i = 0; i < 4; i++) {
-        const t = now + i * 0.3;
-        osc.frequency.setValueAtTime(450, t);
-        osc.frequency.exponentialRampToValueAtTime(950, t + 0.15);
-        osc.frequency.exponentialRampToValueAtTime(450, t + 0.3);
+      osc2.type = 'square';
+      oscSub.type = 'sine';
+
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+
+      oscSub.connect(gainSub);
+      gainSub.connect(ctx.destination);
+
+      // 4 siren wail cycles (pitch ramps up and down)
+      const cycles = 4;
+      const cycleLen = duration / cycles;
+      for (let i = 0; i < cycles; i++) {
+        const start = now + i * cycleLen;
+        const mid = start + cycleLen * 0.48;
+        const end = start + cycleLen;
+
+        osc.frequency.setValueAtTime(500, start);
+        osc.frequency.exponentialRampToValueAtTime(1150, mid);
+        osc.frequency.exponentialRampToValueAtTime(500, end);
+
+        osc2.frequency.setValueAtTime(505, start);
+        osc2.frequency.exponentialRampToValueAtTime(1160, mid);
+        osc2.frequency.exponentialRampToValueAtTime(505, end);
       }
-      gain.gain.setValueAtTime(0.2, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+      // Low sub-bass earthquake rumble during siren
+      oscSub.frequency.setValueAtTime(65, now);
+      oscSub.frequency.exponentialRampToValueAtTime(45, now + duration);
+
+      gain.gain.setValueAtTime(0.24, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+      gain2.gain.setValueAtTime(0.12, now);
+      gain2.gain.exponentialRampToValueAtTime(0.005, now + duration);
+
+      gainSub.gain.setValueAtTime(0.18, now);
+      gainSub.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
       osc.start(now);
       osc.stop(now + duration);
+      osc2.start(now);
+      osc2.stop(now + duration);
+      oscSub.start(now);
+      oscSub.stop(now + duration);
     } else if (type === 'glitch') {
       // Glitch / static buzz
       osc.type = 'square';

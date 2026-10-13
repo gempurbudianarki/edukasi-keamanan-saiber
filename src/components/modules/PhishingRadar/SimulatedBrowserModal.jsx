@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Lock, AlertTriangle, ShieldAlert, CreditCard, Camera, Smartphone, MessageSquare, Gamepad2, User } from 'lucide-react';
+import { 
+  Lock, 
+  AlertTriangle, 
+  ShieldAlert, 
+  CreditCard, 
+  Camera, 
+  Smartphone, 
+  MessageSquare, 
+  Gamepad2, 
+  User, 
+  Radiation, 
+  Biohazard, 
+  Siren, 
+  AlertOctagon, 
+  Flame 
+} from 'lucide-react';
 import { playSound } from '../../../utils/soundEffects';
 import { DanaLoginMockup } from './modals/mockups/DanaLoginMockup';
 import { ApkDownloadMockup } from './modals/mockups/ApkDownloadMockup';
@@ -16,8 +31,8 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
 
   const handleBreach = () => {
     setBreached(true);
-    playSound('siren');
-    setTimeout(() => playSound('glitch'), 500);
+    playSound('siren', true);
+    setTimeout(() => playSound('glitch', true), 600);
   };
 
   const renderCrimeVector = (type) => {
@@ -76,45 +91,76 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
           <button className="sim-close-btn" onClick={onClose} title="Tutup Simulator">✕</button>
         </div>
 
+        {/* DEFCON-1 Tactical Hazard Caution Strip */}
+        {breached && (
+          <div className="tactical-hazard-strip">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Siren size={18} className="siren-spinning" />
+              <span>DEFCON-1 CYBER WAR DEFENSE PROTOCOL</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Radiation size={16} className="nuclear-icon" />
+              <span>CRITICAL INTRUSION DETECTED</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>CODE: RED ALERT</span>
+              <Siren size={18} className="siren-spinning" />
+            </div>
+          </div>
+        )}
+
         {/* Browser viewport body */}
         <div className="sim-body">
           {breached ? (
-            /* BREACH OVERLAY */
+            /* DEFCON-1 TACTICAL BREACH OVERLAY (ZERO SCROLL FIT) */
             <div className="breach-overlay">
-              <div className="breach-card">
-                <div className="breach-pulse-icon">
-                  <ShieldAlert size={48} color="#dc2626" />
+              <div className="tactical-breach-hud">
+                {/* Emergency Flashing Siren Orb & Defcon Badge */}
+                <div className="tactical-beacon-wrap">
+                  <div className="tactical-siren-orb" title="Keadaan Darurat Siber">
+                    <Radiation size={28} className="nuclear-spin" />
+                  </div>
+                  <div className="tactical-defcon-badge">
+                    <span className="defcon-ping" />
+                    <span>DEFCON 1 // PROTOKOL PERANG SIBER AKTIF</span>
+                    <span className="defcon-ping" />
+                  </div>
                 </div>
-                <div className="badge badge-red" style={{ marginBottom: 12 }}>
-                  SIMULASI PERETASAN AKTIF // PERANGKAT TERINFEKSI
-                </div>
-                <h2 className="breach-title">
+
+                {/* Tactical Alert Headline & Subtitle */}
+                <h2 className="tactical-breach-title">
                   {scenario.breachResult?.headline || 'DATA PRIBADI ANDA TELAH BERHASIL DICURI!'}
                 </h2>
-                <p className="breach-desc">
+                <p className="tactical-breach-desc">
                   {scenario.breachResult?.alertMsg || 'Informasi yang Anda ketik baru saja terekam di terminal hacker.'}
                 </p>
 
+                {/* Compact 3-Column Threat Grid (Zero Vertical Scrolling!) */}
                 {scenario.breachResult?.liveCrimes && (
-                  <div className="crime-grid">
+                  <div className="tactical-crime-grid">
                     {scenario.breachResult.liveCrimes.map((c, i) => (
-                      <div key={i} className="crime-item">
-                        <div className="crime-icon">{renderCrimeVector(c.iconType)}</div>
-                        <div>
-                          <div className="crime-item-title">{c.title}</div>
-                          <div className="crime-item-desc">{c.desc}</div>
+                      <div key={i} className="tactical-crime-card">
+                        <div className="tactical-crime-header">
+                          <div className="tactical-crime-icon">
+                            {renderCrimeVector(c.iconType)}
+                          </div>
+                          <span className="tactical-threat-tag">THREAT #{i + 1}</span>
                         </div>
+                        <div className="tactical-crime-title">{c.title}</div>
+                        <div className="tactical-crime-desc">{c.desc}</div>
                       </div>
                     ))}
                   </div>
                 )}
 
-                <div className="breach-actions">
-                  <button className="btn btn-secondary" onClick={onClose} style={{ background: '#ffffff', color: '#0f172a', fontWeight: 600, padding: '10px 22px' }}>
+                {/* Tactical Defense Actions */}
+                <div className="tactical-breach-actions">
+                  <button className="tactical-btn-dismiss" onClick={onClose}>
                     Tutup Simulator
                   </button>
-                  <button className="btn btn-primary" onClick={onReportPhishing} style={{ background: '#dc2626', borderColor: '#b91c1c', fontWeight: 700, padding: '10px 22px' }}>
-                    <ShieldAlert size={16} /> Laporkan & Blokir Tautan
+                  <button className="tactical-btn-countermeasure" onClick={onReportPhishing}>
+                    <ShieldAlert size={18} />
+                    <span>LUNCURKAN COUNTER-DEFENSE: BLOKIR & LAPORKAN</span>
                   </button>
                 </div>
               </div>
