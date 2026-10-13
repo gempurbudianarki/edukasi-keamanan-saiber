@@ -7,6 +7,7 @@ import { WebSimulationView } from './views/WebSimulationView';
 import { DomainComparatorView } from './views/DomainComparatorView';
 import { EmailSpoofingView } from './views/EmailSpoofingView';
 import { UrlScannerView } from './views/UrlScannerView';
+import { calculateMissionAccuracy } from '../../../utils/scoring';
 import './PhishingRadar.css';
 
 export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
@@ -61,13 +62,9 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
   const handleFinishAll = () => {
     playSound('complete');
     setFinished(true);
-    const totalCorrect = [
-      ...simHistory.filter(h => h.correct),
-      ...domainHistory.filter(h => h.correct),
-      ...emailHistory.filter(h => h.correct)
-    ].length;
-    const totalQuestions = (scenarios.length || 4) + (domainDrills.length || 3) + (emailDrills.length || 2);
-    const finalPct = Math.min(100, Math.round((totalCorrect / Math.max(1, totalQuestions)) * 100));
+    const combinedHistory = [...simHistory, ...domainHistory, ...emailHistory];
+    const totalQuestions = (scenarios.length || 6) + (domainDrills.length || 3) + (emailDrills.length || 5);
+    const finalPct = calculateMissionAccuracy(combinedHistory, totalQuestions);
     onComplete(finalPct);
   };
 
@@ -82,13 +79,12 @@ export function PhishingRadar({ onBack, onComplete, initialScore = 0 }) {
 
   // Completion screen
   if (finished) {
-    const totalCorrect = [
-      ...simHistory.filter(h => h.correct),
-      ...domainHistory.filter(h => h.correct),
-      ...emailHistory.filter(h => h.correct)
-    ].length;
+    const combinedHistory = [...simHistory, ...domainHistory, ...emailHistory];
     const totalQuestions = scenarios.length + domainDrills.length + emailDrills.length;
-    const finalPct = Math.min(100, Math.round((totalCorrect / Math.max(1, totalQuestions)) * 100));
+    const finalPct = calculateMissionAccuracy(combinedHistory, totalQuestions);
+    const totalCorrect = new Set(
+      combinedHistory.filter(h => h.correct).map(h => h.id)
+    ).size;
 
     return (
       <div className="module-page container">
