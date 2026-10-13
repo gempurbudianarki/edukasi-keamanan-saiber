@@ -7,6 +7,7 @@ import { ApkDownloadMockup } from './modals/mockups/ApkDownloadMockup';
 import { SmsFormMockup } from './modals/mockups/SmsFormMockup';
 import { InstagramMockup } from './modals/mockups/InstagramMockup';
 import { LegitClassroomMockup } from './modals/mockups/LegitClassroomMockup';
+import { GameDiamondMockup } from './modals/mockups/GameDiamondMockup';
 import { SCENARIO_TYPES } from '../../../data/scenarioTypes';
 import './SimulatedBrowser.css';
 
@@ -31,13 +32,15 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
     }
   };
 
-  const tabTitle = scenario.simType === 'dana_login'
+  const tabTitle = scenario.simType === SCENARIO_TYPES.DANA_LOGIN
     ? 'DANA • Dompet Digital Indonesia'
-    : scenario.simType === 'ig_login'
+    : scenario.simType === SCENARIO_TYPES.IG_LOGIN
     ? 'Instagram • Login'
-    : scenario.simType === 'apk_installer'
+    : scenario.simType === SCENARIO_TYPES.APK_INSTALLER
     ? 'Unduh CapCut Mod APK'
-    : scenario.simType === 'legit_classroom'
+    : scenario.simType === SCENARIO_TYPES.GAME_DIAMOND
+    ? 'Event 10.000 Diamond Game'
+    : scenario.simType === SCENARIO_TYPES.LEGIT_CLASSROOM
     ? 'Google Classroom'
     : 'Kemendikbud – Kuota Belajar';
 
@@ -130,6 +133,9 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
               )}
               {scenario.simType === SCENARIO_TYPES.IG_LOGIN && (
                 <InstagramMockup scenario={scenario} onBreach={handleBreach} />
+              )}
+              {scenario.simType === SCENARIO_TYPES.GAME_DIAMOND && (
+                <GameDiamondMockup scenario={scenario} onBreach={handleBreach} />
               )}
               {scenario.simType === SCENARIO_TYPES.LEGIT_CLASSROOM && (
                 <LegitClassroomMockup onClose={onClose} />
