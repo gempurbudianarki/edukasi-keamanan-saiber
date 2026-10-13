@@ -41,7 +41,7 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
 
   return (
     <div className="sim-overlay">
-      <div className={`sim-chrome ${breached ? 'anim-shake' : ''}`}>
+      <div className={`sim-chrome ${breached ? 'breach-active' : ''}`}>
         {/* Tab bar */}
         <div className="sim-tabbar">
           <div className="sim-tab">
