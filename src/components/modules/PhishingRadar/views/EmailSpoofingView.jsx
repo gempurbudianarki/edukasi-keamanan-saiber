@@ -109,31 +109,32 @@ export function EmailSpoofingView({
       {/* Realistic Email Client Card */}
       <div style={{
         background: '#ffffff',
-        border: '1.5px solid #e2e8f0',
-        borderRadius: '14px',
+        border: '2.5px solid var(--nb-border, #000000)',
+        borderRadius: 'var(--nb-radius-md, 8px)',
         padding: '20px',
         marginBottom: '20px',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)'
+        boxShadow: '4px 4px 0 var(--nb-shadow-color, #000000)'
       }}>
         {/* Email Metadata Header */}
-        <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '14px', marginBottom: '16px' }}>
+        <div style={{ borderBottom: '2px solid var(--nb-border, #000000)', paddingBottom: '14px', marginBottom: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
-                width: '42px',
-                height: '42px',
-                borderRadius: '50%',
+                width: '44px',
+                height: '44px',
+                borderRadius: '8px',
                 background: '#f1f5f9',
-                border: '1px solid #cbd5e1',
+                border: '2px solid #000000',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#475569'
+                color: '#0f172a',
+                boxShadow: '2px 2px 0 #000000'
               }}>
                 <User size={22} />
               </div>
               <div>
-                <div style={{ fontWeight: 800, fontSize: '1rem', color: '#0f172a' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
                   {displaySender}
                 </div>
                 <div style={{ fontSize: '0.8rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
@@ -142,21 +143,21 @@ export function EmailSpoofingView({
               </div>
             </div>
 
-            <div style={{ fontSize: '0.76rem', color: '#94a3b8', textAlign: 'right' }}>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', textAlign: 'right', fontWeight: 600 }}>
               {dateStr}
             </div>
           </div>
 
-          <div style={{ marginTop: '12px', fontSize: '0.82rem', color: '#475569' }}>
+          <div style={{ marginTop: '12px', fontSize: '0.84rem', color: '#475569' }}>
             <strong>Kepada:</strong> <span style={{ fontFamily: 'var(--font-mono)' }}>{toEmail}</span>
           </div>
-          <div style={{ marginTop: '6px', fontSize: '0.98rem', fontWeight: 800, color: '#dc2626' }}>
+          <div style={{ marginTop: '8px', fontSize: '1.05rem', fontWeight: 800, color: 'var(--nb-coral, #ff4d4d)', fontFamily: 'var(--font-heading)' }}>
             {subject}
           </div>
         </div>
 
         {/* Email Body Content (Rendered as safe React paragraphs) */}
-        <div style={{ fontSize: '0.9rem', color: '#334155', lineHeight: 1.65, whiteSpace: 'pre-line', marginBottom: '18px' }}>
+        <div style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.65, whiteSpace: 'pre-line', marginBottom: '18px' }}>
           {bodyText}
         </div>
 
@@ -168,11 +169,13 @@ export function EmailSpoofingView({
               alignItems: 'center',
               gap: '6px',
               padding: '9px 18px',
-              background: '#0284c7',
-              color: '#ffffff',
-              borderRadius: '7px',
-              fontWeight: 700,
-              fontSize: '0.84rem'
+              background: 'var(--nb-cyan, #00f0ff)',
+              color: '#0f172a',
+              border: '2px solid #000000',
+              borderRadius: '6px',
+              fontWeight: 800,
+              fontSize: '0.86rem',
+              boxShadow: '2px 2px 0 #000000'
             }}>
               <span>{ctaText}</span>
               <ExternalLink size={14} />
@@ -184,15 +187,15 @@ export function EmailSpoofingView({
       {/* Raw Headers & Technical Inspection Drawer */}
       {showHeaders && (
         <div style={{
-          background: '#0f172a',
-          border: '1.5px solid #334155',
-          borderRadius: '10px',
+          background: '#050811',
+          border: '2.5px solid var(--nb-border, #000000)',
+          borderRadius: 'var(--nb-radius-md, 8px)',
           padding: '16px',
           marginBottom: '20px',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
+          boxShadow: '4px 4px 0 var(--nb-shadow-color, #000000)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', borderBottom: '1px solid #1e293b', paddingBottom: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#38bdf8', fontSize: '0.82rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', borderBottom: '1.5px solid #1e293b', paddingBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--nb-cyan, #00f0ff)', fontSize: '0.82rem', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>
               <Code size={15} />
               <span>RAW MIME HEADERS FORENSIC DATA</span>
             </div>
@@ -217,14 +220,14 @@ export function EmailSpoofingView({
       {/* Decisions Action Buttons */}
       {!selectedAction ? (
         <div>
-          <div style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', marginBottom: '10px' }}>
+          <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '12px', fontWeight: 700 }}>
             Berdasarkan nama pengirim, subjek, isi email, dan hasil inspeksi header di atas, tentukan keputusanmu:
           </div>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
             <button
               type="button"
               className="btn btn-secondary"
-              style={{ flex: '1 1 200px', borderColor: '#16a34a', color: '#15803d', background: '#f0fdf4', padding: '13px' }}
+              style={{ flex: '1 1 200px', background: 'var(--nb-lime, #22c55e)', color: '#ffffff', borderColor: '#000000', padding: '13px', fontWeight: 800 }}
               onClick={() => handleAction('real')}
             >
               <ShieldCheck size={18} />
@@ -233,7 +236,7 @@ export function EmailSpoofingView({
             <button
               type="button"
               className="btn btn-primary"
-              style={{ flex: '1 1 200px', background: '#dc2626', borderColor: '#b91c1c', color: '#fff', padding: '13px' }}
+              style={{ flex: '1 1 200px', background: 'var(--nb-coral, #ff4d4d)', borderColor: '#000000', color: '#ffffff', padding: '13px', fontWeight: 800 }}
               onClick={() => handleAction('fake')}
             >
               <ShieldAlert size={18} />
@@ -252,7 +255,7 @@ export function EmailSpoofingView({
               </div>
             ) : (
               <div className="feedback-wrong">
-                <ShieldAlert size={22} color="#dc2626" />
+                <ShieldAlert size={22} color="#ff4d4d" />
                 <span>KEPUTUSAN KELIRU! Waspada trik manipulasi email.</span>
               </div>
             )}
@@ -264,12 +267,12 @@ export function EmailSpoofingView({
 
           {/* Red flags list */}
           {redFlags.length > 0 && (
-            <div style={{ background: '#ffffff', border: '1px solid #fee2e2', borderRadius: '10px', padding: '14px', marginBottom: '16px' }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#dc2626', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <AlertTriangle size={15} />
+            <div style={{ background: '#ffffff', border: '2px solid var(--nb-border, #000000)', borderRadius: 'var(--nb-radius-md, 8px)', padding: '14px', marginBottom: '16px', boxShadow: '3px 3px 0 var(--nb-shadow-color, #000000)' }}>
+              <div style={{ fontSize: '0.84rem', fontWeight: 800, color: 'var(--nb-coral, #ff4d4d)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <AlertTriangle size={16} />
                 <span>Titik Kritis Indikator Ancaman (Red Flags):</span>
               </div>
-              <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.84rem', color: '#475569', lineHeight: 1.5 }}>
+              <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.84rem', color: '#334155', lineHeight: 1.5, fontWeight: 500 }}>
                 {redFlags.map((flag, idx) => (
                   <li key={idx} style={{ marginBottom: '4px' }}>{flag}</li>
                 ))}

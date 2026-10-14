@@ -124,16 +124,19 @@ export function playSound(type = 'click', force = false) {
       osc.start(now);
       osc.stop(now + 0.3);
     } else if (type === 'siren') {
-      // Tactical DEFCON Nuclear Klaxon Siren
-      const duration = 2.4;
+      // Cinematic DEFCON-1 Nuclear & Cyber War Emergency Klaxon
+      const duration = 2.8;
       const osc2 = ctx.createOscillator();
       const gain2 = ctx.createGain();
       const oscSub = ctx.createOscillator();
       const gainSub = ctx.createGain();
+      const oscAlarm = ctx.createOscillator();
+      const gainAlarm = ctx.createGain();
 
       osc.type = 'sawtooth';
       osc2.type = 'square';
       oscSub.type = 'sine';
+      oscAlarm.type = 'sawtooth';
 
       osc2.connect(gain2);
       gain2.connect(ctx.destination);
@@ -141,33 +144,46 @@ export function playSound(type = 'click', force = false) {
       oscSub.connect(gainSub);
       gainSub.connect(ctx.destination);
 
-      const cycles = 4;
+      oscAlarm.connect(gainAlarm);
+      gainAlarm.connect(ctx.destination);
+
+      // Layer 1 & 2: Dual sweeping de-tuned air-raid klaxon
+      const cycles = 5;
       const cycleLen = duration / cycles;
       for (let i = 0; i < cycles; i++) {
         const start = now + i * cycleLen;
-        const mid = start + cycleLen * 0.48;
+        const mid = start + cycleLen * 0.45;
         const end = start + cycleLen;
 
-        osc.frequency.setValueAtTime(500, start);
-        osc.frequency.exponentialRampToValueAtTime(1180, mid);
-        osc.frequency.exponentialRampToValueAtTime(500, end);
+        osc.frequency.setValueAtTime(420, start);
+        osc.frequency.exponentialRampToValueAtTime(1280, mid);
+        osc.frequency.exponentialRampToValueAtTime(420, end);
 
-        osc2.frequency.setValueAtTime(505, start);
-        osc2.frequency.exponentialRampToValueAtTime(1190, mid);
-        osc2.frequency.exponentialRampToValueAtTime(505, end);
+        osc2.frequency.setValueAtTime(430, start);
+        osc2.frequency.exponentialRampToValueAtTime(1310, mid);
+        osc2.frequency.exponentialRampToValueAtTime(430, end);
       }
 
-      oscSub.frequency.setValueAtTime(70, now);
-      oscSub.frequency.exponentialRampToValueAtTime(40, now + duration);
+      // Layer 3: Sub-bass visceral chest rumble (38Hz -> 58Hz)
+      oscSub.frequency.setValueAtTime(55, now);
+      oscSub.frequency.exponentialRampToValueAtTime(38, now + duration);
 
-      gain.gain.setValueAtTime(0.25, now);
+      // Layer 4: Emergency alert pulsing tone
+      oscAlarm.frequency.setValueAtTime(880, now);
+      oscAlarm.frequency.setValueAtTime(1760, now + 0.15);
+      oscAlarm.frequency.setValueAtTime(880, now + 0.3);
+
+      gain.gain.setValueAtTime(0.32, now);
       gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
 
-      gain2.gain.setValueAtTime(0.14, now);
+      gain2.gain.setValueAtTime(0.18, now);
       gain2.gain.exponentialRampToValueAtTime(0.005, now + duration);
 
-      gainSub.gain.setValueAtTime(0.22, now);
-      gainSub.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      gainSub.gain.setValueAtTime(0.38, now);
+      gainSub.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+      gainAlarm.gain.setValueAtTime(0.15, now);
+      gainAlarm.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
       osc.start(now);
       osc.stop(now + duration);
@@ -175,17 +191,43 @@ export function playSound(type = 'click', force = false) {
       osc2.stop(now + duration);
       oscSub.start(now);
       oscSub.stop(now + duration);
+      oscAlarm.start(now);
+      oscAlarm.stop(now + 0.6);
     } else if (type === 'glitch') {
-      // Realistic electrical static & screen malfunction
+      // Realistic electrical hardware malfunction & static burst
+      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.35, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < noiseBuffer.length; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1000, now);
+      filter.frequency.exponentialRampToValueAtTime(3500, now + 0.15);
+      filter.frequency.exponentialRampToValueAtTime(400, now + 0.3);
+
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.35, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+      whiteNoise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      whiteNoise.start(now);
+      whiteNoise.stop(now + 0.35);
+
+      // Low pitch distortion pop
       osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(140, now);
-      osc.frequency.setValueAtTime(60, now + 0.05);
-      osc.frequency.setValueAtTime(450, now + 0.1);
-      osc.frequency.setValueAtTime(80, now + 0.16);
-      gain.gain.setValueAtTime(0.22, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.setValueAtTime(60, now + 0.08);
+      osc.frequency.setValueAtTime(450, now + 0.18);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
       osc.start(now);
-      osc.stop(now + 0.25);
+      osc.stop(now + 0.3);
     } else if (type === 'scan') {
       // Frequency radar beam sweep
       osc.type = 'sine';

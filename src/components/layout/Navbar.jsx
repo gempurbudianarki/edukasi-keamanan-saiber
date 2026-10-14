@@ -87,7 +87,7 @@ export function Navbar({
               onClick={handleSoundToggle}
               title={muted ? 'Nyalakan Efek Suara' : 'Matikan Suara'}
             >
-              {muted ? <VolumeX size={17} color="#dc2626" /> : <Volume2 size={17} color="#dc2626" />}
+              {muted ? <VolumeX size={17} color="#000000" /> : <Volume2 size={17} color="#000000" />}
             </button>
 
             {/* Student Name Pill */}

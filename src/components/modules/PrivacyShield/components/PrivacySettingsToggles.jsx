@@ -37,7 +37,7 @@ export function PrivacySettingsToggles({ settings, onToggle }) {
       </p>
 
       {/* Toggles list */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
         {privacySettingDefinitions.map((def) => {
           const currentValue = settings[def.key];
           const isSafe = currentValue === def.safeWhen;
@@ -45,74 +45,56 @@ export function PrivacySettingsToggles({ settings, onToggle }) {
           return (
             <div
               key={def.key}
-              onClick={() => onToggle(def.key)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '14px 16px',
-                borderRadius: '14px',
-                background: isSafe ? '#f0fdf4' : '#fff5f5',
-                border: `1.5px solid ${isSafe ? '#86efac' : '#fecaca'}`,
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: isSafe ? '0 2px 8px rgba(16, 185, 129, 0.08)' : '0 2px 8px rgba(239, 68, 68, 0.06)'
+              onClick={() => {
+                playSound('click');
+                onToggle(def.key);
               }}
+              className={`privacy-setting-item ${isSafe ? 'is-safe' : 'is-unsafe'}`}
             >
               {/* Left Info */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', flex: 1, paddingRight: '12px' }}>
-                <div style={{ color: isSafe ? '#16a34a' : '#dc2626', marginTop: '2px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', flex: 1, paddingRight: '12px' }}>
+                <div style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '8px',
+                  border: '2px solid #000',
+                  background: isSafe ? 'var(--nb-lime, #22c55e)' : 'var(--nb-coral, #ff4d4d)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  boxShadow: '2px 2px 0 #000',
+                  marginTop: '2px'
+                }}>
                   {renderIcon(def.key)}
                 </div>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '3px', flexWrap: 'wrap' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.92rem', color: '#0f172a' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                    <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
                       {def.title}
                     </span>
-                    <span className={`badge ${isSafe ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
+                    <span className={`badge ${isSafe ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.7rem', padding: '2px 8px' }}>
                       {isSafe ? 'Aman (Terlindungi)' : 'Beresiko Tinggi'}
                     </span>
                   </div>
 
-                  <div style={{ fontSize: '0.8rem', color: '#475569', lineHeight: 1.45, marginBottom: '4px' }}>
+                  <div style={{ fontSize: '0.82rem', color: '#334155', lineHeight: 1.45, marginBottom: '6px' }}>
                     {def.description}
                   </div>
 
                   {!isSafe && (
-                    <div style={{ fontSize: '0.74rem', color: '#b91c1c', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <AlertTriangle size={12} />
+                    <div style={{ fontSize: '0.76rem', color: 'var(--nb-coral, #ff4d4d)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <AlertTriangle size={14} />
                       <span>{def.riskWhenUnsafe}</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Right: iOS-Style Switch Toggle */}
-              <div
-                style={{
-                  width: '50px',
-                  height: '28px',
-                  borderRadius: '14px',
-                  background: isSafe ? '#16a34a' : '#cbd5e1',
-                  position: 'relative',
-                  flexShrink: 0,
-                  transition: 'background 0.25s',
-                  boxShadow: isSafe ? '0 0 10px rgba(22, 163, 74, 0.3)' : 'none'
-                }}
-              >
-                <div
-                  style={{
-                    width: '22px',
-                    height: '22px',
-                    borderRadius: '50%',
-                    background: '#ffffff',
-                    position: 'absolute',
-                    top: '3px',
-                    left: isSafe ? '25px' : '3px',
-                    transition: 'left 0.25s ease',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.25)'
-                  }}
-                />
+              {/* Right: Neo-Brutalist Tactile Switch Toggle */}
+              <div className={`nb-switch-track ${isSafe ? 'on' : 'off'}`}>
+                <div className="nb-switch-thumb" />
               </div>
             </div>
           );
@@ -120,8 +102,12 @@ export function PrivacySettingsToggles({ settings, onToggle }) {
       </div>
 
       {/* Tip footer */}
-      <div style={{ marginTop: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px', fontSize: '0.8rem', color: '#475569', lineHeight: 1.5 }}>
-        💡 <strong>Prinsip Keamanan Siber Pelajar:</strong> Lindungi jejak digital Anda. Kejahatan pemerasan foto, stalking, dan pencurian identitas biasanya berawal dari oversharing informasi sensitif di bio & feed media sosial.
+      <div style={{ marginTop: '20px', background: 'var(--nb-yellow, #facc15)', border: '2.5px solid var(--nb-border, #000000)', borderRadius: 'var(--nb-radius-md, 8px)', padding: '14px 16px', fontSize: '0.82rem', color: '#0f172a', lineHeight: 1.5, boxShadow: '3px 3px 0 var(--nb-shadow-color, #000000)', fontWeight: 600 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+          <Sparkles size={18} />
+          <strong>Prinsip Keamanan Siber Pelajar:</strong>
+        </div>
+        <div>Lindungi jejak digital Anda. Kejahatan pemerasan foto, stalking, dan pencurian identitas biasanya berawal dari oversharing informasi sensitif di bio & feed media sosial.</div>
       </div>
     </div>
   );

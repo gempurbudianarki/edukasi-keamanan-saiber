@@ -1,12 +1,37 @@
 import React from 'react';
-import { User, Lock, Unlock, MapPin, PhoneCall, AlertTriangle, ShieldAlert, ShieldCheck, Heart, MessageCircle, Bookmark, CheckCircle2, Wifi, Battery } from 'lucide-react';
+import { 
+  User, 
+  Lock, 
+  Unlock, 
+  MapPin, 
+  PhoneCall, 
+  AlertTriangle, 
+  ShieldAlert, 
+  ShieldCheck, 
+  Heart, 
+  MessageCircle, 
+  Bookmark, 
+  CheckCircle2, 
+  Wifi, 
+  Battery,
+  GraduationCap,
+  Palmtree,
+  Coffee,
+  Gamepad2,
+  School,
+  Trophy,
+  Plane,
+  Home,
+  Globe,
+  Camera
+} from 'lucide-react';
 
 export function SocialProfilePreview({ settings }) {
   const highlights = [
-    { title: 'Sekolah', emoji: '🎓' },
-    { title: 'Liburan', emoji: '🌴' },
-    { title: 'Nongkrong', emoji: '☕' },
-    { title: 'Hobi PC', emoji: '🎮' }
+    { title: 'Sekolah', icon: GraduationCap },
+    { title: 'Liburan', icon: Palmtree },
+    { title: 'Nongkrong', icon: Coffee },
+    { title: 'Hobi PC', icon: Gamepad2 }
   ];
 
   const posts = [
@@ -16,7 +41,7 @@ export function SocialProfilePreview({ settings }) {
       category: 'Sekolah',
       risk: 'Logo sekolah & badge nama terbaca',
       bg: 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
-      icon: '🏫',
+      icon: School,
       likes: '142'
     },
     {
@@ -25,7 +50,7 @@ export function SocialProfilePreview({ settings }) {
       category: 'Lokasi Real-time',
       risk: 'Geotagging kafe tempat nongkrong',
       bg: 'linear-gradient(135deg, #78350f, #d97706)',
-      icon: '☕',
+      icon: Coffee,
       likes: '98'
     },
     {
@@ -34,7 +59,7 @@ export function SocialProfilePreview({ settings }) {
       category: 'Prestasi',
       risk: 'Nama lengkap & NISN pada sertifikat',
       bg: 'linear-gradient(135deg, #064e3b, #10b981)',
-      icon: '🏆',
+      icon: Trophy,
       likes: '235'
     },
     {
@@ -43,7 +68,7 @@ export function SocialProfilePreview({ settings }) {
       category: 'Dokumen Sensitif',
       risk: 'Barcode & kode booking bisa di-hack!',
       bg: 'linear-gradient(135deg, #4c1d95, #8b5cf6)',
-      icon: '✈️',
+      icon: Plane,
       likes: '189'
     },
     {
@@ -52,7 +77,7 @@ export function SocialProfilePreview({ settings }) {
       category: 'Tempat Tinggal',
       risk: 'Nomor rumah & pelat motor terlihat',
       bg: 'linear-gradient(135deg, #831843, #ec4899)',
-      icon: '🏡',
+      icon: Home,
       likes: '76'
     },
     {
@@ -61,7 +86,7 @@ export function SocialProfilePreview({ settings }) {
       category: 'Gadget',
       risk: 'Identifikasi spesifikasi barang mewah',
       bg: 'linear-gradient(135deg, #164e63, #06b6d4)',
-      icon: '🎮',
+      icon: Gamepad2,
       likes: '312'
     }
   ];
@@ -79,39 +104,40 @@ export function SocialProfilePreview({ settings }) {
           </div>
         </div>
 
-        <span className={`badge ${settings.isPrivateAccount ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.78rem' }}>
-          {settings.isPrivateAccount ? '🔒 Akun Privat (Terkunci)' : '🔓 Akun Publik (Terbuka Bebas)'}
+        <span className={`badge ${settings.isPrivateAccount ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+          {settings.isPrivateAccount ? (
+            <>
+              <Lock size={13} />
+              <span>Akun Privat (Terkunci)</span>
+            </>
+          ) : (
+            <>
+              <Globe size={13} />
+              <span>Akun Publik (Terbuka Bebas)</span>
+            </>
+          )}
         </span>
       </div>
 
       {/* Simulated Smartphone Instagram Profile Frame */}
-      <div style={{
-        background: '#ffffff',
-        border: '3px solid #e2e8f0',
-        borderRadius: '32px',
-        overflow: 'hidden',
-        boxShadow: '0 16px 40px rgba(0, 0, 0, 0.08)',
-        position: 'relative',
-        maxWidth: '380px',
-        margin: '0 auto'
-      }}>
+      <div className="privacy-phone-frame">
         {/* Phone Top Notch / Status Bar */}
-        <div style={{ background: '#f8fafc', padding: '10px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', borderBottom: '1px solid #f1f5f9' }}>
-          <span style={{ fontWeight: 700, color: '#0f172a' }}>09:41</span>
+        <div style={{ background: '#f8fafc', padding: '10px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.72rem', color: '#64748b', borderBottom: '2px solid #000000' }}>
+          <span style={{ fontWeight: 800, color: '#0f172a' }}>09:41</span>
           <div style={{ width: '60px', height: '14px', background: '#000000', borderRadius: '10px' }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <Wifi size={12} />
-            <Battery size={14} />
+            <Wifi size={12} color="#000" />
+            <Battery size={14} color="#000" />
           </div>
         </div>
 
         {/* Instagram Header App Bar */}
-        <div style={{ padding: '10px 16px', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 800, fontSize: '1rem', color: '#0f172a' }}>
-            {settings.isPrivateAccount ? <Lock size={15} color="#16a34a" /> : <Unlock size={15} color="#dc2626" />}
+        <div style={{ padding: '10px 16px', borderBottom: '2px solid #000000', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 800, fontSize: '1rem', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
+            {settings.isPrivateAccount ? <Lock size={16} color="#16a34a" /> : <Unlock size={16} color="#ff4d4d" />}
             <span>pelajar_kekinian</span>
           </div>
-          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>•••</span>
+          <span style={{ fontSize: '0.75rem', color: '#0f172a', fontWeight: 800 }}>•••</span>
         </div>
 
         {/* Profile Info Header */}
@@ -156,7 +182,7 @@ export function SocialProfilePreview({ settings }) {
             Budi Pratama (Siswa SMAN 1)
           </div>
           <div style={{ fontSize: '0.8rem', color: '#475569', lineHeight: 1.4, marginBottom: '10px' }}>
-            Hobi Fotografi, Game & Musik • Banda Aceh 🎒📸
+            Hobi Fotografi, Game & Musik • Banda Aceh
           </div>
 
           {/* Dynamic Vulnerability Alert Badges in Bio */}
@@ -190,77 +216,66 @@ export function SocialProfilePreview({ settings }) {
 
           {/* Story Highlights Bar */}
           <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '8px' }}>
-            {highlights.map((h, i) => (
-              <div key={i} style={{ textAlign: 'center', flexShrink: 0 }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '50%', border: '1.5px solid #cbd5e1', padding: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 4px' }}>
-                  <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}>
-                    {h.emoji}
+            {highlights.map((h, i) => {
+              const HighlightIcon = h.icon;
+              return (
+                <div key={i} style={{ textAlign: 'center', flexShrink: 0 }}>
+                  <div style={{ width: '46px', height: '46px', borderRadius: '50%', border: '1.5px solid #cbd5e1', padding: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 4px' }}>
+                    <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f172a' }}>
+                      <HighlightIcon size={18} strokeWidth={2.2} />
+                    </div>
                   </div>
+                  <div style={{ fontSize: '0.65rem', color: '#64748b' }}>{h.title}</div>
                 </div>
-                <div style={{ fontSize: '0.65rem', color: '#64748b' }}>{h.title}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Feed Post Grid 3x2 */}
           <div style={{ position: 'relative' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px', minHeight: '180px' }}>
-              {posts.map((post) => (
-                <div
-                  key={post.id}
-                  style={{
-                    aspectRatio: '1/1',
-                    borderRadius: '6px',
-                    background: post.bg,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#ffffff',
-                    padding: '4px',
-                    textAlign: 'center',
-                    position: 'relative'
-                  }}
-                >
-                  <span style={{ fontSize: '1.3rem' }}>{post.icon}</span>
-                  <span style={{ fontSize: '0.64rem', fontWeight: 700, marginTop: '2px', lineHeight: 1.1 }}>
-                    {post.title}
-                  </span>
-                  <div style={{ position: 'absolute', bottom: '3px', right: '4px', fontSize: '0.6rem', display: 'flex', alignItems: 'center', gap: '2px', opacity: 0.85 }}>
-                    <Heart size={8} fill="#fff" />
-                    <span>{post.likes}</span>
+              {posts.map((post) => {
+                const PostIcon = post.icon;
+                return (
+                  <div
+                    key={post.id}
+                    style={{
+                      aspectRatio: '1/1',
+                      borderRadius: '6px',
+                      background: post.bg,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff',
+                      padding: '4px',
+                      textAlign: 'center',
+                      position: 'relative'
+                    }}
+                  >
+                    <PostIcon size={22} color="#ffffff" strokeWidth={2.2} />
+                    <span style={{ fontSize: '0.64rem', fontWeight: 700, marginTop: '4px', lineHeight: 1.1 }}>
+                      {post.title}
+                    </span>
+                    <div style={{ position: 'absolute', bottom: '3px', right: '4px', fontSize: '0.6rem', display: 'flex', alignItems: 'center', gap: '2px', opacity: 0.85 }}>
+                      <Heart size={8} fill="#fff" />
+                      <span>{post.likes}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* FROSTED GLASS PRIVATE LOCK OVERLAY (When Account is Private) */}
             {settings.isPrivateAccount && (
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'rgba(255, 255, 255, 0.92)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '6px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '16px',
-                textAlign: 'center',
-                border: '1.5px solid #86efac',
-                animation: 'fadeIn 0.3s'
-              }}>
-                <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', marginBottom: '8px' }}>
-                  <Lock size={22} />
+              <div className="privacy-lock-overlay">
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--nb-lime, #22c55e)', border: '2px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', marginBottom: '10px', boxShadow: '2px 2px 0 #000' }}>
+                  <Lock size={24} />
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '0.92rem', color: '#0f172a', marginBottom: '2px' }}>
+                <div style={{ fontWeight: 800, fontSize: '0.98rem', color: '#0f172a', marginBottom: '4px', fontFamily: 'var(--font-heading)' }}>
                   Akun Ini Bersifat Privat
                 </div>
-                <div style={{ fontSize: '0.74rem', color: '#475569', lineHeight: 1.35, maxWidth: '220px' }}>
+                <div style={{ fontSize: '0.76rem', color: '#334155', lineHeight: 1.4, maxWidth: '230px', fontWeight: 600 }}>
                   Hanya pengikut terverifikasi yang dapat melihat postingan, seragam, kafe, dan foto rumah. Penguntit diblokir total!
                 </div>
               </div>

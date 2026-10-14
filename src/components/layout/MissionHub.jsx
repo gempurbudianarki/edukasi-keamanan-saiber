@@ -23,7 +23,9 @@ export function MissionHub({ progress, onSelectMission }) {
       subtitle: 'Simulasi Serangan, Bedah Domain & Email Spoofing',
       description: 'Eksplorasi tautan kuota gratis palsu, bedah domain palsu (.xyz, .club) vs domain pemerintah (.go.id), dan deteksi email spoofing dengan inspeksi header SPF/DKIM.',
       icon: Radar,
-      color: '#dc2626',
+      color: '#ff4d4d',
+      iconBg: '#ff4d4d',
+      iconColor: '#ffffff',
       badgeClass: 'badge-red',
       tag: 'Deteksi Ancaman'
     },
@@ -34,8 +36,10 @@ export function MissionHub({ progress, onSelectMission }) {
       subtitle: 'Verifikasi Dua Langkah & Tameng Akun',
       description: 'Saksikan simulasi bot brute-force hacker yang langsung menembus akun tanpa 2FA, dan bagaimana perisai kode OTP 6-digit sukses menggagalkan pencurian sesi login.',
       icon: KeyRound,
-      color: '#dc2626',
-      badgeClass: 'badge-red',
+      color: '#22c55e',
+      iconBg: '#22c55e',
+      iconColor: '#000000',
+      badgeClass: 'badge-green',
       tag: 'Perlindungan Sesi'
     },
     {
@@ -45,8 +49,10 @@ export function MissionHub({ progress, onSelectMission }) {
       subtitle: 'Kekuatan Kata Sandi & Telemetri Bobol',
       description: 'Uji ketahanan kata sandimu secara realtime! Hitung estimasi waktu komputer super peretas untuk meretasnya, dan rakit Passphrase anti-jebol.',
       icon: Key,
-      color: '#16a34a',
-      badgeClass: 'badge-green',
+      color: '#00f0ff',
+      iconBg: '#00f0ff',
+      iconColor: '#000000',
+      badgeClass: 'badge-cyan',
       tag: 'Kriptografi Sandi'
     },
     {
@@ -56,7 +62,9 @@ export function MissionHub({ progress, onSelectMission }) {
       subtitle: 'Audit Jejak & Privasi Media Sosial',
       description: 'Audit profil media sosial virtual ala Instagram/TikTok. Nonaktifkan pelacakan lokasi presisi, kunci privasi akun, dan tangkal bahaya doxxing serta stalking.',
       icon: EyeOff,
-      color: '#d97706',
+      color: '#facc15',
+      iconBg: '#facc15',
+      iconColor: '#000000',
       badgeClass: 'badge-amber',
       tag: 'Privasi Digital'
     }
@@ -131,7 +139,7 @@ export function MissionHub({ progress, onSelectMission }) {
               className={`mission-card ${isDone ? 'mission-completed' : ''}`}
             >
               <div className="mission-card-header">
-                <div className="mission-icon-box" style={{ background: `${m.color}12`, borderColor: `${m.color}35`, color: m.color }}>
+                <div className="mission-icon-box" style={{ background: m.iconBg, color: m.iconColor }}>
                   <Icon size={24} />
                 </div>
                 <div className="mission-tags">

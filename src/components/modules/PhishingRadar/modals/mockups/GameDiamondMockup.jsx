@@ -141,8 +141,9 @@ export function GameDiamondMockup({ scenario, onBreach }) {
         </button>
 
         {spinWon && (
-          <div style={{ marginTop: '10px', fontSize: '0.84rem', color: '#4ade80', fontWeight: 700 }}>
-            🎉 Selamat! Anda Mendapatkan 10.000 Diamond!
+          <div style={{ marginTop: '10px', fontSize: '0.84rem', color: '#4ade80', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <Sparkles size={16} />
+            <span>Selamat! Anda Mendapatkan 10.000 Diamond!</span>
           </div>
         )}
       </div>

@@ -97,29 +97,44 @@ export function DomainComparatorView({
           onClick={() => handleSelect('A')}
           style={{
             padding: '20px',
-            borderRadius: '12px',
+            borderRadius: 'var(--nb-radius-md, 8px)',
             border: selectedChoice
-              ? (correctAnswer === 'A' ? '2px solid #16a34a' : selectedChoice === 'A' ? '2px solid #dc2626' : '1.5px solid #e2e8f0')
-              : '1.5px solid #e2e8f0',
+              ? (correctAnswer === 'A' ? '2.5px solid #000' : selectedChoice === 'A' ? '2.5px solid #000' : '2px solid #000')
+              : '2.5px solid #000000',
             background: selectedChoice
-              ? (correctAnswer === 'A' ? '#f0fdf4' : selectedChoice === 'A' ? '#fef2f2' : '#f8fafc')
-              : '#f8fafc',
+              ? (correctAnswer === 'A' ? '#dcfce7' : selectedChoice === 'A' ? '#fee2e2' : '#ffffff')
+              : '#ffffff',
             cursor: selectedChoice ? 'default' : 'pointer',
-            transition: 'all 0.2s',
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)'
+            transition: 'transform 0.12s, box-shadow 0.12s',
+            boxShadow: selectedChoice
+              ? (correctAnswer === 'A' ? '3px 3px 0 #16a34a' : selectedChoice === 'A' ? '3px 3px 0 #dc2626' : '2px 2px 0 #000')
+              : '4px 4px 0 #000000'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span className={`badge ${selectedChoice && correctAnswer === 'A' ? 'badge-green' : 'badge-secondary'}`}>
-              Opsi A {selectedChoice && (correctAnswer === 'A' ? '✓ (Resmi)' : selectedChoice === 'A' ? '✗ (Palsu)' : '')}
+            <span className={`badge ${selectedChoice && correctAnswer === 'A' ? 'badge-green' : selectedChoice && selectedChoice === 'A' ? 'badge-red' : 'badge-secondary'}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <span>Opsi A</span>
+              {selectedChoice && (
+                correctAnswer === 'A' ? (
+                  <>
+                    <ShieldCheck size={14} />
+                    <span>(Resmi)</span>
+                  </>
+                ) : selectedChoice === 'A' ? (
+                  <>
+                    <ShieldAlert size={14} />
+                    <span>(Palsu)</span>
+                  </>
+                ) : null
+              )}
             </span>
-            <Globe size={18} color="#dc2626" />
+            <Globe size={18} color="#0f172a" />
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600, color: '#0f172a' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', wordBreak: 'break-all', fontWeight: 800, color: '#0f172a' }}>
             {domainA_name}
           </div>
           {showAnalysis && (
-            <div style={{ marginTop: '12px', fontSize: '0.82rem', color: domainA_isLegit ? '#15803d' : '#b91c1c', lineHeight: 1.5 }}>
+            <div style={{ marginTop: '12px', fontSize: '0.82rem', color: domainA_isLegit ? '#15803d' : '#b91c1c', lineHeight: 1.5, fontWeight: 600 }}>
               {domainA_analysis}
             </div>
           )}
@@ -130,29 +145,44 @@ export function DomainComparatorView({
           onClick={() => handleSelect('B')}
           style={{
             padding: '20px',
-            borderRadius: '12px',
+            borderRadius: 'var(--nb-radius-md, 8px)',
             border: selectedChoice
-              ? (correctAnswer === 'B' ? '2px solid #16a34a' : selectedChoice === 'B' ? '2px solid #dc2626' : '1.5px solid #e2e8f0')
-              : '1.5px solid #e2e8f0',
+              ? (correctAnswer === 'B' ? '2.5px solid #000' : selectedChoice === 'B' ? '2.5px solid #000' : '2px solid #000')
+              : '2.5px solid #000000',
             background: selectedChoice
-              ? (correctAnswer === 'B' ? '#f0fdf4' : selectedChoice === 'B' ? '#fef2f2' : '#f8fafc')
-              : '#f8fafc',
+              ? (correctAnswer === 'B' ? '#dcfce7' : selectedChoice === 'B' ? '#fee2e2' : '#ffffff')
+              : '#ffffff',
             cursor: selectedChoice ? 'default' : 'pointer',
-            transition: 'all 0.2s',
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)'
+            transition: 'transform 0.12s, box-shadow 0.12s',
+            boxShadow: selectedChoice
+              ? (correctAnswer === 'B' ? '3px 3px 0 #16a34a' : selectedChoice === 'B' ? '3px 3px 0 #dc2626' : '2px 2px 0 #000')
+              : '4px 4px 0 #000000'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <span className={`badge ${selectedChoice && correctAnswer === 'B' ? 'badge-green' : 'badge-secondary'}`}>
-              Opsi B {selectedChoice && (correctAnswer === 'B' ? '✓ (Resmi)' : selectedChoice === 'B' ? '✗ (Palsu)' : '')}
+            <span className={`badge ${selectedChoice && correctAnswer === 'B' ? 'badge-green' : selectedChoice && selectedChoice === 'B' ? 'badge-red' : 'badge-secondary'}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <span>Opsi B</span>
+              {selectedChoice && (
+                correctAnswer === 'B' ? (
+                  <>
+                    <ShieldCheck size={14} />
+                    <span>(Resmi)</span>
+                  </>
+                ) : selectedChoice === 'B' ? (
+                  <>
+                    <ShieldAlert size={14} />
+                    <span>(Palsu)</span>
+                  </>
+                ) : null
+              )}
             </span>
-            <Globe size={18} color="#dc2626" />
+            <Globe size={18} color="#0f172a" />
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.92rem', wordBreak: 'break-all', fontWeight: 600, color: '#0f172a' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', wordBreak: 'break-all', fontWeight: 800, color: '#0f172a' }}>
             {domainB_name}
           </div>
           {showAnalysis && (
-            <div style={{ marginTop: '12px', fontSize: '0.82rem', color: domainB_isLegit ? '#15803d' : '#b91c1c', lineHeight: 1.5 }}>
+            <div style={{ marginTop: '12px', fontSize: '0.82rem', color: domainB_isLegit ? '#15803d' : '#b91c1c', lineHeight: 1.5, fontWeight: 600 }}>
               {domainB_analysis}
             </div>
           )}

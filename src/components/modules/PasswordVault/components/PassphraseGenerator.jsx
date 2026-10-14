@@ -70,51 +70,54 @@ export function PassphraseGenerator({ onApplyPassphrase }) {
       </p>
 
       {/* Interactive 4-Token Passphrase Container */}
-      <div style={{ background: '#f8fafc', border: '1.5px solid #cbd5e1', borderRadius: '14px', padding: '18px', textAlign: 'center', marginBottom: '18px', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.03)' }}>
+      <div className="passphrase-box">
         
-        <div style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '1px', marginBottom: '12px' }}>
+        <div style={{ fontSize: '0.78rem', color: '#0f172a', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px', marginBottom: '14px', fontFamily: 'var(--font-heading)' }}>
           Kombinasi Blok Kata Sandi (Klik kata untuk mengacak ulang):
         </div>
 
         {/* Token Pill Badges */}
         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center', marginBottom: '16px' }}>
           <button
-            className="btn btn-sm"
+            className="passphrase-token-btn"
             onClick={() => handleSwapWord(1)}
-            style={{ background: '#eff6ff', border: '1.5px solid #bfdbfe', color: '#1d4ed8', fontWeight: 800, fontSize: '0.92rem', padding: '8px 14px', borderRadius: '10px', cursor: 'pointer' }}
+            style={{ background: '#eff6ff', color: '#1d4ed8' }}
             title="Klik untuk acak kata ini"
           >
             {phraseData.word1} ↻
           </button>
-          <span style={{ color: '#94a3b8', fontWeight: 800 }}>-</span>
+          <span style={{ color: '#0f172a', fontWeight: 900, fontSize: '1.2rem' }}>-</span>
 
           <button
-            className="btn btn-sm"
+            className="passphrase-token-btn"
             onClick={() => handleSwapWord(2)}
-            style={{ background: '#fdf2f8', border: '1.5px solid #fbcfe8', color: '#be185d', fontWeight: 800, fontSize: '0.92rem', padding: '8px 14px', borderRadius: '10px', cursor: 'pointer' }}
+            style={{ background: '#fdf2f8', color: '#be185d' }}
             title="Klik untuk acak kata ini"
           >
             {phraseData.word2} ↻
           </button>
-          <span style={{ color: '#94a3b8', fontWeight: 800 }}>-</span>
+          <span style={{ color: '#0f172a', fontWeight: 900, fontSize: '1.2rem' }}>-</span>
 
           <button
-            className="btn btn-sm"
+            className="passphrase-token-btn"
             onClick={() => handleSwapWord(3)}
-            style={{ background: '#f0fdf4', border: '1.5px solid #bbf7d0', color: '#15803d', fontWeight: 800, fontSize: '0.92rem', padding: '8px 14px', borderRadius: '10px', cursor: 'pointer' }}
+            style={{ background: '#f0fdf4', color: '#15803d' }}
             title="Klik untuk acak kata ini"
           >
             {phraseData.word3} ↻
           </button>
-          <span style={{ color: '#94a3b8', fontWeight: 800 }}>-</span>
+          <span style={{ color: '#0f172a', fontWeight: 900, fontSize: '1.2rem' }}>-</span>
 
-          <span style={{ background: '#fef3c7', border: '1.5px solid #fde68a', color: '#b45309', fontWeight: 800, fontSize: '0.92rem', padding: '8px 14px', borderRadius: '10px' }}>
+          <span
+            className="passphrase-token-btn"
+            style={{ background: 'var(--nb-yellow, #facc15)', color: '#0f172a', cursor: 'default' }}
+          >
             {phraseData.tail}
           </span>
         </div>
 
         {/* Full string display */}
-        <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '10px', fontFamily: 'var(--font-mono)', fontSize: '1.05rem', fontWeight: 800, color: '#dc2626', letterSpacing: '0.5px', marginBottom: '14px', wordBreak: 'break-all' }}>
+        <div className="passphrase-full-display">
           {phraseData.full}
         </div>
 
@@ -145,7 +148,7 @@ export function PassphraseGenerator({ onApplyPassphrase }) {
 
       {/* Educational fact card */}
       <div style={{ marginTop: '16px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '10px', padding: '12px', fontSize: '0.8rem', color: '#166534', lineHeight: 1.5 }}>
-        <strong>💡 Mengapa Passphrase Lebih Unggul?</strong>
+        <strong style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Sparkles size={16} /> Mengapa Passphrase Lebih Unggul?</strong>
         <br />
         Sandi rumit seperti <code>Tr0Ub&9!</code> sulit dihafal otak dan hanya 8 karakter (mudah di-brute force). Sedangkan <code>Garuda-Samudra-Mentari-99$</code> memiliki panjang 28 karakter dengan variasi kombinasi raksasa ($2^{140}$), mustahil ditembus seumur alam semesta!
       </div>

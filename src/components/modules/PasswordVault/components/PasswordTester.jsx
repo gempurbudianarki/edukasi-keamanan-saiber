@@ -69,7 +69,7 @@ export function PasswordTester({
       </p>
 
       {/* Input box */}
-      <div style={{ position: 'relative', marginBottom: '12px' }}>
+      <div style={{ position: 'relative', marginBottom: '16px' }}>
         <input
           type={showPassword ? 'text' : 'password'}
           value={password}
@@ -78,18 +78,9 @@ export function PasswordTester({
             onPasswordChange(e.target.value);
           }}
           placeholder="Ketik kata sandi Anda di sini..."
+          className="password-input"
           style={{
-            width: '100%',
-            padding: '14px 48px 14px 16px',
-            borderRadius: '12px',
-            border: `2px solid ${analysis.color}`,
-            background: '#ffffff',
-            color: '#0f172a',
-            fontSize: '1.15rem',
-            fontFamily: 'var(--font-mono)',
-            outline: 'none',
-            boxShadow: `0 0 16px ${analysis.color}35`,
-            transition: 'all 0.25s'
+            borderColor: 'var(--nb-border, #000000)'
           }}
         />
         <button
@@ -98,40 +89,25 @@ export function PasswordTester({
             playSound('click');
             onToggleShow();
           }}
-          style={{
-            position: 'absolute',
-            right: '14px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            background: 'transparent',
-            border: 'none',
-            color: '#64748b',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          className="password-eye-btn"
         >
-          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
         </button>
       </div>
 
       {/* 5-Segment Strength Bar */}
-      <div style={{ marginBottom: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '6px' }}>
+      <div className="strength-meter-wrap">
+        <div className="strength-meter-header">
           <span>Indikator Kekuatan Sandi:</span>
-          <span style={{ color: analysis.color, fontWeight: 800 }}>Skor Entropi: {analysis.score}/100</span>
+          <span style={{ color: '#0f172a', fontWeight: 800 }}>Skor Entropi: {analysis.score}/100</span>
         </div>
-        <div style={{ display: 'flex', gap: '6px', height: '10px' }}>
+        <div className="strength-brick-track">
           {[0, 1, 2, 3, 4].map((idx) => (
             <div
               key={idx}
+              className="strength-brick-segment"
               style={{
-                flex: 1,
-                borderRadius: '5px',
-                background: getSegmentColor(idx),
-                transition: 'background-color 0.3s ease, transform 0.2s',
-                boxShadow: idx < activeSegments && activeSegments === 5 ? '0 0 8px rgba(0, 240, 255, 0.8)' : 'none'
+                background: getSegmentColor(idx)
               }}
             />
           ))}
@@ -139,39 +115,29 @@ export function PasswordTester({
       </div>
 
       {/* Supercomputer Telemetry HUD */}
-      <div style={{
-        background: '#020617',
-        border: '1.5px solid #1e293b',
-        borderRadius: '14px',
-        padding: '18px',
-        marginBottom: '18px',
-        boxShadow: '0 12px 30px rgba(0, 0, 0, 0.35)',
-        color: '#f8fafc',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
+      <div className="vault-telemetry-hud">
         {/* HUD Top Bar */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '10px', marginBottom: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#38bdf8', fontSize: '0.8rem', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+        <div className="vault-telemetry-header">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--nb-cyan, #00f0ff)', fontSize: '0.8rem', fontFamily: 'var(--font-mono)', fontWeight: 800 }}>
             <Cpu size={16} />
             <span>GPU CLUSTER TELEMETRY (8x NVIDIA RTX 4090)</span>
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#22c55e', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <span style={{ fontSize: '0.74rem', color: 'var(--nb-lime, #22c55e)', fontFamily: 'var(--font-mono)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
             <Activity size={12} /> 100 GH/s ACTIVE
           </span>
         </div>
 
         {/* Live Crack Time Highlight */}
-        <div style={{ textAlign: 'center', padding: '8px 0' }}>
-          <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '1px', marginBottom: '4px' }}>
+        <div style={{ textAlign: 'center', padding: '10px 0' }}>
+          <div style={{ fontSize: '0.76rem', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '1px', marginBottom: '6px', fontWeight: 700 }}>
             Estimasi Waktu Tembus Komputer Peretas:
           </div>
           <div style={{
-            fontSize: '1.85rem',
+            fontSize: '2rem',
             fontFamily: 'var(--font-mono)',
             fontWeight: 800,
-            color: analysis.color,
-            textShadow: `0 0 20px ${analysis.color}70`,
+            color: analysis.score >= 80 ? 'var(--nb-cyan, #00f0ff)' : analysis.score >= 60 ? 'var(--nb-lime, #22c55e)' : analysis.score >= 40 ? 'var(--nb-yellow, #facc15)' : 'var(--nb-coral, #ff4d4d)',
+            textShadow: '0 0 20px rgba(0, 240, 255, 0.35)',
             lineHeight: 1.2
           }}>
             {analysis.crackTime}
@@ -179,24 +145,24 @@ export function PasswordTester({
         </div>
 
         {/* Live Hash Stream */}
-        <div style={{ background: '#091122', padding: '6px 10px', borderRadius: '6px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#64748b', display: 'flex', justifyContent: 'space-between', margin: '10px 0', overflow: 'hidden' }}>
-          <span>HASH TARGET:</span>
-          <span style={{ color: '#38bdf8' }}>{getPseudoHash(password)}</span>
+        <div className="vault-hash-stream">
+          <span style={{ fontWeight: 700 }}>TARGET HASH:</span>
+          <span style={{ color: 'var(--nb-cyan, #00f0ff)', fontWeight: 700 }}>{getPseudoHash(password)}</span>
         </div>
 
         {/* Telemetry Metrics Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '10px', borderTop: '1px solid #1e293b', paddingTop: '12px', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
-          <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '8px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '10px', borderTop: '2px solid #1e293b', paddingTop: '12px', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '6px', border: '1px solid #1e293b' }}>
             <div style={{ color: '#64748b' }}>Kecepatan Uji:</div>
-            <div style={{ color: '#cbd5e1', fontWeight: 700 }}>100 Miliar / dtk</div>
+            <div style={{ color: '#cbd5e1', fontWeight: 800 }}>100 Miliar / dtk</div>
           </div>
-          <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '8px' }}>
+          <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '6px', border: '1px solid #1e293b' }}>
             <div style={{ color: '#64748b' }}>Panjang Karakter:</div>
-            <div style={{ color: '#cbd5e1', fontWeight: 700 }}>{password.length} Karakter</div>
+            <div style={{ color: '#cbd5e1', fontWeight: 800 }}>{password.length} Karakter</div>
           </div>
-          <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '8px' }}>
+          <div style={{ background: '#0b1329', padding: '8px 10px', borderRadius: '6px', border: '1px solid #1e293b' }}>
             <div style={{ color: '#64748b' }}>Shannon Entropy:</div>
-            <div style={{ color: analysis.entropy >= 60 ? '#4ade80' : '#f87171', fontWeight: 700 }}>
+            <div style={{ color: analysis.entropy >= 60 ? 'var(--nb-lime, #22c55e)' : 'var(--nb-coral, #ff4d4d)', fontWeight: 800 }}>
               {analysis.entropy} bits
             </div>
           </div>
@@ -204,10 +170,10 @@ export function PasswordTester({
       </div>
 
       {/* Checklist criteria */}
-      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '8px' }}>
+      <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#0f172a', marginBottom: '10px', fontFamily: 'var(--font-heading)' }}>
         Parameter Ketahanan Sandi:
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '8px', marginBottom: '18px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px', marginBottom: '20px' }}>
         {[
           { label: 'Panjang min. 12 Karakter', passed: analysis.checks?.length },
           { label: 'Huruf Kecil (a-z)', passed: analysis.checks?.lowercase },
@@ -218,35 +184,23 @@ export function PasswordTester({
         ].map((item, idx) => (
           <div
             key={idx}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '0.78rem',
-              padding: '6px 10px',
-              borderRadius: '8px',
-              background: item.passed ? '#f0fdf4' : '#f8fafc',
-              border: `1px solid ${item.passed ? '#bbf7d0' : '#e2e8f0'}`,
-              color: item.passed ? '#15803d' : '#64748b',
-              fontWeight: item.passed ? 600 : 400
-            }}
+            className={`criteria-item ${item.passed ? 'passed' : ''}`}
           >
-            {item.passed ? <Check size={14} color="#16a34a" /> : <X size={14} color="#dc2626" />}
+            {item.passed ? <Check size={16} color="#16a34a" strokeWidth={3} /> : <X size={16} color="#ff4d4d" strokeWidth={3} />}
             <span>{item.label}</span>
           </div>
         ))}
       </div>
 
       {/* Preset samples */}
-      <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+      <div style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 700 }}>
         Uji Cepat Pola Kata Sandi Populer:
       </div>
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      <div className="example-pills">
         {samplePasswords.map((item, idx) => (
           <button
             key={idx}
-            className="btn btn-secondary btn-sm"
-            style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)' }}
+            className="example-pill-btn"
             onClick={() => {
               playSound('click');
               onPasswordChange(item.label);

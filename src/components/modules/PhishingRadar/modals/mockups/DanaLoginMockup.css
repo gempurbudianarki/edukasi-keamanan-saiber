@@ -17,31 +17,33 @@
 
 /* ── Top Educational Safety Banner ────────────────────────────── */
 .dana-safety-banner {
-  background: #fffbeb;
-  border: 1.5px solid #fde68a;
-  color: #92400e;
-  padding: 9px 12px;
-  border-radius: 10px;
-  font-size: 0.76rem;
+  background: var(--nb-yellow, #facc15);
+  border: 2px solid var(--nb-border, #000);
+  color: var(--nb-text, #0f172a);
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: var(--nb-radius-md, 8px);
+  box-shadow: 3px 3px 0 var(--nb-shadow-color, #000);
+  font-size: 0.78rem;
   line-height: 1.45;
   margin-bottom: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 /* ── Simulated SMS Incoming Push Notification (Toast) ────────── */
 .dana-sms-toast {
-  background: #0f172a;
-  border: 1.5px solid #38bdf8;
-  border-radius: 12px;
-  padding: 10px 14px;
+  background: #090d16;
+  border: 2.5px solid #000000;
+  border-radius: var(--nb-radius-md, 8px);
+  padding: 12px 14px;
   margin-bottom: 14px;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   color: #ffffff;
-  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.25);
+  box-shadow: 4px 4px 0 #000000;
   animation: toastSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -55,11 +57,12 @@
   height: 28px;
   border-radius: 50%;
   background: #0284c7;
+  border: 1.5px solid #000000;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #fff;
+  color: #ffffff;
 }
 
 .dana-sms-content {
@@ -71,7 +74,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .dana-sms-sender {
@@ -84,21 +87,24 @@
 .dana-sms-time {
   font-size: 0.68rem;
   color: #94a3b8;
+  font-weight: 600;
 }
 
 .dana-sms-text {
-  font-size: 0.75rem;
-  color: #e2e8f0;
-  line-height: 1.35;
+  font-size: 0.78rem;
+  color: #f1f5f9;
+  line-height: 1.45;
+  font-weight: 500;
 }
 
 .dana-sms-otp-code {
   display: inline-block;
-  background: #e11d48;
-  color: #fff;
-  font-weight: 800;
-  padding: 1px 6px;
+  background: #ff2a5f;
+  color: #ffffff;
+  font-weight: 900;
+  padding: 1px 7px;
   border-radius: 4px;
+  border: 1px solid #000000;
   font-family: var(--font-mono);
   letter-spacing: 1px;
 }

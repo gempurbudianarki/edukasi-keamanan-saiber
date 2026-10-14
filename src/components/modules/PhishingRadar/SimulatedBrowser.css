@@ -22,12 +22,11 @@
 .sim-chrome {
   width: 100%;
   max-width: 820px;
-  background: #1a1a2e;
-  border-radius: 14px;
+  background: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.75),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
+  box-shadow: 10px 10px 0px #000000;
   display: flex;
   flex-direction: column;
   max-height: 90vh;
@@ -39,7 +38,7 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #090d16;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -47,45 +46,45 @@
 
 .sim-body::-webkit-scrollbar,
 .breach-overlay::-webkit-scrollbar {
-  width: 7px;
+  width: 8px;
 }
 
 .sim-body::-webkit-scrollbar-track,
 .breach-overlay::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
+  background: #f1ede4;
+  border-left: 2px solid #000000;
 }
 
 .sim-body::-webkit-scrollbar-thumb,
 .breach-overlay::-webkit-scrollbar-thumb {
-  background: rgba(220, 38, 38, 0.4);
+  background: #000000;
   border-radius: 4px;
 }
 
-.sim-body::-webkit-scrollbar-thumb:hover,
-.breach-overlay::-webkit-scrollbar-thumb:hover {
-  background: rgba(220, 38, 38, 0.7);
-}
-
-/* Tab bar — looks like real Chrome dark mode */
+/* Tab bar — Neo-Brutalist real browser chrome */
 .sim-tabbar {
-  background: #16161e;
+  background: #000000;
   padding: 8px 12px 0 12px;
   display: flex;
   align-items: flex-end;
-  gap: 2px;
+  gap: 4px;
+  border-bottom: 2px solid #000000;
 }
 
 .sim-tab {
-  background: #1a1a2e;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-bottom: none;
   border-radius: 8px 8px 0 0;
   padding: 7px 14px;
-  font-size: 0.76rem;
-  font-weight: 500;
-  color: #e2e8f0;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #000000;
   display: flex;
   align-items: center;
   gap: 6px;
-  max-width: 220px;
+  max-width: 240px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -98,21 +97,35 @@
 }
 
 .sim-tab .tab-close {
+  background: transparent;
+  border: none;
+  padding: 2px;
   margin-left: auto;
-  opacity: 0.4;
   cursor: pointer;
   flex-shrink: 0;
-  font-size: 0.68rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  border-radius: 4px;
+  transition: transform 0.1s, color 0.1s, background 0.1s;
+}
+
+.sim-tab .tab-close:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+  transform: scale(1.1);
 }
 
 /* Address bar */
 .sim-addressbar {
-  background: #1a1a2e;
-  padding: 8px 12px;
+  background: #ffffff;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 12px;
+  border-bottom: 3px solid #000000;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .sim-nav-btns {
@@ -122,68 +135,135 @@
 }
 
 .sim-nav-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  background: #ffffff;
+  color: #000000;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-weight: 900;
+  font-size: 1rem;
+  transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
 }
 
 .sim-nav-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--nb-yellow, #facc15);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.sim-nav-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000000;
 }
 
 .sim-url-pill {
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: #0f0f1a;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 0.8rem;
-  font-family: var(--font-body);
-  color: #94a3b8;
+  justify-content: space-between;
+  gap: 10px;
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  box-shadow: 3px 3px 0 #000000;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.88rem;
+  font-family: var(--font-mono, monospace);
+  color: #000000;
   overflow: hidden;
-  white-space: nowrap;
-}
-
-.sim-url-pill .lock-icon {
-  flex-shrink: 0;
 }
 
 .sim-url-pill .url-text {
+  flex: 1;
+  min-width: 0;
+  color: #000000 !important;
+  font-weight: 800;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
 }
 
-.url-danger { color: #f87171; }
-.url-safe { color: #6ee7b7; }
+.lock-danger {
+  color: #ff3366 !important;
+  flex-shrink: 0;
+}
 
-.sim-close-x {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: #94a3b8;
+.lock-safe {
+  color: #16a34a !important;
+  flex-shrink: 0;
+}
+
+.url-badge-danger {
+  background: #ff3366;
+  color: #ffffff;
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 900;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1.5px solid #000000;
+  box-shadow: 1.5px 1.5px 0 #000000;
+  flex-shrink: 0;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.url-badge-safe {
+  background: #22c55e;
+  color: #ffffff;
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 900;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1.5px solid #000000;
+  box-shadow: 1.5px 1.5px 0 #000000;
+  flex-shrink: 0;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sim-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 2px solid #000000;
+  background: var(--nb-coral, #ff4d4d);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.95rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 2px 2px 0 #000000;
+  transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
 }
 
-.sim-close-x:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #f87171;
+.sim-close-btn:hover {
+  background: #dc2626;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.sim-close-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000000;
 }
 
 /* Page content area */
@@ -784,31 +864,34 @@
    BREACH CONSEQUENCE SCREEN — Crystal Clear Alert & Smooth Animation
    ================================================================ */
 
+/* ================================================================
+   BREACH CONSEQUENCE SCREEN — CINEMATIC DEFCON-1 CYBER WAR ALARM
+   High Contrast • Bone-Chilling Emergency Atmosphere • Vivid Audio & Visuals
+   ================================================================ */
+
 .sim-chrome.breach-active {
-  border: 1.5px solid rgba(220, 38, 38, 0.5) !important;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 30px rgba(220, 38, 38, 0.25) !important;
-  transition: all 0.4s ease;
+  border: 4px solid #ff003b !important;
+  box-shadow: 0 0 50px rgba(255, 0, 59, 0.85), 10px 10px 0px #000000 !important;
+  animation: emergencyStrobeBorder 0.9s infinite alternate, screenQuake 0.5s ease-out;
 }
 
-@keyframes breachEntrance {
+@keyframes screenQuake {
+  0%, 100% { transform: translate(0, 0); }
+  15% { transform: translate(-8px, 6px); }
+  30% { transform: translate(8px, -6px); }
+  45% { transform: translate(-5px, 4px); }
+  60% { transform: translate(5px, -4px); }
+  75% { transform: translate(-2px, 2px); }
+}
+
+@keyframes emergencyStrobeBorder {
   0% {
-    opacity: 0;
-    transform: translateY(16px) scale(0.98);
+    border-color: #ff003b;
+    box-shadow: 0 0 60px rgba(255, 0, 59, 0.9), 10px 10px 0px #000000;
   }
   100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes breachIconPulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 14px rgba(220, 38, 38, 0);
+    border-color: #facc15;
+    box-shadow: 0 0 25px rgba(250, 204, 21, 0.75), 10px 10px 0px #000000;
   }
 }
 
@@ -816,44 +899,68 @@
 .tactical-hazard-strip {
   background: repeating-linear-gradient(
     -45deg,
-    #7f1d1d,
-    #7f1d1d 14px,
-    #0f172a 14px,
-    #0f172a 28px
+    #facc15,
+    #facc15 16px,
+    #000000 16px,
+    #000000 32px
   );
-  padding: 8px 18px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #ef4444;
-  color: #fef08a;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  border-bottom: 3px solid #000000;
+  box-shadow: 0 4px 0 #000000;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hazard-pill-item {
+  background: #000000;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.hazard-text-danger {
+  color: #ff4d4d;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 0.76rem;
+  letter-spacing: 0.5px;
+}
+
+.hazard-text-warning {
+  color: #facc15;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 0.76rem;
+  letter-spacing: 0.5px;
+}
+
+.hazard-text-alert {
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 0.76rem;
+  letter-spacing: 0.5px;
 }
 
 .siren-spinning {
-  color: #ef4444;
-  filter: drop-shadow(0 0 8px #ef4444);
   animation: sirenFlashRotate 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes sirenFlashRotate {
-  0% { transform: scale(1) rotate(-15deg); filter: drop-shadow(0 0 4px #dc2626); }
-  50% { transform: scale(1.25) rotate(15deg); filter: drop-shadow(0 0 14px #ef4444); }
-  100% { transform: scale(1) rotate(-15deg); filter: drop-shadow(0 0 4px #dc2626); }
-}
-
-.nuclear-icon {
-  color: #fbbf24;
-  filter: drop-shadow(0 0 6px #f59e0b);
+  0% { transform: scale(1) rotate(-15deg); }
+  50% { transform: scale(1.3) rotate(15deg); }
+  100% { transform: scale(1) rotate(-15deg); }
 }
 
 .nuclear-spin {
-  animation: nuclearSpin 8s linear infinite;
+  animation: nuclearSpin 6s linear infinite;
 }
 
 @keyframes nuclearSpin {
@@ -861,39 +968,46 @@
   100% { transform: rotate(360deg); }
 }
 
-/* ── Fullscreen-fit Breach Overlay (Zero Page Scroll) ─────────── */
+/* ── Fullscreen-fit Breach Overlay (Zero Cutoff & Dynamic Scroll) ─────────── */
 .breach-overlay {
   flex: 1;
   width: 100%;
-  background: radial-gradient(circle at 50% 25%, rgba(220, 38, 38, 0.3) 0%, #030712 75%);
-  padding: 18px 24px 22px;
+  background: radial-gradient(circle at center, #2a050f 0%, #120308 60%, #060104 100%);
+  padding: 24px 20px 28px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 100%;
+  color: #ffffff;
+  animation: emergencyStrobeVignette 1.2s infinite alternate;
 }
 
-/* Cyber Scanlines backdrop */
-.breach-overlay::before {
-  content: "";
+@keyframes emergencyStrobeVignette {
+  0% {
+    background: radial-gradient(circle at center, rgba(255, 0, 59, 0.25) 0%, #110207 60%, #050003 100%);
+  }
+  100% {
+    background: radial-gradient(circle at center, rgba(255, 0, 59, 0.08) 0%, #090104 70%, #020002 100%);
+  }
+}
+
+.breach-scanlines {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.2),
-    rgba(0, 0, 0, 0.2) 1px,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.25) 1px,
     transparent 1px,
-    transparent 3px
+    transparent 2px
   );
-  opacity: 0.6;
   z-index: 1;
+  opacity: 0.6;
 }
 
 .tactical-breach-hud {
@@ -906,220 +1020,279 @@
   animation: breachEntrance 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+@keyframes breachEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* ── Tactical Beacon & Defcon Badge ──────────────────────────── */
 .tactical-beacon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
 .tactical-siren-orb {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(220, 38, 38, 0.2);
-  border: 2px solid #ef4444;
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  background: #ff003b;
+  border: 3px solid #000000;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fbbf24;
-  box-shadow: 0 0 24px rgba(220, 38, 38, 0.6), inset 0 0 12px rgba(220, 38, 38, 0.4);
-  animation: breachIconPulse 1.4s infinite ease-in-out;
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(255, 0, 59, 0.95), 4px 4px 0 #000000;
   flex-shrink: 0;
+  animation: sirenEmergencyPulse 0.7s infinite alternate;
+}
+
+@keyframes sirenEmergencyPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 0, 59, 0.7), 4px 4px 0 #000000;
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 45px rgba(255, 0, 59, 1), 4px 4px 0 #000000;
+  }
 }
 
 .tactical-defcon-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(185, 28, 28, 0.25);
-  border: 1.5px solid #ef4444;
-  color: #fecaca;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  font-size: 0.76rem;
-  font-family: var(--font-mono);
-  font-weight: 800;
-  letter-spacing: 1px;
-  box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
+  gap: 10px;
+  background: #000000;
+  border: 2.5px solid #facc15;
+  color: #facc15;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  box-shadow: 4px 4px 0 #000000;
 }
 
 .defcon-ping {
-  width: 8px;
-  height: 8px;
-  background: #ef4444;
+  width: 9px;
+  height: 9px;
+  background: #ff003b;
   border-radius: 50%;
-  box-shadow: 0 0 8px #ef4444;
-  animation: defconBlink 0.6s infinite alternate;
+  box-shadow: 0 0 10px #ff003b;
+  animation: defconPing 0.8s infinite alternate;
 }
 
-@keyframes defconBlink {
-  0% { opacity: 0.3; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1.2); }
+@keyframes defconPing {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.3); }
 }
 
-/* ── Typography (Impactful & Compact) ────────────────────────── */
+/* ── Typography (High Contrast & Razor Sharp) ───────────────── */
 .tactical-breach-title {
   color: #ffffff !important;
-  font-size: 1.25rem !important;
+  font-size: 1.65rem !important;
   font-weight: 900 !important;
-  letter-spacing: -0.3px;
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
   line-height: 1.25;
   text-align: center;
-  margin-bottom: 4px !important;
+  margin-bottom: 8px !important;
   text-transform: uppercase;
-  text-shadow: 0 0 16px rgba(239, 68, 68, 0.7), 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 25px rgba(255, 0, 59, 0.9), 2px 2px 0 #000000;
 }
 
-.tactical-breach-desc {
-  color: #fca5a5 !important;
-  font-size: 0.82rem !important;
-  line-height: 1.4;
-  text-align: center;
-  margin-bottom: 14px !important;
-  max-width: 620px;
+.tactical-breach-desc-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  max-width: 680px;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* ── Compact 3-Column Threat Grid (Fits in screen, Zero Scroll) ── */
+.tactical-desc-icon {
+  color: #ff3366;
+  flex-shrink: 0;
+  animation: defconPing 1s infinite alternate;
+}
+
+.tactical-breach-desc {
+  color: #f1f5f9 !important;
+  font-size: 0.92rem !important;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0 !important;
+  text-shadow: 1px 1px 2px #000000;
+}
+
+/* ── Compact 3-Column Threat Grid ── */
 .tactical-crime-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 14px;
+  margin-bottom: 22px;
   text-align: left;
 }
 
 .tactical-crime-card {
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(239, 68, 68, 0.35);
-  border-top: 3px solid #dc2626;
+  background: #140913;
+  border: 2.5px solid #ff2a5f;
+  box-shadow: 5px 5px 0 #000000;
   border-radius: 10px;
-  padding: 10px 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s, border-color 0.2s;
+  padding: 16px 16px;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .tactical-crime-card:hover {
-  transform: translateY(-2px);
-  border-color: #ef4444;
-  background: rgba(20, 30, 55, 0.95);
-  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+  transform: translate(-2px, -2px);
+  border-color: #facc15;
+  background: #1d0d1b;
+  box-shadow: 7px 7px 0 #000000;
 }
 
 .tactical-crime-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .tactical-crime-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  background: rgba(220, 38, 38, 0.15);
-  border: 1px solid rgba(220, 38, 38, 0.4);
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #000000;
+  border: 2px solid #ff2a5f;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ef4444;
+  color: #fef08a;
+  box-shadow: 0 0 12px rgba(255, 42, 95, 0.4), 2px 2px 0 #000000;
   flex-shrink: 0;
 }
 
 .tactical-threat-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 800;
-  color: #ef4444;
-  background: rgba(220, 38, 38, 0.12);
-  padding: 2px 6px;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #facc15;
+  background: #000000;
+  padding: 3px 8px;
+  border: 1.5px solid #facc15;
   border-radius: 4px;
   letter-spacing: 0.5px;
+  box-shadow: 1px 1px 0 #000000;
 }
 
 .tactical-crime-title {
   color: #ffffff !important;
+  font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 0.78rem;
-  line-height: 1.3;
-  margin-bottom: 4px;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  margin-bottom: 6px;
 }
 
 .tactical-crime-desc {
   color: #cbd5e1 !important;
-  font-size: 0.72rem;
-  line-height: 1.35;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  font-weight: 500;
   flex: 1;
 }
 
 /* ── Tactical Action Buttons ─────────────────────────────────── */
 .tactical-breach-actions {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
 
 .tactical-btn-dismiss {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  color: #e2e8f0;
-  font-weight: 600;
-  padding: 9px 18px;
+  background: #18141f;
+  border: 2.5px solid #ffffff;
+  color: #ffffff;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  padding: 12px 22px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.84rem;
-  transition: all 0.2s;
+  font-size: 0.92rem;
+  box-shadow: 4px 4px 0 #000000;
+  transition: transform 0.12s, box-shadow 0.12s, background 0.15s, color 0.15s;
 }
 
 .tactical-btn-dismiss:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #ffffff;
-  color: #ffffff;
+  background: var(--nb-yellow, #facc15);
+  border-color: #000000;
+  color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000000;
 }
 
 .tactical-btn-countermeasure {
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
-  border: 1.5px solid #ef4444;
-  color: #ffffff;
-  font-weight: 800;
-  padding: 10px 22px;
+  background: var(--nb-lime, #22c55e);
+  border: 3px solid #000000;
+  color: #000000;
+  font-weight: 900;
+  font-family: var(--font-heading);
+  padding: 14px 28px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.86rem;
+  font-size: 0.98rem;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   letter-spacing: 0.5px;
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
-  animation: countermeasurePulse 1.8s infinite alternate;
-  transition: all 0.2s;
+  box-shadow: 5px 5px 0 #000000;
+  animation: buttonEmergencyAlertPulse 1.2s infinite alternate;
+  transition: transform 0.12s, box-shadow 0.12s, background 0.15s;
 }
 
-@keyframes countermeasurePulse {
-  0% { transform: scale(1); box-shadow: 0 0 15px rgba(220, 38, 38, 0.4); }
-  100% { transform: scale(1.02); box-shadow: 0 0 30px rgba(239, 68, 68, 0.85); }
+@keyframes buttonEmergencyAlertPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4), 5px 5px 0 #000000;
+  }
+  100% {
+    transform: scale(1.03);
+    box-shadow: 0 0 35px rgba(34, 197, 94, 0.85), 6px 6px 0 #000000;
+  }
 }
 
 .tactical-btn-countermeasure:hover {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  transform: translateY(-1px);
+  background: #4ade80;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 #000000;
 }
 
 /* Responsive fallback for mobile */
 @media (max-width: 680px) {
   .tactical-crime-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
-    max-height: 220px;
+    gap: 10px;
+    max-height: 240px;
     overflow-y: auto;
+  }
+  .tactical-breach-title {
+    font-size: 1.25rem !important;
   }
 }
 

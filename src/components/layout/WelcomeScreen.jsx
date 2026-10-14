@@ -27,7 +27,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
     const trimmed = nameInput.trim();
     if (!trimmed || trimmed.length < 2) {
       playSound('beep');
-      setErrorMessage('⚠️ Nama wajib diisi (minimal 2 huruf)! Jangan biarkan kosong.');
+      setErrorMessage('Nama wajib diisi (minimal 2 huruf)! Jangan biarkan kosong.');
       return false;
     }
     setErrorMessage('');
@@ -88,7 +88,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
         {!isEditing && (studentName || nameInput.trim()) ? (
           <div className="agent-greeting-card">
             <div className="agent-card-left">
-              <div className="agent-avatar-circle" style={{ background: '#ffffff', border: '2px solid #fee2e2' }}>
+              <div className="agent-avatar-circle">
                 <img src="/logo.png" alt="CyberGenZ Emblem" className="agent-avatar-logo" />
               </div>
               <div className="agent-greeting-info">
@@ -97,7 +97,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
                   IDENTITAS AGEN TERVERIFIKASI
                 </div>
                 <h2 className="agent-greeting-title">
-                  Selamat Datang, <span className="agent-highlight-name">Agen {studentName || nameInput.trim()}</span>! 🛡️
+                  Selamat Datang, <span className="agent-highlight-name">Agen {studentName || nameInput.trim()}</span>! <Shield size={22} className="agent-title-shield" />
                 </h2>
                 <p className="agent-greeting-desc">
                   Data analisismu telah tersimpan di sistem PKM UBBG 2026. Siap menguji ketangkasanmu membongkar serangan siber?
@@ -108,7 +108,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
             <div className="agent-greeting-actions">
               <button
                 id="btn-start-simulation-welcome"
-                className="btn btn-red-glow"
+                className="btn btn-primary"
                 onClick={handleStartDirectly}
               >
                 <span>Masuk ke Hub 4 Misi</span>
@@ -130,7 +130,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
         ) : (
           <div className="welcome-name-box">
             <label htmlFor="student-name-input" className="name-box-label">
-              <User size={16} className="text-red" />
+              <User size={18} />
               Masukkan Nama Lengkap Kamu untuk Memulai:
             </label>
             <div className="name-input-row">
@@ -153,7 +153,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
               />
               <button
                 id="btn-save-name-welcome"
-                className="btn btn-red-glow"
+                className="btn btn-yellow"
                 onClick={handleStartDirectly}
               >
                 <span>Mulai Simulasi</span>
@@ -177,13 +177,13 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
         {/* 4 Mission Highlights Grid */}
         <div className="welcome-preview-section">
           <h3 className="preview-heading">
-            <BookOpen size={18} className="text-red" />
+            <BookOpen size={18} />
             4 Modul Praktik Interaktif yang Akan Kamu Pelajari:
           </h3>
 
           <div className="welcome-grid-4">
             <div className="preview-item">
-              <div className="preview-icon-box bg-red-soft text-red">
+              <div className="preview-icon-box" style={{ background: 'var(--nb-coral-red)', color: '#ffffff' }}>
                 <Radar size={22} />
               </div>
               <div className="preview-content">
@@ -193,7 +193,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
             </div>
 
             <div className="preview-item">
-              <div className="preview-icon-box bg-red-soft text-red">
+              <div className="preview-icon-box" style={{ background: 'var(--nb-green)', color: '#000000' }}>
                 <KeyRound size={22} />
               </div>
               <div className="preview-content">
@@ -203,7 +203,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
             </div>
 
             <div className="preview-item">
-              <div className="preview-icon-box bg-red-soft text-red">
+              <div className="preview-icon-box" style={{ background: 'var(--nb-cyan)', color: '#000000' }}>
                 <Key size={22} />
               </div>
               <div className="preview-content">
@@ -213,7 +213,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
             </div>
 
             <div className="preview-item">
-              <div className="preview-icon-box bg-red-soft text-red">
+              <div className="preview-icon-box" style={{ background: 'var(--nb-yellow)', color: '#000000' }}>
                 <EyeOff size={22} />
               </div>
               <div className="preview-content">

@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# AI Agent & Assistant directories
+.agent/
+.agents/
+.codex/
+*.exe
+__pycache__/
+*.pyc

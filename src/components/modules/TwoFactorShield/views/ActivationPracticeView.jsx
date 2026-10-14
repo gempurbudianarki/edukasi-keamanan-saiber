@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Smartphone, CheckCircle2, ShieldCheck, RotateCcw, Sparkles, QrCode, Key, Copy, Check, ArrowRight, ShieldAlert, HelpCircle } from 'lucide-react';
+import { Smartphone, CheckCircle2, ShieldCheck, RotateCcw, Sparkles, QrCode, Key, Copy, Check, ArrowRight, ShieldAlert, HelpCircle, Wifi, Battery, RotateCw } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 import { FloatingScoreBurst } from '../../../layout/FloatingScoreBurst';
 
@@ -153,63 +153,47 @@ export function ActivationPracticeView({ onCompletePractice }) {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px', marginBottom: '24px' }}>
             {/* Opsi 1: Authenticator App (Recommended) */}
             <div
+              className={`twofa-method-card ${chosenMethod === 'authenticator' ? 'active' : ''}`}
               onClick={() => {
                 playSound('click');
                 setChosenMethod('authenticator');
               }}
-              style={{
-                background: chosenMethod === 'authenticator' ? '#eff6ff' : '#ffffff',
-                border: `2px solid ${chosenMethod === 'authenticator' ? '#2563eb' : '#e2e8f0'}`,
-                borderRadius: '14px',
-                padding: '20px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: chosenMethod === 'authenticator' ? '0 4px 14px rgba(37, 99, 235, 0.15)' : 'none'
-              }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1d4ed8' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '8px', background: 'var(--nb-cyan, #00f0ff)', border: '2px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', boxShadow: '2px 2px 0 #000' }}>
                   <QrCode size={24} />
                 </div>
-                <span className="badge badge-green" style={{ fontSize: '0.7rem' }}>Sangat Direkomendasikan</span>
+                <span className="badge badge-green" style={{ fontSize: '0.72rem' }}>Sangat Direkomendasikan</span>
               </div>
-              <h4 style={{ fontSize: '1.02rem', color: '#0f172a', margin: '0 0 6px 0' }}>
+              <h4 style={{ fontSize: '1.05rem', color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'var(--font-heading)' }}>
                 Aplikasi Authenticator (TOTP)
               </h4>
-              <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.5, margin: 0 }}>
+              <p style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.5, margin: 0 }}>
                 Menggunakan Google Authenticator, Microsoft Authenticator, atau Aegis. Menghasilkan kode acak 6 digit offline setiap 30 detik. <strong>Kebal terhadap SIM Swap!</strong>
               </p>
             </div>
 
             {/* Opsi 2: SMS OTP */}
             <div
+              className={`twofa-method-card ${chosenMethod === 'sms' ? 'active' : ''}`}
               onClick={() => {
                 playSound('click');
                 setChosenMethod('sms');
               }}
-              style={{
-                background: chosenMethod === 'sms' ? '#eff6ff' : '#ffffff',
-                border: `2px solid ${chosenMethod === 'sms' ? '#2563eb' : '#e2e8f0'}`,
-                borderRadius: '14px',
-                padding: '20px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: chosenMethod === 'sms' ? '0 4px 14px rgba(37, 99, 235, 0.15)' : 'none'
-              }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#dc2626' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '8px', background: 'var(--nb-yellow, #facc15)', border: '2px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', boxShadow: '2px 2px 0 #000' }}>
                   <Smartphone size={24} />
                 </div>
-                <span className="badge badge-amber" style={{ fontSize: '0.7rem' }}>Cukup Aman</span>
+                <span className="badge badge-amber" style={{ fontSize: '0.72rem' }}>Cukup Aman</span>
               </div>
-              <h4 style={{ fontSize: '1.02rem', color: '#0f172a', margin: '0 0 6px 0' }}>
+              <h4 style={{ fontSize: '1.05rem', color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'var(--font-heading)' }}>
                 SMS / WhatsApp OTP
               </h4>
-              <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.5, margin: 0 }}>
+              <p style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.5, margin: 0 }}>
                 Menerima kode verifikasi melalui SMS ke nomor ponsel. Mudah digunakan, namun rentan jika nomor hangus atau diretas via <em>SIM Swap</em>.
               </p>
             </div>
@@ -238,12 +222,12 @@ export function ActivationPracticeView({ onCompletePractice }) {
           {/* Sisi Kiri: Mockup Smartphone dengan Live TOTP App */}
           <div style={{
             background: '#090d16',
-            border: '4px solid #334155',
-            borderRadius: '28px',
+            border: '3.5px solid var(--nb-border, #000000)',
+            borderRadius: '32px',
             padding: '18px',
             maxWidth: '320px',
             margin: '0 auto',
-            boxShadow: '0 16px 40px rgba(0, 0, 0, 0.35)',
+            boxShadow: '6px 6px 0 var(--nb-shadow-color, #000000)',
             position: 'relative'
           }}>
             {/* Notch & Camera */}
@@ -252,14 +236,20 @@ export function ActivationPracticeView({ onCompletePractice }) {
             </div>
 
             {/* Status bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: '#94a3b8', marginBottom: '14px', padding: '0 6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.7rem', color: '#94a3b8', marginBottom: '14px', padding: '0 6px' }}>
               <span>09:41</span>
-              <span>📶 5G • 🔋 98%</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                <Wifi size={12} color="#94a3b8" />
+                <span>5G</span>
+                <span>•</span>
+                <Battery size={13} color="#94a3b8" />
+                <span>98%</span>
+              </span>
             </div>
 
             {/* Screen Inner */}
-            <div style={{ background: '#020617', borderRadius: '18px', padding: '16px 12px', border: '1px solid #1e293b', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.74rem', color: '#38bdf8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
+            <div style={{ background: '#020617', borderRadius: '18px', padding: '16px 12px', border: '2px solid #1e293b', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.74rem', color: 'var(--nb-cyan, #00f0ff)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
                 Google Authenticator
               </div>
               <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '16px' }}>
@@ -301,27 +291,28 @@ export function ActivationPracticeView({ onCompletePractice }) {
                 </div>
               </div>
 
-              <div style={{ fontSize: '0.72rem', color: '#64748b', lineHeight: 1.4 }}>
-                🔄 Kode berganti otomatis tiap 30 detik (RFC 6238 TOTP Standard)
+              <div style={{ fontSize: '0.72rem', color: '#64748b', lineHeight: 1.4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <RotateCw size={13} />
+                <span>Kode berganti otomatis tiap 30 detik (RFC 6238 TOTP Standard)</span>
               </div>
             </div>
           </div>
 
           {/* Sisi Kanan: Form Input 6 Kotak & QR Code Mockup */}
-          <div style={{ background: '#ffffff', border: '1.5px solid #fee2e2', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 16px rgba(220, 38, 38, 0.05)' }}>
+          <div style={{ background: '#ffffff', border: '2.5px solid var(--nb-border, #000000)', borderRadius: 'var(--nb-radius-lg, 12px)', padding: '24px', boxShadow: '5px 5px 0 var(--nb-shadow-color, #000000)' }}>
             
             {/* Setup info with mini QR */}
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '20px' }}>
-              <div style={{ width: '64px', height: '64px', background: '#ffffff', border: '1.5px solid #cbd5e1', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, position: 'relative', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', background: '#f8fafc', padding: '14px', borderRadius: 'var(--nb-radius-md, 8px)', border: '2px solid var(--nb-border, #000000)', marginBottom: '20px', boxShadow: '3px 3px 0 var(--nb-shadow-color, #000000)' }}>
+              <div style={{ width: '64px', height: '64px', background: '#ffffff', border: '2px solid var(--nb-border, #000000)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, position: 'relative', overflow: 'hidden', boxShadow: '2px 2px 0 #000' }}>
                 <QrCode size={48} color="#0f172a" />
                 {/* Laser scan beam animation */}
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#ef4444', boxShadow: '0 0 8px #ef4444', animation: 'scan 2s infinite linear' }} />
               </div>
               <div style={{ fontSize: '0.82rem' }}>
-                <div style={{ fontWeight: 700, color: '#0f172a', marginBottom: '2px' }}>Kunci Rahasia Setup (Secret Key):</div>
+                <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: '2px' }}>Kunci Rahasia Setup (Secret Key):</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
-                  <code style={{ background: '#e2e8f0', padding: '3px 6px', borderRadius: '4px', color: '#0f172a', fontWeight: 600 }}>CYBER-UBBG-2026-KEY</code>
-                  <button className="btn btn-secondary btn-sm" style={{ padding: '2px 8px', fontSize: '0.72rem' }} onClick={handleCopyKey}>
+                  <code style={{ background: '#e2e8f0', padding: '4px 8px', borderRadius: '4px', border: '1.5px solid #000', color: '#0f172a', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>CYBER-UBBG-2026-KEY</code>
+                  <button className="btn btn-secondary btn-sm" style={{ padding: '3px 10px', fontSize: '0.72rem' }} onClick={handleCopyKey}>
                     {copiedKey ? <Check size={12} color="#16a34a" /> : <Copy size={12} />}
                     <span>{copiedKey ? 'Tersalin' : 'Salin'}</span>
                   </button>
@@ -329,7 +320,7 @@ export function ActivationPracticeView({ onCompletePractice }) {
               </div>
             </div>
 
-            <h3 style={{ fontSize: '1.05rem', color: '#0f172a', marginBottom: '8px' }}>
+            <h3 style={{ fontSize: '1.1rem', color: '#0f172a', marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
               Konfirmasi Kode Verifikasi 6-Digit
             </h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.84rem', marginBottom: '18px' }}>
@@ -338,7 +329,7 @@ export function ActivationPracticeView({ onCompletePractice }) {
 
             <form onSubmit={handleVerify}>
               {/* 6 Individual Pin Boxes */}
-              <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginBottom: '18px', flexWrap: 'wrap' }}>
                 {pinDigits.map((digit, index) => (
                   <input
                     key={index}
@@ -349,27 +340,14 @@ export function ActivationPracticeView({ onCompletePractice }) {
                     value={digit}
                     onChange={(e) => handleDigitChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    style={{
-                      width: '46px',
-                      height: '54px',
-                      textAlign: 'center',
-                      fontSize: '1.5rem',
-                      fontFamily: 'var(--font-mono)',
-                      fontWeight: 800,
-                      borderRadius: '10px',
-                      border: digit ? '2px solid #dc2626' : '2px solid #cbd5e1',
-                      background: digit ? '#fef2f2' : '#ffffff',
-                      color: '#0f172a',
-                      outline: 'none',
-                      transition: 'all 0.15s'
-                    }}
+                    className={`twofa-pin-input ${digit ? 'has-value' : ''}`}
                   />
                 ))}
               </div>
 
               {errorMsg && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#dc2626', fontSize: '0.82rem', marginBottom: '14px', justifyContent: 'center' }}>
-                  <ShieldAlert size={15} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#dc2626', fontSize: '0.84rem', marginBottom: '14px', justifyContent: 'center', fontWeight: 700 }}>
+                  <ShieldAlert size={16} />
                   <span>{errorMsg}</span>
                 </div>
               )}
@@ -386,11 +364,11 @@ export function ActivationPracticeView({ onCompletePractice }) {
       {/* STEP 3: Cadangan Pemulihan (Backup Codes) & Selesai */}
       {practiceStep === 3 && (
         <div style={{ maxWidth: '580px', margin: '0 auto', textAlign: 'center', padding: '16px' }}>
-          <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', color: '#16a34a' }}>
+          <div style={{ width: '64px', height: '64px', borderRadius: '12px', background: 'var(--nb-lime, #22c55e)', border: '2.5px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', color: '#ffffff', boxShadow: '3px 3px 0 #000' }}>
             <ShieldCheck size={38} />
           </div>
 
-          <h3 style={{ fontSize: '1.35rem', color: '#0f172a', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.4rem', color: '#0f172a', marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>
             Aktivasi 2FA Berhasil 100%!
           </h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: 1.5, marginBottom: '20px' }}>
@@ -398,27 +376,27 @@ export function ActivationPracticeView({ onCompletePractice }) {
           </p>
 
           {/* Backup Codes Card */}
-          <div style={{ background: '#f8fafc', border: '1.5px dashed #cbd5e1', borderRadius: '14px', padding: '20px', textAlign: 'left', marginBottom: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>
-                <Key size={16} color="#dc2626" />
+          <div className="twofa-backup-card">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: '0.95rem', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
+                <Key size={18} color="#ff4d4d" />
                 <span>Simpan Kode Pemulihan Cadangan (Backup Codes)</span>
               </div>
-              <span className="badge badge-amber" style={{ fontSize: '0.7rem' }}>Sangat Penting</span>
+              <span className="badge badge-amber" style={{ fontSize: '0.72rem' }}>Sangat Penting</span>
             </div>
-            <p style={{ fontSize: '0.8rem', color: '#475569', margin: '0 0 12px 0' }}>
+            <p style={{ fontSize: '0.82rem', color: '#475569', margin: '0 0 14px 0' }}>
               Gunakan kode 8-digit sekali pakai ini jika suatu saat smartphone Anda hilang atau rusak:
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontFamily: 'var(--font-mono)', fontSize: '0.92rem', fontWeight: 700, color: '#334155' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.95rem', color: '#0f172a' }}>
               {backupCodes.map((code, i) => (
-                <div key={i} style={{ background: '#ffffff', padding: '8px 12px', borderRadius: '6px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div key={i} className="twofa-backup-code-pill">
                   {code}
                 </div>
               ))}
             </div>
 
-            <div style={{ marginTop: '14px', textAlign: 'right' }}>
+            <div style={{ marginTop: '16px', textAlign: 'right' }}>
               <button
                 className="btn btn-secondary btn-sm"
                 onClick={() => {

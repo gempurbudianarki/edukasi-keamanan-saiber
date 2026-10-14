@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Play, ShieldAlert, ShieldCheck, User, Smartphone, AlertTriangle, Lock, Unlock, Radio, BellRing, CheckCircle2, XCircle, Wifi, Battery, ShieldX, KeyRound, ArrowRight } from 'lucide-react';
+import { Terminal, Play, ShieldAlert, ShieldCheck, User, Smartphone, AlertTriangle, Lock, Unlock, Radio, BellRing, CheckCircle2, XCircle, Wifi, Battery, ShieldX, KeyRound, ArrowRight, Sparkles } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 
 export function AttackDemoView({ onProceedToPractice }) {
@@ -122,11 +122,11 @@ export function AttackDemoView({ onProceedToPractice }) {
   return (
     <div className="glass-panel scenario-card">
       {/* Top Banner & 2FA State Switch */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '14px', borderBottom: '1.5px solid #fee2e2', paddingBottom: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '14px', borderBottom: '3px solid var(--nb-border, #000000)', paddingBottom: '16px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Radio size={20} color="#dc2626" className="pulse-slow" />
-            <h2 style={{ fontSize: '1.25rem', color: '#0f172a', margin: 0 }}>
+            <Radio size={20} color="#ff4d4d" className="pulse-slow" />
+            <h2 style={{ fontSize: '1.25rem', color: '#0f172a', margin: 0, fontFamily: 'var(--font-heading)' }}>
               Simulasi Serangan Hacker: Mengapa Kata Sandi Saja Tidak Cukup?
             </h2>
           </div>
@@ -136,19 +136,21 @@ export function AttackDemoView({ onProceedToPractice }) {
         </div>
 
         {/* 2FA Toggle Switch Button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '8px 16px', borderRadius: '14px', border: '1.5px solid #e2e8f0' }}>
-          <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#334155' }}>Status Benteng Akun:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '8px 16px', borderRadius: 'var(--nb-radius-md, 8px)', border: '2.5px solid var(--nb-border, #000000)', boxShadow: '3px 3px 0 var(--nb-shadow-color, #000000)' }}>
+          <span style={{ fontSize: '0.84rem', fontWeight: 800, color: '#0f172a' }}>Status Benteng Akun:</span>
           <button
             className="btn btn-sm"
             style={{
               padding: '8px 16px',
               fontSize: '0.84rem',
               fontWeight: 800,
-              background: has2FAEnabled ? '#16a34a' : '#dc2626',
+              background: has2FAEnabled ? 'var(--nb-lime, #22c55e)' : 'var(--nb-coral, #ff4d4d)',
               color: '#ffffff',
-              border: 'none',
-              boxShadow: has2FAEnabled ? '0 0 16px rgba(22, 163, 74, 0.45)' : '0 0 16px rgba(220, 38, 38, 0.45)',
-              transition: 'all 0.25s'
+              border: '2px solid #000000',
+              borderRadius: '6px',
+              boxShadow: '2px 2px 0 #000000',
+              cursor: 'pointer',
+              transition: 'transform 0.12s, box-shadow 0.12s'
             }}
             onClick={() => {
               if (isAttacking) return;
@@ -282,35 +284,49 @@ export function AttackDemoView({ onProceedToPractice }) {
 
               {/* Dynamic Notification Dropdown (Ketika 2FA Aktif) */}
               {showPushNotification && (
-                <div className="banner-drop-in" style={{
-                  background: '#ffffff',
-                  borderRadius: '16px',
-                  padding: '12px 14px',
-                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.4)',
-                  marginBottom: '12px',
-                  border: '1.5px solid #38bdf8'
+                <div className="banner-drop-in phone-push-card" style={{
+                  marginBottom: '12px'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', fontWeight: 800, color: '#0f172a' }}>
-                      <BellRing size={14} color="#dc2626" />
+                      <BellRing size={14} color="#ff4d4d" />
                       <span>Apple ID Security</span>
                     </div>
-                    <span style={{ fontSize: '0.68rem', color: '#64748b' }}>Baru Saja</span>
+                    <span style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700 }}>Baru Saja</span>
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: '#334155', lineHeight: 1.35, marginBottom: '8px' }}>
-                    ⚠️ Upaya masuk terdeteksi dari <strong>St. Petersburg, Rusia</strong> (IP: 185.220.101.5). Apakah ini Anda?
+                  <div style={{ fontSize: '0.74rem', color: '#334155', lineHeight: 1.35, marginBottom: '10px' }}>
+                    Upaya masuk terdeteksi dari <strong>St. Petersburg, Rusia</strong> (IP: 185.220.101.5). Apakah ini Anda?
                   </div>
-                  <div style={{ display: 'flex', gap: '6px' }}>
+                  <div style={{ display: 'flex', gap: '8px' }}>
                     <button
                       className="btn btn-sm"
-                      style={{ flex: 1, background: '#dc2626', color: '#ffffff', border: 'none', padding: '6px 8px', fontSize: '0.72rem', fontWeight: 700 }}
+                      style={{
+                        flex: 1,
+                        background: 'var(--nb-coral, #ff4d4d)',
+                        color: '#ffffff',
+                        border: '2px solid #000000',
+                        borderRadius: '6px',
+                        boxShadow: '2px 2px 0 #000000',
+                        padding: '6px 8px',
+                        fontSize: '0.72rem',
+                        fontWeight: 800,
+                        cursor: 'pointer'
+                      }}
                       onClick={handleManualReject}
                     >
                       <XCircle size={12} /> TOLAK & BLOKIR
                     </button>
                     <button
                       className="btn btn-sm"
-                      style={{ background: '#f1f5f9', color: '#64748b', border: 'none', padding: '6px 8px', fontSize: '0.72rem' }}
+                      style={{
+                        background: '#f1f5f9',
+                        color: '#94a3b8',
+                        border: '2px solid #cbd5e1',
+                        borderRadius: '6px',
+                        padding: '6px 8px',
+                        fontSize: '0.72rem',
+                        fontWeight: 700
+                      }}
                       disabled
                     >
                       Izinkan
@@ -362,8 +378,18 @@ export function AttackDemoView({ onProceedToPractice }) {
 
               {/* Bottom Phone Footer */}
               <div style={{ textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px' }}>
-                <span className={`badge ${has2FAEnabled ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.7rem' }}>
-                  {has2FAEnabled ? '🛡️ Terlindungi Lapis 2FA' : '⚠️ Hanya Kata Sandi'}
+                <span className={`badge ${has2FAEnabled ? 'badge-green' : 'badge-red'}`} style={{ fontSize: '0.7rem', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                  {has2FAEnabled ? (
+                    <>
+                      <ShieldCheck size={13} />
+                      <span>Terlindungi Lapis 2FA</span>
+                    </>
+                  ) : (
+                    <>
+                      <AlertTriangle size={13} />
+                      <span>Hanya Kata Sandi</span>
+                    </>
+                  )}
                 </span>
               </div>
             </div>
@@ -373,9 +399,10 @@ export function AttackDemoView({ onProceedToPractice }) {
       </div>
 
       {/* Educational Footer Banner */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '22px', borderTop: '1.5px solid #fee2e2', paddingTop: '16px', flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.4 }}>
-          💡 <strong>Pelajaran Penting:</strong> Kata sandi Anda bisa saja bocor dari database luar. Namun dengan <strong>2FA Aktif</strong>, akun Anda tetap 100% kebal karena peretas tidak memegang ponsel Anda!
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '22px', borderTop: '3px solid var(--nb-border, #000000)', paddingTop: '16px', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.4, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <Sparkles size={16} />
+          <span><strong>Pelajaran Penting:</strong> Kata sandi Anda bisa saja bocor dari database luar. Namun dengan <strong>2FA Aktif</strong>, akun Anda tetap 100% kebal karena peretas tidak memegang ponsel Anda!</span>
         </div>
 
         <button className="btn btn-secondary" onClick={onProceedToPractice} style={{ padding: '8px 18px' }}>

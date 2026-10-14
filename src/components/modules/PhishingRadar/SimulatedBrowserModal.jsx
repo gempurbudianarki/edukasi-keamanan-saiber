@@ -4,6 +4,7 @@ import {
   Lock, 
   AlertTriangle, 
   ShieldAlert, 
+  ShieldCheck,
   CreditCard, 
   Camera, 
   Smartphone, 
@@ -14,7 +15,13 @@ import {
   Biohazard, 
   Siren, 
   AlertOctagon, 
-  Flame 
+  Flame,
+  ArrowLeft,
+  ArrowRight,
+  RotateCw,
+  X,
+  Zap,
+  ShieldX
 } from 'lucide-react';
 import { playSound } from '../../../utils/soundEffects';
 import { DanaLoginMockup } from './modals/mockups/DanaLoginMockup';
@@ -37,13 +44,13 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
 
   const renderCrimeVector = (type) => {
     switch (type) {
-      case 'credit': return <CreditCard size={18} color="#dc2626" />;
-      case 'lock': return <Lock size={18} color="#dc2626" />;
-      case 'camera': return <Camera size={18} color="#dc2626" />;
-      case 'gamepad': return <Gamepad2 size={18} color="#dc2626" />;
-      case 'message': return <MessageSquare size={18} color="#dc2626" />;
-      case 'user': return <User size={18} color="#dc2626" />;
-      default: return <AlertTriangle size={18} color="#dc2626" />;
+      case 'credit': return <CreditCard size={20} color="#fef08a" strokeWidth={2.5} />;
+      case 'lock': return <Lock size={20} color="#fef08a" strokeWidth={2.5} />;
+      case 'camera': return <Camera size={20} color="#fef08a" strokeWidth={2.5} />;
+      case 'gamepad': return <Gamepad2 size={20} color="#fef08a" strokeWidth={2.5} />;
+      case 'message': return <MessageSquare size={20} color="#fef08a" strokeWidth={2.5} />;
+      case 'user': return <User size={20} color="#fef08a" strokeWidth={2.5} />;
+      default: return <AlertTriangle size={20} color="#fef08a" strokeWidth={2.5} />;
     }
   };
 
@@ -69,42 +76,64 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
               <Lock size={13} color="#94a3b8" />
             </span>
             <span>{tabTitle}</span>
-            <span className="tab-close" onClick={onClose}>✕</span>
+            <button className="tab-close" onClick={onClose} aria-label="Tutup Tab">
+              <X size={12} strokeWidth={2.5} />
+            </button>
           </div>
         </div>
 
         {/* Address bar */}
         <div className="sim-addressbar">
           <div className="sim-nav-btns">
-            <button className="sim-nav-btn" title="Back">←</button>
-            <button className="sim-nav-btn" title="Forward">→</button>
-            <button className="sim-nav-btn" title="Reload">↻</button>
+            <button className="sim-nav-btn" title="Back" aria-label="Kembali">
+              <ArrowLeft size={16} strokeWidth={2.5} />
+            </button>
+            <button className="sim-nav-btn" title="Forward" aria-label="Maju">
+              <ArrowRight size={16} strokeWidth={2.5} />
+            </button>
+            <button className="sim-nav-btn" title="Reload" aria-label="Muat Ulang">
+              <RotateCw size={15} strokeWidth={2.5} />
+            </button>
           </div>
 
           <div className="sim-url-pill">
-            <Lock size={14} style={{ color: '#94a3b8', flexShrink: 0 }} />
-            <span className="url-text" style={{ color: '#e2e8f0' }}>
+            <Lock size={15} className={scenario.isPhishing ? 'lock-danger' : 'lock-safe'} />
+            <span className="url-text" title={scenario.displayUrl}>
               {scenario.displayUrl}
             </span>
+            {scenario.isPhishing ? (
+              <span className="url-badge-danger">
+                <ShieldAlert size={13} strokeWidth={2.5} />
+                <span>TIDAK AMAN / PALSU</span>
+              </span>
+            ) : (
+              <span className="url-badge-safe">
+                <ShieldCheck size={13} strokeWidth={2.5} />
+                <span>RESMI TERVERIFIKASI</span>
+              </span>
+            )}
           </div>
 
-          <button className="sim-close-btn" onClick={onClose} title="Tutup Simulator">✕</button>
+          <button className="sim-close-btn" onClick={onClose} title="Tutup Simulator" aria-label="Tutup Jendela">
+            <X size={18} strokeWidth={2.8} />
+          </button>
         </div>
 
         {/* DEFCON-1 Tactical Hazard Caution Strip */}
         {breached && (
           <div className="tactical-hazard-strip">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Siren size={18} className="siren-spinning" />
-              <span>DEFCON-1 CYBER WAR DEFENSE PROTOCOL</span>
+            <div className="hazard-pill-item hazard-pill-danger">
+              <Siren size={16} className="siren-spinning" />
+              <span className="hazard-text-danger">DEFCON-1 CYBER WAR DEFENSE PROTOCOL</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Radiation size={16} className="nuclear-icon" />
-              <span>CRITICAL INTRUSION DETECTED</span>
+            <div className="hazard-pill-item hazard-pill-warning">
+              <Radiation size={16} className="nuclear-spin" />
+              <span className="hazard-text-warning">CRITICAL INTRUSION DETECTED</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span>CODE: RED ALERT</span>
-              <Siren size={18} className="siren-spinning" />
+            <div className="hazard-pill-item hazard-pill-alert">
+              <Zap size={15} className="hazard-flash" />
+              <span className="hazard-text-alert">CODE: RED ALERT</span>
+              <Siren size={16} className="siren-spinning" />
             </div>
           </div>
         )}
@@ -112,16 +141,20 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
         {/* Browser viewport body */}
         <div className="sim-body">
           {breached ? (
-            /* DEFCON-1 TACTICAL BREACH OVERLAY (ZERO SCROLL FIT) */
+            /* DEFCON-1 TACTICAL BREACH OVERLAY (ZERO CUTOFF, CINEMATIC EMERGENCY) */
             <div className="breach-overlay">
+              {/* Scanline CRT overlay effect */}
+              <div className="breach-scanlines" />
+
               <div className="tactical-breach-hud">
                 {/* Emergency Flashing Siren Orb & Defcon Badge */}
                 <div className="tactical-beacon-wrap">
                   <div className="tactical-siren-orb" title="Keadaan Darurat Siber">
-                    <Radiation size={28} className="nuclear-spin" />
+                    <Radiation size={32} className="nuclear-spin" />
                   </div>
                   <div className="tactical-defcon-badge">
                     <span className="defcon-ping" />
+                    <AlertOctagon size={16} color="#facc15" />
                     <span>DEFCON 1 // PROTOKOL PERANG SIBER AKTIF</span>
                     <span className="defcon-ping" />
                   </div>
@@ -131,11 +164,14 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
                 <h2 className="tactical-breach-title">
                   {scenario.breachResult?.headline || 'DATA PRIBADI ANDA TELAH BERHASIL DICURI!'}
                 </h2>
-                <p className="tactical-breach-desc">
-                  {scenario.breachResult?.alertMsg || 'Informasi yang Anda ketik baru saja terekam di terminal hacker.'}
-                </p>
+                <div className="tactical-breach-desc-row">
+                  <ShieldX size={20} className="tactical-desc-icon" />
+                  <p className="tactical-breach-desc">
+                    {scenario.breachResult?.alertMsg || 'Informasi yang Anda ketik baru saja terekam di terminal hacker.'}
+                  </p>
+                </div>
 
-                {/* Compact 3-Column Threat Grid (Zero Vertical Scrolling!) */}
+                {/* Compact 3-Column Threat Grid */}
                 {scenario.breachResult?.liveCrimes && (
                   <div className="tactical-crime-grid">
                     {scenario.breachResult.liveCrimes.map((c, i) => (
@@ -156,10 +192,11 @@ export function SimulatedBrowserModal({ scenario, onClose, onReportPhishing }) {
                 {/* Tactical Defense Actions */}
                 <div className="tactical-breach-actions">
                   <button className="tactical-btn-dismiss" onClick={onClose}>
-                    Tutup Simulator
+                    <X size={16} strokeWidth={2.5} />
+                    <span>Tutup Simulator</span>
                   </button>
                   <button className="tactical-btn-countermeasure" onClick={onReportPhishing}>
-                    <ShieldAlert size={18} />
+                    <ShieldAlert size={20} strokeWidth={2.5} />
                     <span>LUNCURKAN COUNTER-DEFENSE: BLOKIR & LAPORKAN</span>
                   </button>
                 </div>

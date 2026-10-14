@@ -12,7 +12,8 @@ import {
   Camera,
   CreditCard,
   GraduationCap,
-  Gamepad2
+  Gamepad2,
+  Paperclip
 } from 'lucide-react';
 import { playSound } from '../../../../utils/soundEffects';
 import { SimulatedBrowserModal } from '../SimulatedBrowserModal';
@@ -120,7 +121,9 @@ export function WebSimulationView({
       {/* SINKHOLE NOTIFICATION */}
       {sinkholeAlert && (
         <div className="sinkhole-banner">
-          <div className="sinkhole-icon">🛡️</div>
+          <div className="sinkhole-icon">
+            <ShieldCheck size={28} color="#22c55e" strokeWidth={2.5} />
+          </div>
           <div className="sinkhole-content">
             <div className="sinkhole-title">
               HAGEZI MULTI PRO++ DNS SINKHOLE INTERCEPTED
@@ -168,7 +171,9 @@ export function WebSimulationView({
 
           {current.attachment && (
             <div className="chat-attachment">
-              <span className="att-icon">📎</span>
+              <span className="att-icon">
+                <Paperclip size={18} color="#64748b" />
+              </span>
               <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
                 <span className="att-name" style={{ fontWeight: 700, color: '#dc2626', wordBreak: 'break-all' }}>
                   {typeof current.attachment === 'object' && current.attachment !== null
@@ -222,7 +227,7 @@ export function WebSimulationView({
 
         {/* Action Buttons */}
         {!answeredAction ? (
-          <div className="scenario-actions" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <div className="scenario-actions" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <button 
               className="btn btn-secondary"
               onClick={() => handleAction('open')}
@@ -234,7 +239,7 @@ export function WebSimulationView({
 
             <button 
               className="btn btn-primary"
-              style={{ background: '#dc2626', borderColor: '#b91c1c', flex: '1 1 180px' }}
+              style={{ background: 'var(--nb-coral, #ff4d4d)', borderColor: '#000000', color: '#ffffff', flex: '1 1 180px' }}
               onClick={() => handleAction('block')}
             >
               <ShieldAlert size={16} />
@@ -243,7 +248,7 @@ export function WebSimulationView({
 
             <button 
               className="btn btn-primary"
-              style={{ background: '#16a34a', borderColor: '#15803d', flex: '1 1 180px' }}
+              style={{ background: 'var(--nb-lime, #22c55e)', borderColor: '#000000', color: '#ffffff', flex: '1 1 180px' }}
               onClick={() => handleAction('safe')}
             >
               <ShieldCheck size={16} />

@@ -52,35 +52,37 @@ export function PrivacyShield({ onBack, onComplete, initialScore = 0 }) {
       {/* Doxxing Risk Telemetry Banner */}
       <div style={{
         background: '#ffffff',
-        border: '1.5px solid #fee2e2',
-        borderRadius: '14px',
+        border: '2.5px solid var(--nb-border, #000000)',
+        borderRadius: 'var(--nb-radius-md, 8px)',
         padding: '16px 20px',
         marginBottom: '20px',
-        boxShadow: '0 4px 14px rgba(220, 38, 38, 0.04)',
+        boxShadow: '4px 4px 0 var(--nb-shadow-color, #000000)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '14px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '12px',
-            background: evaluation.score >= 90 ? '#dcfce7' : '#fee2e2',
-            color: evaluation.score >= 90 ? '#16a34a' : '#dc2626',
+            width: '46px',
+            height: '46px',
+            borderRadius: '8px',
+            border: '2px solid #000',
+            background: evaluation.score >= 90 ? 'var(--nb-lime, #22c55e)' : 'var(--nb-coral, #ff4d4d)',
+            color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxShadow: '2px 2px 0 #000'
           }}>
-            {evaluation.score >= 90 ? <ShieldCheck size={26} /> : <ShieldAlert size={26} />}
+            {evaluation.score >= 90 ? <ShieldCheck size={26} strokeWidth={2.5} /> : <ShieldAlert size={26} strokeWidth={2.5} />}
           </div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', color: '#0f172a' }}>
-              Status Pertahanan Profil: <span style={{ color: evaluation.color }}>{evaluation.status}</span>
+            <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
+              Status Pertahanan Profil: <span style={{ color: evaluation.score >= 90 ? '#16a34a' : '#dc2626' }}>{evaluation.status}</span>
             </div>
-            <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
+            <div style={{ fontSize: '0.84rem', color: '#475569', fontWeight: 500 }}>
               {evaluation.score >= 90
                 ? 'Profil Anda terlindungi maksimal dari pelacakan lokasi, penguntit (stalker), dan sindikat doxxing.'
                 : 'Peringatan: Terdapat informasi sensitif yang bocor dan dapat disalahgunakan pihak jahat!'}
@@ -89,13 +91,13 @@ export function PrivacyShield({ onBack, onComplete, initialScore = 0 }) {
         </div>
 
         {/* Mini progress bar */}
-        <div style={{ minWidth: '180px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, marginBottom: '4px', color: '#334155' }}>
+        <div style={{ minWidth: '190px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 800, marginBottom: '6px', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
             <span>Perisai Privasi:</span>
-            <span style={{ color: evaluation.color }}>{evaluation.score}%</span>
+            <span>{evaluation.score}%</span>
           </div>
-          <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${evaluation.score}%`, background: evaluation.color, transition: 'width 0.3s ease, background 0.3s ease' }} />
+          <div style={{ height: '12px', background: '#e2e8f0', borderRadius: '4px', border: '2px solid #000', overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${evaluation.score}%`, background: evaluation.score >= 90 ? 'var(--nb-lime, #22c55e)' : 'var(--nb-coral, #ff4d4d)', transition: 'width 0.3s ease, background 0.3s ease' }} />
           </div>
         </div>
       </div>

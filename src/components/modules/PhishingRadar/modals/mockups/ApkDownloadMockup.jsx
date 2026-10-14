@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, AlertTriangle, ShieldAlert, Smartphone, CheckCircle2, ShieldOff, Sparkles } from 'lucide-react';
+import { Download, AlertTriangle, ShieldAlert, Smartphone, CheckCircle2, ShieldOff, Sparkles, Scissors } from 'lucide-react';
 import { playSound } from '../../../../../utils/soundEffects';
 
 export function ApkDownloadMockup({ scenario, onBreach }) {
@@ -74,7 +74,7 @@ export function ApkDownloadMockup({ scenario, onBreach }) {
             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
             flexShrink: 0
           }}>
-            ✂️
+            <Scissors size={28} color="#38bdf8" strokeWidth={2.5} />
           </div>
           <div style={{ minWidth: 0, flex: 1 }}>
             <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

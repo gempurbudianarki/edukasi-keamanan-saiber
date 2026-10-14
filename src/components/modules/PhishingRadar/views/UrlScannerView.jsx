@@ -63,7 +63,19 @@ export function UrlScannerView() {
             if (errorMessage) setErrorMessage('');
           }}
           placeholder="https://contoh-domain-mencurigakan.com/path"
-          style={{ flex: 1, minWidth: '260px', padding: '12px 14px', borderRadius: '8px', border: `1.5px solid ${errorMessage ? '#ef4444' : '#cbd5e1'}`, background: '#ffffff', color: '#0f172a', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}
+          style={{
+            flex: 1,
+            minWidth: '260px',
+            padding: '12px 16px',
+            borderRadius: 'var(--nb-radius-md, 8px)',
+            border: '2.5px solid var(--nb-border, #000000)',
+            background: '#ffffff',
+            color: '#0f172a',
+            fontSize: '0.92rem',
+            fontFamily: 'var(--font-mono)',
+            boxShadow: '3px 3px 0 var(--nb-shadow-color, #000000)',
+            outline: 'none'
+          }}
         />
         <button
           className="btn btn-primary"
@@ -76,8 +88,8 @@ export function UrlScannerView() {
       </div>
 
       {errorMessage && (
-        <div style={{ background: '#fee2e2', border: '1px solid #fca5a5', color: '#991b1b', padding: '8px 12px', borderRadius: '6px', fontSize: '0.82rem', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <AlertTriangle size={15} />
+        <div style={{ background: '#fee2e2', border: '2px solid #000000', color: '#991b1b', padding: '10px 14px', borderRadius: 'var(--nb-radius-md, 8px)', fontSize: '0.84rem', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '2px 2px 0 #000', fontWeight: 700 }}>
+          <AlertTriangle size={16} />
           <span>{errorMessage}</span>
         </div>
       )}
@@ -100,51 +112,52 @@ export function UrlScannerView() {
 
       {/* Analysis Result */}
       {analysis && (
-        <div style={{ background: '#ffffff', border: `1.5px solid ${analysis.riskColor}60`, borderRadius: '12px', padding: '20px', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
+        <div style={{ background: '#ffffff', border: '2.5px solid var(--nb-border, #000000)', borderRadius: 'var(--nb-radius-lg, 12px)', padding: '22px', boxShadow: '5px 5px 0 var(--nb-shadow-color, #000000)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
             <div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 700 }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.5px' }}>
                 Tingkat Risiko Ancaman
               </div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: analysis.riskColor }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 900, color: analysis.riskLevel?.includes('BAHAYA') ? 'var(--nb-coral, #ff4d4d)' : analysis.riskLevel?.includes('AMAN') ? 'var(--nb-lime, #22c55e)' : 'var(--nb-yellow, #facc15)', fontFamily: 'var(--font-heading)' }}>
                 {analysis.riskLevel}
               </div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 800 }}>
                 Skor Probabilitas Phishing
               </div>
-              <div style={{ fontSize: '2rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: analysis.riskColor }}>
-                {analysis.score}<span style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>/100</span>
+              <div style={{ fontSize: '2.2rem', fontFamily: 'var(--font-mono)', fontWeight: 900, color: '#0f172a' }}>
+                {analysis.score}<span style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>/100</span>
               </div>
             </div>
           </div>
 
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '14px', borderRadius: '8px', marginBottom: '18px', fontSize: '0.88rem', color: '#1e293b', lineHeight: 1.5 }}>
+          <div style={{ background: 'var(--nb-paper-dot, #fffdf8)', border: '2px solid var(--nb-border, #000000)', padding: '14px 16px', borderRadius: 'var(--nb-radius-md, 8px)', marginBottom: '20px', fontSize: '0.88rem', color: '#1e293b', lineHeight: 1.5, boxShadow: '2px 2px 0 var(--nb-shadow-color, #000000)' }}>
             <strong style={{ color: '#0f172a' }}>Rekomendasi Keamanan:</strong> {analysis.recommendation}
           </div>
 
           {/* Features list */}
-          <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '10px' }}>
+          <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#0f172a', marginBottom: '12px', fontFamily: 'var(--font-heading)' }}>
             Parameter Ekstraksi Algoritma:
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '10px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px' }}>
             {analysis.features?.map((f, i) => (
               <div
                 key={i}
                 style={{
                   padding: '12px 14px',
-                  borderRadius: '8px',
+                  borderRadius: 'var(--nb-radius-sm, 4px)',
                   background: f.danger ? '#fef2f2' : '#f0fdf4',
-                  border: `1.5px solid ${f.danger ? '#fecaca' : '#bbf7d0'}`,
-                  fontSize: '0.8rem'
+                  border: '2px solid var(--nb-border, #000000)',
+                  boxShadow: '2px 2px 0 var(--nb-shadow-color, #000000)',
+                  fontSize: '0.82rem'
                 }}
               >
-                <div style={{ fontWeight: 700, color: f.danger ? '#b91c1c' : '#15803d', marginBottom: '4px' }}>
+                <div style={{ fontWeight: 800, color: f.danger ? 'var(--nb-coral, #ff4d4d)' : '#15803d', marginBottom: '4px', fontFamily: 'var(--font-heading)' }}>
                   {f.name}
                 </div>
-                <div style={{ color: '#475569', lineHeight: 1.45 }}>{f.desc}</div>
+                <div style={{ color: '#334155', lineHeight: 1.45, fontWeight: 500 }}>{f.desc}</div>
               </div>
             ))}
           </div>

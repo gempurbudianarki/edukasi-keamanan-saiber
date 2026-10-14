@@ -62,8 +62,7 @@ export function ResetConfirmModal({ isOpen, onClose, onConfirm }) {
             Batalkan
           </button>
           <button
-            className="btn btn-primary"
-            style={{ background: '#dc2626', borderColor: '#b91c1c' }}
+            className="btn btn-danger"
             onClick={() => {
               playSound('click');
               onConfirm();
