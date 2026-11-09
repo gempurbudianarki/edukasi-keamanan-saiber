@@ -1,67 +1,235 @@
 /* ================================================================
    TWO-FACTOR SHIELD (BENTENG 2FA) — NEO-BRUTALISM GEN-Z STYLING
+   PKM UBBG 2026 — CyberGenZ Simulator
    ================================================================ */
 
-.twofa-tabs,
-.mode-nav-tabs {
+.twofa-module-wrapper {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+.twofa-header-badges {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  border-bottom: 3px solid var(--nb-border, #000000);
-  padding-bottom: 14px;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
-.twofa-tab-btn,
-.mode-tab-btn {
-  background: var(--nb-card-bg, #ffffff);
-  border: 2.5px solid var(--nb-border, #000000);
-  color: var(--nb-text, #0f172a);
-  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
-  font-size: 0.92rem;
-  font-weight: 800;
-  padding: 10px 20px;
-  border-radius: var(--nb-radius-md, 8px);
-  cursor: pointer;
-  display: inline-flex;
+/* ── Luxury Cyber Defense Telemetry HUD ───────────────────────────── */
+.twofa-telemetry-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #090d16;
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 8px 14px;
+  box-shadow: 3px 3px 0 #000000;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.telemetry-left, .telemetry-right {
+  display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 3px 3px 0 var(--nb-shadow-color, #000000);
-  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.12s cubic-bezier(0.16, 1, 0.3, 1), background 0.15s;
+  flex-wrap: wrap;
 }
 
-.twofa-tab-btn:hover,
-.mode-tab-btn:hover {
-  background: #f8fafc;
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--nb-shadow-color, #000000);
+.telemetry-pulse-dot {
+  width: 9px;
+  height: 9px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse-slow 1.5s infinite ease-in-out;
 }
 
-.twofa-tab-btn.active,
-.mode-tab-btn.active {
-  background: var(--nb-coral, #ff4d4d);
+.telemetry-hud-title {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #00f0ff;
+  letter-spacing: 0.08em;
+}
+
+.telemetry-chip {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.chip-gold {
+  color: #facc15;
+  border-color: #854d0e;
+  background: rgba(250, 204, 21, 0.1);
+}
+
+.chip-cyan {
+  color: #38bdf8;
+  border-color: #0369a1;
+  background: rgba(56, 189, 248, 0.1);
+}
+
+/* ── 4-Stage Stepper Navigation Bar ─────────────────────────────── */
+.twofa-stepper-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.twofa-stepper-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 2.5px 2.5px 0 #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.twofa-stepper-btn:hover {
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 4px 4px 0 #000000;
+  background: #fffdf0;
+}
+
+.twofa-stepper-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000000;
+}
+
+.twofa-stepper-btn.active-step {
+  background: var(--nb-yellow, #facc15) !important;
+  border: 2px solid #000000 !important;
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 4px 4px 0 #000000 !important;
+}
+
+.twofa-stepper-btn.done-step {
+  background: #dcfce7;
+  border-color: #16a34a;
+}
+
+.stepper-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepper-label {
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 900;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+/* ── Hacker Terminal & Attack Demo (Tahap 1) ─────────────────────── */
+.twofa-top-control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2.5px solid #000000;
+}
+
+.twofa-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #000000;
   color: #ffffff;
-  border-color: var(--nb-border, #000000);
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--nb-shadow-color, #000000);
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
 }
 
-/* Hacker Terminal Simulation */
+.twofa-title-text {
+  font-size: clamp(1.2rem, 2.5vw, 1.48rem);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  font-family: var(--font-heading);
+}
+
+.twofa-desc-text {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 650px;
+}
+
+.twofa-state-switch-card {
+  background: #f8fafc;
+  border: 2px solid #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 8px 12px;
+  box-shadow: 2.5px 2.5px 0 #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.state-switch-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.btn-inner-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Cyber Attack Arena Grid (Left: Hacker Terminal | Right: Smartphone) */
 .attack-arena {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
+  grid-template-columns: minmax(0, 1.25fr) minmax(290px, 340px);
+  gap: 20px;
+  align-items: stretch;
+  margin-bottom: 20px;
 }
 
 .terminal-box {
   background: #050811;
-  border: 3px solid var(--nb-border, #000000);
-  border-radius: var(--nb-radius-lg, 12px);
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-md, 12px);
   overflow: hidden;
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  box-shadow: 6px 6px 0 var(--nb-shadow-color, #000000);
-  position: relative;
+  box-shadow: 4px 4px 0 #000000;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
 }
 
 .terminal-topbar {
@@ -70,7 +238,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border-bottom: 2.5px solid var(--nb-border, #000000);
+  border-bottom: 2.5px solid #000000;
 }
 
 .terminal-dots {
@@ -98,58 +266,187 @@
 }
 
 .terminal-body {
-  padding: 18px;
-  font-size: 0.85rem;
-  min-height: 240px;
-  line-height: 1.6;
-  color: #cbd5e1;
+  flex: 1;
+  background: #050811;
+  padding: 16px;
+  overflow-y: auto;
+  max-height: 330px;
+  line-height: 1.55;
+  font-size: 0.82rem;
+  font-family: var(--font-mono, monospace);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .log-line {
-  margin-bottom: 6px;
+  word-break: break-word;
+  line-height: 1.45;
 }
 
-.log-cyan { color: #00f0ff; }
-.log-green { color: #22c55e; }
-.log-red { color: #ff4d4d; }
-.log-amber { color: #facc15; }
-.log-muted { color: #64748b; }
+.terminal-cursor {
+  animation: blink-cursor 0.8s infinite;
+  color: #00f0ff;
+  display: inline-block;
+  margin-top: 4px;
+}
 
-/* Smartphone 1:1 Realistic Physical Chassis */
+.terminal-footer-controls {
+  background: #0b0f19;
+  border-top: 2.5px solid #000000;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.terminal-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 170px;
+}
+
+.terminal-prog-label {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+}
+
+.terminal-prog-track {
+  flex: 1;
+  height: 10px;
+  background: #1e293b;
+  border-radius: 6px;
+  border: 1.5px solid #000000;
+  overflow: hidden;
+}
+
+.terminal-prog-fill {
+  height: 100%;
+  transition: width 0.25s ease, background-color 0.3s ease;
+}
+
+.terminal-prog-num {
+  font-size: 0.76rem;
+  color: #ffffff;
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+  min-width: 38px;
+}
+
+.launch-attack-btn {
+  white-space: nowrap;
+}
+
+/* ── Vector Selector Buttons ─────────────────────────────────────── */
+.attack-vector-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.vector-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 0.76rem;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #000000;
+  background: #ffffff;
+  color: #0f172a;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.vector-btn:hover:not(:disabled) {
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 3.5px 3.5px 0 #000000;
+  background: #fffdf0;
+}
+
+.vector-btn.active {
+  background: var(--nb-yellow, #facc15);
+  box-shadow: 3px 3px 0 #000000;
+  transform: translate(-1px, -1px);
+}
+
+/* ── Forensic Inspector (Technical Depth for Critical Thinking) ─── */
+.forensic-inspector-card {
+  background: #090d16;
+  border: 2px solid #1e293b;
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #cbd5e1;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.76rem;
+  margin-top: 12px;
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.forensic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.forensic-pill {
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+.forensic-pill-label {
+  color: #64748b;
+  font-size: 0.68rem;
+  display: block;
+}
+
+.forensic-pill-val {
+  color: #38bdf8;
+  font-weight: 800;
+}
+
+/* ── Smartphone Chassis & Push Notification Simulation ──────────── */
 .phone-device-wrap {
   perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
 }
 
 .phone-device-card {
   background: #090d16;
-  border: 3.5px solid var(--nb-border, #000000);
+  border: 3.5px solid #000000;
   border-radius: 36px;
   padding: 14px;
-  box-shadow: 7px 7px 0 var(--nb-shadow-color, #000000);
+  box-shadow: 7px 7px 0 #000000;
   position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
-}
-
-.phone-screen-container {
-  background: #020617;
-  border-radius: 26px;
-  min-height: 390px;
+  width: 100%;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-  border: 2px solid #1e293b;
 }
 
-/* Dynamic Island Notch */
 .dynamic-island {
   width: 110px;
   height: 24px;
   background: #000000;
   border-radius: 20px;
-  margin: 10px auto 0 auto;
+  margin: 6px auto 10px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -173,91 +470,974 @@
   background: #0f172a;
 }
 
-/* Push Notification Toast inside phone */
+.phone-screen-container {
+  background: #020617;
+  border-radius: 26px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #1e293b;
+  flex: 1;
+}
+
+.phone-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #cbd5e1;
+  font-size: 0.72rem;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
 .phone-push-card {
-  background: var(--nb-card-bg, #ffffff);
-  border: 2.5px solid var(--nb-border, #000000);
-  border-radius: var(--nb-radius-md, 8px);
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  border-radius: 10px;
   padding: 12px 14px;
-  box-shadow: 4px 4px 0 var(--nb-shadow-color, #000000);
+  box-shadow: 4px 4px 0 #000000;
   margin-bottom: 12px;
 }
 
-/* Method Selector Cards */
+.push-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.push-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #dc2626;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.push-time {
+  font-size: 0.68rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.push-body-text {
+  font-size: 0.8rem;
+  color: #0f172a;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+.push-callout-instruction {
+  font-size: 0.72rem;
+  color: #b45309;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.push-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.push-btn-reject {
+  font-size: 0.72rem;
+  padding: 8px 6px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.push-btn-mistake {
+  font-size: 0.68rem;
+  padding: 8px 6px;
+  color: #64748b;
+  border: 1.5px dashed #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-coral-red {
+  background: #ff4d4d;
+  color: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.btn-coral-red:hover {
+  background: #ef4444;
+}
+
+.btn-ghost {
+  background: #f8fafc;
+  color: #475569;
+  border: 1.5px solid #cbd5e1;
+}
+
+.phone-center-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 8px;
+}
+
+.state-icon-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2.5px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.bg-red-alert { background: #ef4444; }
+.bg-amber-alert { background: #f59e0b; }
+.bg-green-safe { background: #22c55e; }
+.bg-slate-idle { background: #1e293b; border-color: #334155; }
+
+.state-alert-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.title-red { color: #fca5a5; }
+.title-amber { color: #fde047; }
+.title-green { color: #86efac; }
+
+.state-alert-desc {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.desc-red { color: #fecaca; }
+.desc-amber { color: #fef08a; }
+.desc-green { color: #bbf7d0; }
+
+.idle-phone-title {
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.idle-phone-desc {
+  color: #94a3b8;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  max-width: 230px;
+  margin: 0 auto;
+}
+
+.phone-bottom-badge-row {
+  text-align: center;
+  padding-top: 10px;
+}
+
+/* ── Educational Bottom Action Bar (Tahap 1) ────────────────────── */
+.twofa-demo-footer-bar {
+  margin-top: 24px;
+  background: #ffffff;
+  border: 3px solid #000000;
+  border-radius: var(--radius-md, 10px);
+  padding: 16px 20px;
+  box-shadow: 5px 5px 0 #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.twofa-demo-insight-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: #1e293b;
+  line-height: 1.5;
+  flex: 1;
+  min-width: 260px;
+}
+
+/* ── Method Selector Cards (Tahap 2) ────────────────────────────── */
 .twofa-method-card {
-  background: var(--nb-card-bg, #ffffff);
-  border: 2.5px solid var(--nb-border, #000000);
-  border-radius: var(--nb-radius-lg, 12px);
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-md, 12px);
   padding: 20px;
   cursor: pointer;
-  box-shadow: 4px 4px 0 var(--nb-shadow-color, #000000);
-  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 4px 4px 0 #000000;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
 .twofa-method-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--nb-shadow-color, #000000);
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 #000000;
 }
 
 .twofa-method-card.active {
-  background: #eff6ff;
-  border-color: var(--nb-border, #000000);
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--nb-shadow-color, #000000);
+  background: #fffdf0;
+  border-color: #000000;
+  border-width: 3px;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000000;
+}
+
+/* ── TOTP Mathematical Visualizer (Kriptografi Terbuka) ─────────── */
+.totp-algorithm-box {
+  background: #050811;
+  border: 3px solid #000000;
+  border-radius: var(--radius-md, 12px);
+  padding: 18px;
+  color: #e2e8f0;
+  box-shadow: 5px 5px 0 #000000;
+  margin-top: 24px;
+}
+
+.totp-algo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.totp-algo-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #00f0ff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.algorithm-pipeline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pipeline-node {
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+  flex: 1;
+  min-width: 140px;
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.pipeline-node-label {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.pipeline-node-code {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.84rem;
+  font-weight: 900;
+  color: #facc15;
+}
+
+.pipeline-arrow {
+  font-weight: 900;
+  color: #00f0ff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* OTP 6-Digit PIN Boxes */
 .twofa-pin-input {
-  width: 48px;
-  height: 56px;
+  width: 52px;
+  height: 60px;
   text-align: center;
-  font-size: 1.55rem;
+  font-size: 1.65rem;
   font-family: var(--font-mono, monospace);
-  font-weight: 800;
-  border-radius: var(--nb-radius-md, 8px);
-  border: 2.5px solid var(--nb-border, #000000);
+  font-weight: 900;
+  border-radius: var(--radius-sm, 8px);
+  border: 2.5px solid #000000;
   background: #ffffff;
-  color: var(--nb-text, #0f172a);
-  box-shadow: 3px 3px 0 var(--nb-shadow-color, #000000);
+  color: #0f172a;
+  box-shadow: 3px 3px 0 #000000;
   outline: none;
-  transition: transform 0.12s, box-shadow 0.12s, border-color 0.15s, background 0.15s;
+  transition: transform 0.12s, box-shadow 0.12s, border-color 0.15s, background-color 0.15s;
 }
 
 .twofa-pin-input:focus {
-  border-color: var(--nb-border, #000000);
+  border-color: #000000;
   background: #fef08a;
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--nb-shadow-color, #000000);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #000000;
 }
 
 .twofa-pin-input.has-value {
-  background: #fef2f2;
-  border-color: var(--nb-border, #000000);
+  background: #f0fdf4;
+  border-color: #16a34a;
 }
 
-/* Backup Codes Neo-Brutalist Sticker Card */
+/* Backup Codes Card */
 .twofa-backup-card {
-  background: var(--nb-paper-dot, #fffdf8);
-  border: 2.5px dashed var(--nb-border, #000000);
-  border-radius: var(--nb-radius-lg, 12px);
+  background: #fffdf8;
+  border: 2.5px dashed #000000;
+  border-radius: var(--radius-md, 12px);
   padding: 22px;
   text-align: left;
   margin-bottom: 24px;
-  box-shadow: 4px 4px 0 var(--nb-shadow-color, #000000);
+  box-shadow: 4px 4px 0 #000000;
 }
 
 .twofa-backup-code-pill {
   background: #ffffff;
   padding: 10px 14px;
-  border-radius: var(--nb-radius-sm, 4px);
-  border: 2px solid var(--nb-border, #000000);
+  border-radius: var(--radius-sm, 4px);
+  border: 2px solid #000000;
   text-align: center;
   font-family: var(--font-mono, monospace);
   font-weight: 800;
-  box-shadow: 2px 2px 0 var(--nb-shadow-color, #000000);
+  font-size: 1.05rem;
+  box-shadow: 2px 2px 0 #000000;
 }
 
-/* Animations */
+/* ── Tahap 3: Uji Berpikir Kritis 2FA ────────────────────────────── */
+.twofa-drill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 3px solid #000000;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.drill-stage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.twofa-section-title {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  font-family: var(--font-heading);
+}
+
+.twofa-section-subtitle {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 680px;
+}
+
+.twofa-drill-tracker-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8fafc;
+  border: 2px solid #000000;
+  box-shadow: 3px 3px 0 #000000;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm, 8px);
+}
+
+.tracker-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+.tracker-value {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.tracker-dots-row {
+  display: flex;
+  gap: 6px;
+}
+
+.tracker-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1.5px solid #000000;
+  background: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 1px 1px 0 #000000;
+  transition: transform var(--transition-fast);
+}
+
+.tracker-dot:hover {
+  transform: translate(-1px, -1px);
+}
+
+.tracker-dot.dot-active {
+  background: var(--nb-yellow);
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.tracker-dot.dot-correct {
+  background: #22c55e;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.tracker-dot.dot-wrong {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.twofa-challenge-box {
+  background: #ffffff;
+  border: 3px solid #000000;
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 6px 6px 0 #000000;
+  padding: clamp(18px, 4vw, 30px);
+  margin-bottom: 20px;
+}
+
+.challenge-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.challenge-tag-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.challenge-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #000000;
+}
+
+.challenge-num {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #000000;
+}
+
+.challenge-topic {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-left: 4px;
+}
+
+.challenge-title {
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 16px 0;
+  line-height: 1.35;
+}
+
+.challenge-scenario-card {
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-left: 6px solid #d97706;
+  border-radius: var(--radius-sm, 6px);
+  padding: 14px 16px;
+  box-shadow: 2px 2px 0 #000000;
+  margin-bottom: 18px;
+}
+
+.scenario-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #92400e;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.scenario-text-body {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #451a03;
+  margin: 0;
+  font-weight: 600;
+}
+
+.challenge-question-prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 18px;
+}
+
+.twofa-drill-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.twofa-drill-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 3.5px 3.5px 0 #000000;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  user-select: none;
+}
+
+.twofa-drill-opt-btn:hover:not(:disabled) {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 #000000;
+  background: #fffdf0;
+}
+
+.twofa-drill-opt-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000000;
+}
+
+.drill-opt-key-badge {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 900;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.2);
+}
+
+.drill-opt-text {
+  flex: 1;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.drill-opt-status-icon {
+  flex-shrink: 0;
+}
+
+.opt-correct-reveal {
+  background: #dcfce7 !important;
+  border-color: #16a34a !important;
+  box-shadow: 4px 4px 0 #16a34a !important;
+}
+
+.opt-correct-reveal .drill-opt-key-badge {
+  background: #16a34a;
+}
+
+.opt-wrong-reveal {
+  background: #fee2e2 !important;
+  border-color: #dc2626 !important;
+  box-shadow: 4px 4px 0 #dc2626 !important;
+}
+
+.opt-wrong-reveal .drill-opt-key-badge {
+  background: #dc2626;
+}
+
+.opt-muted-reveal {
+  opacity: 0.6;
+  background: #f8fafc;
+}
+
+/* Post-answer feedback box */
+.twofa-drill-feedback-box {
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 16px 20px;
+  box-shadow: 3.5px 3.5px 0 #000000;
+  margin-bottom: 22px;
+}
+
+.fb-success {
+  background: #f0fdf4;
+  border-color: #16a34a;
+}
+
+.fb-warning {
+  background: #fef2f2;
+  border-color: #dc2626;
+}
+
+.fb-header-row {
+  margin-bottom: 8px;
+}
+
+.fb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.fb-success .fb-badge {
+  color: #15803d;
+}
+
+.fb-warning .fb-badge {
+  color: #b91c1c;
+}
+
+.fb-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #1e293b;
+  margin: 0 0 14px 0;
+  font-weight: 600;
+}
+
+.fb-expert-dossier {
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.expert-dossier-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #0f172a;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.expert-dossier-body {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #334155;
+  margin: 0;
+}
+
+.twofa-drill-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px dashed #cbd5e1;
+  padding-top: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.status-answered-pill {
+  font-size: 0.88rem;
+  font-family: var(--font-heading);
+  color: #0f172a;
+}
+
+.status-pending-pill {
+  font-size: 0.84rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ── Tahap 4: Kelulusan Misi Benteng 2FA (Victory Screen) ────────── */
+.twofa-victory-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.twofa-victory-card {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 4px solid #000000;
+  box-shadow: 8px 8px 0 #000000;
+  border-radius: var(--radius-md, 12px);
+  padding: clamp(24px, 4vw, 36px);
+}
+
+.victory-top-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, #22c55e 0%, #00f0ff 50%, #facc15 100%);
+}
+
+.victory-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #dcfce7;
+  border: 2px solid #16a34a;
+  box-shadow: 2px 2px 0 #16a34a;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #15803d;
+  letter-spacing: 0.05em;
+  margin-bottom: 22px;
+}
+
+.victory-main-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.victory-shield-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border: 3.5px solid #000000;
+  box-shadow: 5px 5px 0 #000000;
+  border-radius: var(--radius-md, 12px);
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.victory-shield-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.victory-score-badge {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #16a34a;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.victory-score-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.06em;
+}
+
+.victory-title {
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.victory-desc {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+.victory-competencies-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.comp-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm, 6px);
+}
+
+.comp-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1.5px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.comp-green { background: #dcfce7; color: #166534; }
+.comp-cyan { background: #cffafe; color: #0891b2; }
+.comp-yellow { background: #fef9c3; color: #854d0e; }
+
+.comp-title {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.comp-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.victory-checklist-section {
+  background: #fffdf8;
+  border: 2.5px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 18px;
+  margin-bottom: 26px;
+}
+
+.checklist-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.checklist-items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.victory-action-toolbar {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px dashed #cbd5e1;
+  padding-top: 20px;
+  flex-wrap: wrap;
+}
+
+.victory-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.victory-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+}
+
+/* ── Keyframe Animations ────────────────────────────────────────── */
 @keyframes phone-shake {
   0%, 100% { transform: translateX(0); }
   20% { transform: translateX(-6px) rotate(-1deg); }
@@ -287,11 +1467,11 @@
 
 @keyframes shield-glow-pulse {
   0%, 100% {
-    box-shadow: 7px 7px 0 var(--nb-shadow-color, #000000), 0 0 25px rgba(34, 197, 94, 0.4);
-    border-color: var(--nb-lime, #22c55e);
+    box-shadow: 4px 4px 0 #000000, 0 0 20px rgba(34, 197, 94, 0.4);
+    border-color: #22c55e;
   }
   50% {
-    box-shadow: 7px 7px 0 var(--nb-shadow-color, #000000), 0 0 45px rgba(34, 197, 94, 0.8);
+    box-shadow: 4px 4px 0 #000000, 0 0 35px rgba(34, 197, 94, 0.8);
     border-color: #86efac;
   }
 }
@@ -311,10 +1491,6 @@
   50% { opacity: 0; }
 }
 
-.terminal-cursor {
-  animation: blink-cursor 0.8s infinite;
-}
-
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.6; transform: scale(0.96); }
@@ -324,8 +1500,188 @@
   animation: pulse-slow 2s infinite ease-in-out;
 }
 
-@media (max-width: 768px) {
+/* ── Detektif Siber & Bedah Nalar Kritis (Tahap 3) ────────────────── */
+.challenge-detective-clues-box {
+  background: #f8fafc;
+  border: 2px solid #000000;
+  border-radius: var(--radius-sm, 8px);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  box-shadow: 2.5px 2.5px 0 #000000;
+}
+
+.detective-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.clues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1.5px dashed #cbd5e1;
+}
+
+.clue-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.clue-badge {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.consequence-simulation-card {
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-top: 12px;
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.consequence-title {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #475569;
+  margin-top: 4px;
+}
+
+/* ── Responsive Adaptations ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .twofa-stepper-nav {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
   .attack-arena {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .phone-device-card {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .twofa-stepper-btn {
+    padding: 8px 10px;
+  }
+  .stepper-label {
+    font-size: 0.78rem;
+  }
+  .twofa-top-control-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .twofa-state-switch-card {
+    align-items: stretch;
+  }
+  .twofa-state-switch-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .attack-vector-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .vector-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .victory-main-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .victory-shield-block {
+    margin: 0 auto;
+    max-width: 260px;
+  }
+  .victory-action-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .victory-action-toolbar .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .twofa-drill-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .twofa-drill-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .twofa-drill-options-grid {
+    gap: 8px;
+  }
+  .twofa-drill-opt-btn {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .twofa-stepper-nav {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .twofa-stepper-btn {
+    padding: 7px 8px;
+  }
+  .stepper-label {
+    font-size: 0.74rem;
+  }
+  .twofa-pin-input {
+    width: 40px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  .phone-shake-active,
+  .shield-active-glow,
+  .pulse-slow {
+    animation: none !important;
   }
 }

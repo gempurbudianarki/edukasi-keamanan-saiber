@@ -8,10 +8,10 @@ import { getStoredProgress } from './storage';
 export const ROUTE_MAP = {
   welcome: '#/welcome',
   hub: '#/hub',
+  preTest: '#/pre-test',
   phishing: '#/phishing',
   twoFactor: '#/two-factor',
-  password: '#/password',
-  privacy: '#/privacy'
+  postTest: '#/post-test'
 };
 
 const HASH_TO_VIEW = {
@@ -24,6 +24,12 @@ const HASH_TO_VIEW = {
   '#hub': 'hub',
   '#/hub': 'hub',
   '/hub': 'hub',
+  '#pre-test': 'preTest',
+  '#/pre-test': 'preTest',
+  '/pre-test': 'preTest',
+  '#preTest': 'preTest',
+  '#/preTest': 'preTest',
+  '/preTest': 'preTest',
   '#phishing': 'phishing',
   '#/phishing': 'phishing',
   '/phishing': 'phishing',
@@ -33,12 +39,12 @@ const HASH_TO_VIEW = {
   '#twoFactor': 'twoFactor',
   '#/twoFactor': 'twoFactor',
   '/twoFactor': 'twoFactor',
-  '#password': 'password',
-  '#/password': 'password',
-  '/password': 'password',
-  '#privacy': 'privacy',
-  '#/privacy': 'privacy',
-  '/privacy': 'privacy'
+  '#post-test': 'postTest',
+  '#/post-test': 'postTest',
+  '/post-test': 'postTest',
+  '#postTest': 'postTest',
+  '#/postTest': 'postTest',
+  '/postTest': 'postTest'
 };
 
 /**

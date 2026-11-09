@@ -5,8 +5,8 @@ import { WelcomeScreen } from './components/layout/WelcomeScreen';
 import { MissionHub } from './components/layout/MissionHub';
 import { PhishingRadar } from './components/modules/PhishingRadar/PhishingRadar';
 import { TwoFactorShield } from './components/modules/TwoFactorShield/TwoFactorShield';
-import { PasswordVault } from './components/modules/PasswordVault/PasswordVault';
-import { PrivacyShield } from './components/modules/PrivacyShield/PrivacyShield';
+import { PreTest } from './components/modules/PreTest/PreTest';
+import { PostTest } from './components/modules/PostTest/PostTest';
 import { getStoredProgress, saveStoredProgress, resetStoredProgress } from './utils/storage';
 import { playSound } from './utils/soundEffects';
 import { resolveCurrentRoute, syncRouteToUrl } from './utils/navigation';
@@ -88,9 +88,9 @@ export default function App() {
       };
       saveStoredProgress(nextProgress);
 
-      // Check if all 4 missions are completed now
-      const completedCount = Object.values(nextProgress.completedMissions).filter(Boolean).length;
-      if (completedCount === 4) {
+      // Check if both 2 practice missions or postTest are completed
+      const practiceDone = nextProgress.completedMissions?.phishing && nextProgress.completedMissions?.twoFactor;
+      if (practiceDone || nextProgress.completedMissions?.postTest) {
         triggerVictoryConfetti();
       }
 
@@ -148,6 +148,9 @@ export default function App() {
         isPresenterMode={isPresenterMode}
         onTogglePresenter={handleTogglePresenter}
         onNavigateHome={handleNavigateHome}
+        onNavigateHub={handleBackToHub}
+        onNavigatePreTest={() => navigateTo('preTest')}
+        onNavigatePostTest={() => navigateTo('postTest')}
         currentView={currentView}
       />
 
@@ -161,6 +164,9 @@ export default function App() {
             onStartSimulation={() => {
               navigateTo('hub');
             }}
+            onStartPreTest={() => {
+              navigateTo('preTest');
+            }}
           />
         )}
 
@@ -172,39 +178,43 @@ export default function App() {
           />
         )}
 
-        {/* View 2: Phishing Radar */}
+        {/* View: Pre-Test Evaluasi Diagnostik Awal (15 Soal) */}
+        {currentView === 'preTest' && (
+          <PreTest
+            onBack={handleBackToHub}
+            onComplete={(score) => handleCompleteMission('preTest', score)}
+            onNavigateToHub={handleBackToHub}
+            initialScore={progress.scores?.preTest || 0}
+            studentName={progress.studentName}
+          />
+        )}
+
+        {/* View 2: Misi 1 - Phishing Radar & Lab URL */}
         {currentView === 'phishing' && (
           <PhishingRadar
             onBack={handleBackToHub}
             onComplete={(score) => handleCompleteMission('phishing', score)}
-            initialScore={progress.scores.phishing}
+            initialScore={progress.scores?.phishing || 0}
           />
         )}
 
-        {/* View 3: Two Factor Shield */}
+        {/* View 3: Misi 2 - Benteng 2FA */}
         {currentView === 'twoFactor' && (
           <TwoFactorShield
             onBack={handleBackToHub}
             onComplete={(score) => handleCompleteMission('twoFactor', score)}
-            initialScore={progress.scores.twoFactor}
+            onNavigatePostTest={() => navigateTo('postTest')}
+            initialScore={progress.scores?.twoFactor || 0}
           />
         )}
 
-        {/* View 4: Password Vault */}
-        {currentView === 'password' && (
-          <PasswordVault
+        {/* View 4: Post-Test Evaluasi Literasi Siber (15 Soal) */}
+        {currentView === 'postTest' && (
+          <PostTest
             onBack={handleBackToHub}
-            onComplete={(score) => handleCompleteMission('password', score)}
-            initialScore={progress.scores.password}
-          />
-        )}
-
-        {/* View 5: Privacy Shield */}
-        {currentView === 'privacy' && (
-          <PrivacyShield
-            onBack={handleBackToHub}
-            onComplete={(score) => handleCompleteMission('privacy', score)}
-            initialScore={progress.scores.privacy}
+            onComplete={(score) => handleCompleteMission('postTest', score)}
+            initialScore={progress.scores?.postTest || 0}
+            studentName={progress.studentName}
           />
         )}
       </main>
@@ -216,7 +226,7 @@ export default function App() {
             <strong>PKM Universitas Bina Bangsa Getsempena (UBBG)</strong> • Banda Aceh 2026
           </div>
           <div style={{ color: '#64748b', fontSize: '0.84rem' }}>
-            Bidang Teknis & Praktik: <strong>Gempur Budi Anarki</strong> • Edukasi Literasi Siber Siswa
+            Edukasi Literasi Siber Siswa
           </div>
         </div>
       </footer>

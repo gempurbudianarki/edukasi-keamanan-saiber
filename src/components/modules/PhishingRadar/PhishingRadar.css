@@ -709,15 +709,67 @@
 
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .domain-battle-grid {
-    grid-template-columns: 1fr;
+  .module-page {
+    padding: 16px 0 40px 0;
+  }
+  .module-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .module-nav-back {
+    width: 100%;
+    justify-content: center;
+  }
+  .tactical-mode-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 6px;
+    margin-bottom: 18px;
+    overflow-x: visible;
   }
   .tactical-tab-btn {
-    min-width: 150px;
-    font-size: 0.78rem;
-    padding: 9px 12px;
+    min-width: unset;
+    width: 100%;
+    font-size: 0.74rem;
+    padding: 9px 6px;
+    gap: 5px;
+    justify-content: center;
+  }
+  .domain-battle-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
   .scenario-card {
-    padding: 20px 16px;
+    padding: 18px 14px;
+    margin-bottom: 18px;
+  }
+  .scenario-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 375px) {
+  .tactical-mode-selector {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .tactical-tab-btn {
+    font-size: 0.76rem;
+    padding: 8px 6px;
+  }
+  .scenario-card {
+    padding: 14px 10px;
+  }
+  .scenario-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .scenario-actions .btn {
+    width: 100%;
+    min-width: unset;
   }
 }

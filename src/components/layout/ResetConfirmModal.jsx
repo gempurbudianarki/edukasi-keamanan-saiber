@@ -6,6 +6,7 @@ import { playSound } from '../../utils/soundEffects';
 export function ResetConfirmModal({ isOpen, onClose, onConfirm }) {
   useEffect(() => {
     if (!isOpen) return;
+    playSound('modal_open');
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -45,10 +46,10 @@ export function ResetConfirmModal({ isOpen, onClose, onConfirm }) {
         </div>
 
         <h3 className="reset-modal-title">
-          Reset Seluruh Simulasi?
+          Reset Seluruh Simulasi & Latihan?
         </h3>
         <p className="reset-modal-desc">
-          Seluruh skor 4 misi, status penyelesaian, dan data nama siswa akan dihapus dari memori browser dan dikembalikan ke awal.
+          Seluruh progres simulasi (Misi 1 & 2), lembar evaluasi Post-Test 15 butir soal, dan identitas siswa akan dihapus dan dikembalikan ke kondisi awal.
         </p>
 
         <div className="reset-modal-actions">

@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: true,
+    open: false,
+    allowedHosts: ['acehtanggap.cloud', '.acehtanggap.cloud', 'localhost'],
     proxy: {
       '/api': {
         target: 'http://localhost:5000',

@@ -13,12 +13,14 @@ import {
   BookOpen,
   Shield,
   Edit3,
-  AlertCircle
+  AlertCircle,
+  FileText,
+  Compass
 } from 'lucide-react';
 import { playSound } from '../../utils/soundEffects';
 import './WelcomeScreen.css';
 
-export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
+export function WelcomeScreen({ studentName, onSaveName, onStartSimulation, onStartPreTest }) {
   const [nameInput, setNameInput] = useState(studentName || '');
   const [isEditing, setIsEditing] = useState(!studentName);
   const [errorMessage, setErrorMessage] = useState('');
@@ -46,8 +48,21 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
     onStartSimulation();
   };
 
+  const handleStartPreTestDirectly = () => {
+    if (isEditing) {
+      const isValid = handleValidateAndSave();
+      if (!isValid) return;
+    }
+    playSound('success');
+    if (onStartPreTest) {
+      onStartPreTest();
+    } else {
+      onStartSimulation();
+    }
+  };
+
   return (
-    <div className="welcome-container container">
+    <div className="welcome-container container anim-fade-in-up">
       {/* Top Banner Ribbon */}
       <div className="welcome-ribbon">
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
@@ -60,7 +75,7 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
       <div className="welcome-card">
         <div className="welcome-header">
           <div className="welcome-logo-hero-wrap">
-            <img src="/logo.png" alt="Logo CyberGenZ UBBG" className="welcome-hero-logo" />
+            <img src="/logo.png" alt="Logo CyberGenZ UBBG" className="welcome-hero-logo anim-float" />
           </div>
 
           <div className="welcome-badge">
@@ -71,17 +86,10 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
             Selamat Datang di Portal <span className="text-red">Simulasi Keamanan Siber</span>
           </h1>
           <p className="welcome-lead">
-            Platform edukasi dan praktik langsung untuk membekali siswa dalam mendeteksi tautan phishing, 
-            mengamankan akun dengan verifikasi dua langkah (2FA), menguji ketahanan kata sandi, 
-            serta melindungi privasi di media sosial dari ancaman kejahatan digital.
+            Platform edukasi dan evaluasi terpadu untuk membekali siswa dalam mendeteksi tautan phishing, 
+            mengamankan akun dengan verifikasi dua langkah (2FA), menangkal malware & peretasan, 
+            serta melindungi privasi digital siswa di era modern.
           </p>
-
-          <div className="welcome-team-pill">
-            <span className="team-role">Mahasiswa / Bidang Teknis & Praktik:</span>
-            <strong className="team-name">Gempur Budi Anarki</strong>
-            <span className="team-slash">•</span>
-            <span className="team-campus">PKM UBBG 2026</span>
-          </div>
         </div>
 
         {/* Personalized Agent Greeting or Name Registration */}
@@ -100,20 +108,32 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
                   Selamat Datang, <span className="agent-highlight-name">Agen {studentName || nameInput.trim()}</span>! <Shield size={22} className="agent-title-shield" />
                 </h2>
                 <p className="agent-greeting-desc">
-                  Data analisismu telah tersimpan di sistem PKM UBBG 2026. Siap menguji ketangkasanmu membongkar serangan siber?
+                  Data analisismu telah tersimpan di sistem PKM UBBG 2026. Alur dimulai dari <strong>Tahap 1: Pre-Test (15 Soal)</strong>, dilanjutkan <strong>2 Modul Praktik</strong>, dan diakhiri <strong>Post-Test</strong>.
                 </p>
               </div>
             </div>
 
             <div className="agent-greeting-actions">
               <button
+                id="btn-start-pretest-welcome"
+                className="btn btn-cyan"
+                onClick={handleStartPreTestDirectly}
+                title="Mulai Ujian Diagnostik Awal Pre-Test"
+              >
+                <Compass size={18} />
+                <span>Mulai Pre-Test (15 Soal)</span>
+              </button>
+
+              <button
                 id="btn-start-simulation-welcome"
                 className="btn btn-primary"
                 onClick={handleStartDirectly}
+                title="Buka Hub Seluruh Misi"
               >
-                <span>Masuk ke Hub 4 Misi</span>
+                <span>Masuk ke Hub Misi</span>
                 <ArrowRight size={18} />
               </button>
+
               <button
                 className="btn btn-secondary"
                 onClick={() => {
@@ -146,17 +166,27 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    handleValidateAndSave();
+                    handleStartPreTestDirectly();
                   }
                 }}
                 autoFocus
               />
               <button
+                id="btn-save-name-pretest-welcome"
+                className="btn btn-cyan"
+                onClick={handleStartPreTestDirectly}
+                title="Simpan nama dan langsung mulai Pre-Test"
+              >
+                <Compass size={18} />
+                <span>Mulai Pre-Test</span>
+              </button>
+              <button
                 id="btn-save-name-welcome"
                 className="btn btn-yellow"
                 onClick={handleStartDirectly}
+                title="Simpan nama dan buka Hub Misi"
               >
-                <span>Mulai Simulasi</span>
+                <span>Buka Hub Misi</span>
                 <ArrowRight size={18} />
               </button>
             </div>
@@ -168,57 +198,81 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
               </div>
             ) : (
               <p className="name-box-hint">
-                *Tekan <strong>Enter</strong> atau klik <strong>Mulai Simulasi</strong>. Nama tidak boleh kosong agar evaluasi literasimu tercatat.
+                *Tekan <strong>Enter</strong> atau klik <strong>Mulai Pre-Test</strong>. Nama tidak boleh kosong agar evaluasi literasimu tercatat secara resmi.
               </p>
             )}
           </div>
         )}
 
-        {/* 4 Mission Highlights Grid */}
-        <div className="welcome-preview-section">
+        {/* 4 Steps Learning Pathway Preview */}
+        <div className="welcome-preview-section anim-fade-in-up anim-stagger-1">
           <h3 className="preview-heading">
             <BookOpen size={18} />
-            4 Modul Praktik Interaktif yang Akan Kamu Pelajari:
+            Alur Terstruktur PKM UBBG 2026 (4 Tahapan Terpadu):
           </h3>
 
           <div className="welcome-grid-4">
-            <div className="preview-item">
+            <div 
+              className="preview-item anim-fade-in-up anim-stagger-1"
+              onClick={handleStartPreTestDirectly}
+              title="Klik untuk langsung memulai Pre-Test"
+              role="button"
+              tabIndex={0}
+            >
+              <div className="preview-icon-box" style={{ background: 'var(--nb-cyan)', color: '#000000' }}>
+                <Compass size={22} />
+              </div>
+              <div className="preview-content">
+                <h4>Tahap 1: Pre-Test</h4>
+                <p>15 Butir Soal Diagnostik untuk mengukur pemahaman awal sebelum simulasi interaktif.</p>
+              </div>
+            </div>
+
+            <div 
+              className="preview-item anim-fade-in-up anim-stagger-2"
+              onClick={handleStartDirectly}
+              title="Klik untuk membuka Hub Misi Praktik"
+              role="button"
+              tabIndex={0}
+            >
               <div className="preview-icon-box" style={{ background: 'var(--nb-coral-red)', color: '#ffffff' }}>
                 <Radar size={22} />
               </div>
               <div className="preview-content">
-                <h4>01. Phishing Radar & Lab URL</h4>
-                <p>Uji coba membuka tautan kuota gratis palsu, bedah domain palsu vs resmi, dan deteksi email spoofing.</p>
+                <h4>Tahap 2: Phishing Radar</h4>
+                <p>Simulasi tautan palsu, bedah domain palsu vs resmi (.go.id), dan inspeksi SPF/DKIM.</p>
               </div>
             </div>
 
-            <div className="preview-item">
+            <div 
+              className="preview-item anim-fade-in-up anim-stagger-3"
+              onClick={handleStartDirectly}
+              title="Klik untuk membuka Hub Misi Praktik"
+              role="button"
+              tabIndex={0}
+            >
               <div className="preview-icon-box" style={{ background: 'var(--nb-green)', color: '#000000' }}>
                 <KeyRound size={22} />
               </div>
               <div className="preview-content">
-                <h4>02. Benteng 2FA (Verifikasi 2 Langkah)</h4>
-                <p>Simulasi serangan bot brute-force hacker yang diblokir oleh sistem kode OTP 6-digit.</p>
+                <h4>Tahap 3: Benteng 2FA</h4>
+                <p>Simulasi bot brute-force hacker yang dibendung oleh verifikasi dua langkah OTP 6-digit.</p>
               </div>
             </div>
 
-            <div className="preview-item">
-              <div className="preview-icon-box" style={{ background: 'var(--nb-cyan)', color: '#000000' }}>
-                <Key size={22} />
-              </div>
-              <div className="preview-content">
-                <h4>03. Password Vault & Kriptografi</h4>
-                <p>Ketahui berapa detik password kamu bisa dibobol hacker dan pelajari teknik menyusun Passphrase kuat.</p>
-              </div>
-            </div>
-
-            <div className="preview-item">
+            <div 
+              className="preview-item anim-fade-in-up anim-stagger-4"
+              onClick={handleStartDirectly}
+              title="Klik untuk membuka Post-Test di Hub Misi"
+              role="button"
+              tabIndex={0}
+            >
               <div className="preview-icon-box" style={{ background: 'var(--nb-yellow)', color: '#000000' }}>
-                <EyeOff size={22} />
+                <FileText size={22} />
               </div>
               <div className="preview-content">
-                <h4>04. Privacy Shield Medsos</h4>
-                <p>Audit privasi profil virtual Instagram/TikTok untuk mencegah kejahatan doxxing dan penguntitan (stalking).</p>
+                <h4>Tahap 4: Post-Test</h4>
+                <p>15 Butir Soal Evaluasi Akhir untuk mengukur peningkatan literasi keamanan siber (N-Gain).</p>
               </div>
             </div>
           </div>
@@ -228,15 +282,15 @@ export function WelcomeScreen({ studentName, onSaveName, onStartSimulation }) {
         <div className="welcome-footer-badges">
           <div className="feature-pill">
             <CheckCircle size={15} color="#dc2626" />
-            <span>100% Berbasis Simulasi Nyata</span>
+            <span>Pre-Test & Post-Test Terstandar (30 Soal)</span>
           </div>
           <div className="feature-pill">
             <CheckCircle size={15} color="#dc2626" />
-            <span>Tanpa Instalasi Tambahan</span>
+            <span>2 Modul Simulasi Realistis 1:1</span>
           </div>
           <div className="feature-pill">
             <CheckCircle size={15} color="#dc2626" />
-            <span>Evaluasi Mandiri Terstandar PKM</span>
+            <span>Perhitungan Otomatis Kenaikan Literasi (N-Gain)</span>
           </div>
         </div>
       </div>

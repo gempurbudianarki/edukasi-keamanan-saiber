@@ -91,7 +91,7 @@ export function DomainComparatorView({
       </p>
 
       {/* Comparison Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+      <div className="domain-battle-grid">
         {/* Opsi A */}
         <div
           onClick={() => handleSelect('A')}

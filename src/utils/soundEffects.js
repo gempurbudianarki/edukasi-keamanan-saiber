@@ -114,6 +114,31 @@ export function playSound(type = 'click', force = false) {
         o.start(now + i * 0.06);
         o.stop(now + i * 0.06 + 0.3);
       });
+    } else if (type === 'complete') {
+      // Grand celebratory fanfare (Major 9th ascending arpeggio with shimmer)
+      const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50, 1318.51];
+      notes.forEach((freq, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.type = i > 4 ? 'sine' : 'triangle';
+        const startT = now + i * 0.07;
+        o.frequency.setValueAtTime(freq, startT);
+        g.gain.setValueAtTime(0.18, startT);
+        g.gain.exponentialRampToValueAtTime(0.001, startT + 0.45);
+        o.start(startT);
+        o.stop(startT + 0.45);
+      });
+    } else if (type === 'modal_open') {
+      // Clean modern cyber pop-in sound
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(740, now + 0.08);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc.start(now);
+      osc.stop(now + 0.12);
     } else if (type === 'error') {
       // Low dual buzzer
       osc.type = 'sawtooth';
